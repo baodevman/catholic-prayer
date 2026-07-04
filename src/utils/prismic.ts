@@ -21,7 +21,11 @@ export interface NovenaDay {
 const REPO_NAME_KEY = 'catholic_prayer_prismic_repo';
 
 export const getPrismicRepoName = (): string => {
-  return localStorage.getItem(REPO_NAME_KEY) || '';
+  return (import.meta.env.VITE_PRISMIC_REPO as string) || localStorage.getItem(REPO_NAME_KEY) || 'easyforpray';
+};
+
+export const getPrismicAccessToken = (): string => {
+  return (import.meta.env.VITE_PRISMIC_ACCESS_TOKEN as string) || '';
 };
 
 export const setPrismicRepoName = (repoName: string): void => {
@@ -67,7 +71,8 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
   // 1. If Prismic is configured, attempt to fetch from Prismic
   if (repoName) {
     try {
-      const client = createClient(repoName);
+      const accessToken = getPrismicAccessToken();
+      const client = createClient(repoName, accessToken ? { accessToken } : undefined);
       // Fetch all documents of type 'prayer', ordering by title
       const response = await client.getAllByType('prayer');
 
@@ -88,7 +93,7 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
         return {
           uid: doc.uid || doc.id,
           title: d.title || 'Kinh không tên',
-          category: d.category || 'feast-holiday',
+          category: (d.category && d.category.uid) ? d.category.uid : (typeof d.category === 'string' ? d.category : ''),
           content: richTextToHtml(d.content),
           isNovena,
           ...(isNovena && { novenaDays }),
@@ -125,6 +130,61 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
   } catch (error) {
     console.error('Local JSON fetch failed', error);
   }
+
+  return [];
+};
+
+export interface PrismicCategory {
+  uid: string;
+  name: string;
+  parentUid?: string;
+}
+
+// Fetch all category documents from Prismic with localStorage caching fallback
+export const fetchAllCategories = async (): Promise<PrismicCategory[]> => {
+  const repoName = getPrismicRepoName();
+  const cacheKey = 'catholic_prayer_categories_cache';
+  
+  if (repoName) {
+    try {
+      const accessToken = getPrismicAccessToken();
+      const client = createClient(repoName, accessToken ? { accessToken } : undefined);
+      const response = await client.getAllByType('category');
+      
+      const categories: PrismicCategory[] = response.map((doc: any) => ({
+        uid: doc.uid || '',
+        name: doc.data.name || '',
+        parentUid: doc.data.parent && doc.data.parent.uid ? doc.data.parent.uid : undefined
+      }));
+
+      // Cache locally
+      localStorage.setItem(cacheKey, JSON.stringify(categories));
+      return categories;
+    } catch (error) {
+      console.warn('Prismic fetch categories failed, trying local storage cache...', error);
+    }
+  }
+
+  // Fallback to local storage cache
+  try {
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+  } catch {}
+
+  // Fallback to static category list if no cache is available
+  try {
+    const response = await fetch('/import-categories.json');
+    if (response.ok) {
+      const list = await response.json();
+      return list.map((item: any) => ({
+        uid: item.uid,
+        name: item.name,
+        parentUid: item.parent
+      }));
+    }
+  } catch {}
 
   return [];
 };

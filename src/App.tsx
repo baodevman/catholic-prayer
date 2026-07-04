@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAppState } from './hooks/useAppState';
-import { setPrismicRepoName } from './utils/prismic';
 import type { Prayer } from './utils/prismic';
 import './App.css';
 
@@ -14,23 +13,25 @@ const IconHome = ({ active }: { active: boolean }) => (
 
 const IconLibrary = ({ active }: { active: boolean }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--gold-primary)" : "var(--text-muted)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m16 6 4 14" />
+    <path d="M12 6v14" />
+    <path d="M8 8v12" />
+    <path d="M4 4v16" />
+  </svg>
+);
+
+const IconBook = ({ active }: { active: boolean }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--gold-primary)" : "var(--text-muted)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
     <path d="M6 6h10" />
     <path d="M6 10h10" />
   </svg>
 );
 
-const IconBook = ({ active }: { active: boolean }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--gold-primary)" : "var(--text-muted)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-  </svg>
-);
-
 const IconSettings = ({ active }: { active: boolean }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? "var(--gold-primary)" : "var(--text-muted)"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
     <circle cx="12" cy="12" r="3" />
-    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
   </svg>
 );
 
@@ -41,22 +42,17 @@ const CrossSymbol = () => (
 export default function App() {
   const state = useAppState();
   
-  // Category Display Mappings
-  const categoryNames: { [key: string]: string } = {
-    'morning-work': 'Buổi sáng trước khi đi làm',
-    'morning-school': 'Buổi sáng trước khi đi học',
-    'evening-weekday': 'Buổi tối trong tuần',
-    'evening-weekend': 'Buổi tối cuối tuần',
-    'feast-holiday': 'Ngày lễ Công Giáo & Lễ hội',
-    'novena': 'Tuần Cửu Nhật dâng kính',
-  };
-
   // Flipbook State
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [editingDay, setEditingDay] = useState<number | null>(null);
 
-  // Prismic input temporary state
-  const [prismicRepoInput, setPrismicRepoInput] = useState<string>(state.prismicRepo);
+  // Popup selectors & Custom creator form states
+  const [showNovenaSelector, setShowNovenaSelector] = useState<boolean>(false);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [newPrayerTitle, setNewPrayerTitle] = useState<string>('');
+  const [newPrayerCategory, setNewPrayerCategory] = useState<string>('loi-nguyen-cau-truoc-khi-di-lam');
+  const [newPrayerContent, setNewPrayerContent] = useState<string>('');
+  const [newPrayerIsPrivate, setNewPrayerIsPrivate] = useState<boolean>(true);
 
   // Local backups JSON generation
   const handleExportData = () => {
@@ -64,7 +60,9 @@ export default function App() {
       JSON.stringify({
         weeklyBook: state.weeklyBook,
         activeNovena: state.activeNovena,
-        reminders: state.reminders,
+        notificationsEnabled: state.notificationsEnabled,
+        userRole: state.userRole,
+        customPrayers: state.customPrayers
       })
     );
     const downloadAnchor = document.createElement('a');
@@ -79,11 +77,18 @@ export default function App() {
     const fileReader = new FileReader();
     if (e.target.files && e.target.files[0]) {
       fileReader.readAsText(e.target.files[0], "UTF-8");
-      fileReader.onload = (event) => {
+      fileReader.onload = async (event) => {
         try {
           const parsed = JSON.parse(event.target?.result as string);
           if (parsed.weeklyBook) state.updateWeeklyBook(parsed.weeklyBook);
-          if (parsed.reminders) state.updateReminders(parsed.reminders);
+          if (parsed.notificationsEnabled !== undefined) state.updateNotificationsEnabled(parsed.notificationsEnabled);
+          if (parsed.userRole) state.updateUserRole(parsed.userRole);
+          
+          if (parsed.customPrayers && Array.isArray(parsed.customPrayers)) {
+            for (const cp of parsed.customPrayers) {
+              await state.addCustomPrayer(cp);
+            }
+          }
           alert('Khôi phục dữ liệu sao lưu thành công!');
         } catch {
           alert('Tệp sao lưu không hợp lệ!');
@@ -156,52 +161,74 @@ export default function App() {
               </div>
             )}
 
-            {/* Daily Routine Suggestion */}
-            {state.suggestedPrayer && (
-              <div className="dashboard-suggest">
-                <span className="time-meta">
-                  {new Date().getHours() >= 5 && new Date().getHours() < 12 ? 'Lời nguyện ban sáng' : 'Lời nguyện ban tối'}
+            {/* Daily Routine Suggestions (Dynamic Time, Day, & Role) */}
+            {state.suggestedPrayers.length > 0 && (
+              <div className="dashboard-suggest" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <span className="time-meta" style={{ alignSelf: 'center', textAlign: 'center' }}>
+                  {(() => {
+                    const today = new Date();
+                    const hour = today.getHours();
+                    const dayOfWeek = today.getDay();
+                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                    
+                    if (isWeekend) {
+                      if (hour >= 18 || hour < 4) return 'Kinh Tối Cuối Tuần';
+                      return 'Ngày Nghỉ & Lễ Lớn';
+                    } else {
+                      if (hour >= 4 && hour < 10) return 'Khởi Đầu Ngày Mới';
+                      if (hour >= 10 && hour < 15) return 'Giờ Làm Việc & Học Tập (Xin Ơn Tập Trung)';
+                      if (hour >= 15 && hour < 18) return 'Chiều Muộn (Tạ Ơn & Bình An Trở Về)';
+                      return 'Kinh Tối Ngày Thường';
+                    }
+                  })()}
                 </span>
-                <h2 className="prayer-title">{state.suggestedPrayer.title}</h2>
-                <div className="ornamental-divider"><CrossSymbol /></div>
-                <div 
-                  className="serif-text" 
-                  style={{ 
-                    maxHeight: '120px', 
-                    overflow: 'hidden', 
-                    textOverflow: 'ellipsis',
-                    fontSize: '15px',
-                    color: 'var(--text-muted)',
-                    maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
-                  }}
-                  dangerouslySetInnerHTML={{ __html: state.suggestedPrayer.content }}
-                />
-                <button 
-                  className="bible-button" 
-                  style={{ marginTop: '16px' }}
-                  onClick={() => state.setSelectedPrayer(state.suggestedPrayer)}
-                >
-                  Mở sách đọc kinh
-                </button>
+                
+                {state.suggestedPrayers.map((prayer) => (
+                  <div key={prayer.uid} className="bible-card" style={{ marginBottom: 0, padding: '16px' }}>
+                    <h3 style={{ color: 'var(--gold-primary)', textAlign: 'center', margin: '4px 0 8px 0', fontSize: '16px' }}>
+                      {prayer.title}
+                    </h3>
+                    <div className="ornamental-divider" style={{ margin: '6px 0' }}><CrossSymbol /></div>
+                    <div 
+                      className="serif-text" 
+                      style={{ 
+                        maxHeight: '80px', 
+                        overflow: 'hidden', 
+                        fontSize: '14px',
+                        lineHeight: 1.5,
+                        color: 'var(--text-muted)',
+                        maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
+                      }}
+                      dangerouslySetInnerHTML={{ __html: prayer.content }}
+                    />
+                    <button 
+                      className="bible-button" 
+                      style={{ marginTop: '12px', padding: '8px 12px', fontSize: '13px' }}
+                      onClick={() => state.setSelectedPrayer(prayer)}
+                    >
+                      Đọc kinh nguyện này
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
 
-            {/* Active Novena Progress Checklist */}
+            {/* Active Novena Progress Checklist (Calendar-tracked) */}
             {state.activeNovena ? (
-              <div className="bible-card">
+              <div className="bible-card" style={{ marginTop: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span className="category-badge">Tuần Cửu Nhật đang đọc</span>
                   <button 
                     onClick={state.resetActiveNovena}
                     style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '13px', cursor: 'pointer' }}
                   >
-                    Dừng Tuần
+                    Dừng Tuần Kinh
                   </button>
                 </div>
                 <h3 style={{ marginBottom: '14px', fontSize: '18px' }}>{state.activeNovena.name}</h3>
                 
-                {/* 9 Day Progress Rings */}
+                {/* 9 Day Progress Checklist (Auto-marked based on Date) */}
                 <div style={{ 
                   display: 'grid', 
                   gridTemplateColumns: 'repeat(5, 1fr)', 
@@ -211,35 +238,49 @@ export default function App() {
                   {Array.from({ length: 9 }).map((_, idx) => {
                     const dayNum = idx + 1;
                     const isCompleted = state.activeNovena?.completedDays.includes(dayNum);
+                    
+                    // The active day is the first uncompleted day
+                    const activeDay = Array.from({ length: 9 })
+                      .map((_, i) => i + 1)
+                      .find(day => !state.activeNovena?.completedDays.includes(day)) || 9;
+
+                    const isActive = dayNum === activeDay;
+
                     return (
-                      <button
+                      <div
                         key={dayNum}
-                        onClick={() => state.toggleNovenaDay(dayNum)}
                         style={{
                           aspectRatio: '1',
                           borderRadius: '8px',
-                          border: isCompleted ? '1px solid var(--gold-primary)' : '1px solid var(--border-bible)',
-                          backgroundColor: isCompleted ? 'var(--gold-glow)' : 'var(--bg-card)',
-                          color: isCompleted ? 'var(--gold-primary)' : 'var(--text-muted)',
-                          fontWeight: 600,
-                          cursor: 'pointer',
+                          border: isActive 
+                            ? '2px solid var(--gold-primary)' 
+                            : isCompleted 
+                              ? '1px solid var(--gold-light)' 
+                              : '1px solid var(--border-bible)',
+                          backgroundColor: isCompleted 
+                            ? 'var(--gold-glow)' 
+                            : isActive 
+                              ? 'var(--bg-card)' 
+                              : 'transparent',
+                          color: isCompleted || isActive ? 'var(--gold-primary)' : 'var(--text-muted)',
+                          fontWeight: isCompleted || isActive ? 600 : 'normal',
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '13px'
+                          fontSize: '12px'
                         }}
                       >
                         <span>Ng. {dayNum}</span>
                         <span style={{ fontSize: '10px', marginTop: '2px' }}>
-                          {isCompleted ? '✓' : '○'}
+                          {isCompleted ? '✓' : isActive ? '●' : '○'}
                         </span>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>
                 
-                {/* Show prayer for the next uncompleted day */}
+                {/* Show prayer for the next active day */}
                 {(() => {
                   const currentDay = Array.from({ length: 9 })
                     .map((_, i) => i + 1)
@@ -278,14 +319,14 @@ export default function App() {
                 })()}
               </div>
             ) : (
-              <div className="bible-card" style={{ textAlign: 'center', padding: '24px' }}>
+              <div className="bible-card" style={{ textAlign: 'center', padding: '24px', marginTop: '16px' }}>
                 <span className="category-badge" style={{ marginBottom: '8px' }}>Tuần Cửu Nhật</span>
                 <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '16px' }}>
                   Bạn chưa bắt đầu Tuần Cửu Nhật nào. Hãy chọn một tuần kinh để bắt đầu hành trình 9 ngày dâng kính.
                 </p>
                 <button 
                   className="bible-button" 
-                  onClick={() => state.setActiveTab('library')}
+                  onClick={() => setShowNovenaSelector(true)}
                 >
                   Bắt đầu Tuần Cửu Nhật
                 </button>
@@ -298,26 +339,123 @@ export default function App() {
         {state.activeTab === 'library' && (
           <div>
             <h1 className="bible-header" style={{ marginBottom: '12px' }}>Thư Viện Kinh Nguyện</h1>
-            <p style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text-muted)', marginBottom: '24px' }}>
-              Tuyển tập các kinh nguyện Công Giáo được đồng bộ từ CMS
+            <p style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text-muted)', marginBottom: '20px' }}>
+              Tuyển tập các kinh nguyện Công Giáo và các lời nguyện do bạn tự ghi chép
             </p>
 
-            {/* List all 6 categories */}
-            {Object.keys(categoryNames).map((catKey) => {
-              const catPrayers = state.prayers.filter(p => p.category === catKey);
-              return (
-                <div key={catKey} style={{ marginBottom: '24px' }}>
-                  <h3 style={{
-                    color: 'var(--gold-primary)',
-                    borderBottom: '1px solid var(--border-bible)',
-                    paddingBottom: '6px',
-                    marginBottom: '12px',
-                    fontSize: '16px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                  }}>
-                    {categoryNames[catKey]} ({catPrayers.length})
-                  </h3>
+            {/* Trigger Form Button */}
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <button 
+                className="bible-button" 
+                style={{ width: 'auto', padding: '10px 20px', fontSize: '14px' }}
+                onClick={() => setShowAddForm(!showAddForm)}
+              >
+                {showAddForm ? '✕ Đóng biểu mẫu nhập' : '✍ Tự viết kinh nguyện mới'}
+              </button>
+            </div>
+
+            {/* Custom Prayer Input Form */}
+            {showAddForm && (
+              <div className="bible-card" style={{ marginBottom: '30px', border: '2px solid var(--gold-light)' }}>
+                <h3 style={{ color: 'var(--gold-primary)', marginBottom: '12px', textAlign: 'center' }}>Tạo Lời Kinh Của Bạn</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Tiêu đề kinh nguyện</label>
+                    <input 
+                      type="text" 
+                      className="bible-input" 
+                      placeholder="Ví dụ: Kinh dâng ngày cá nhân..." 
+                      value={newPrayerTitle}
+                      onChange={(e) => setNewPrayerTitle(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Danh mục gợi ý</label>
+                    <select 
+                      className="bible-select"
+                      value={newPrayerCategory}
+                      onChange={(e) => setNewPrayerCategory(e.target.value)}
+                    >
+                      {state.categories
+                        .filter(c => c.uid !== 'tuan-cuu-nhat' && c.parentUid !== 'tuan-cuu-nhat' && c.uid !== 'loi-nguyen-cau-buoi-sang' && c.uid !== 'loi-nguyen-cau-buoi-toi' && c.uid !== 'loi-nguyen-cau-cho-hoc-tap-lam-viec' && c.uid !== 'loi-nguyen-cau-trong-kinh-toi-gia-dinh' && c.uid !== 'loi-nguyen-danh-cho-cac-ngay-le-khac')
+                        .map(cat => (
+                          <option key={cat.uid} value={cat.uid}>{cat.name}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Nội dung lời kinh</label>
+                    <textarea 
+                      className="bible-textarea" 
+                      rows={6}
+                      placeholder="Nhập nội dung lời kinh tại đây..." 
+                      value={newPrayerContent}
+                      onChange={(e) => setNewPrayerContent(e.target.value)}
+                    />
+                  </div>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', cursor: 'pointer', padding: '6px 0' }}>
+                    <input 
+                      type="checkbox" 
+                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                      checked={newPrayerIsPrivate}
+                      onChange={(e) => setNewPrayerIsPrivate(e.target.checked)}
+                    />
+                    <span style={{ color: 'var(--text-main)' }}>Đặt làm lời nguyện riêng tư (chỉ dùng cho Sách Kinh Tuần, ẩn khỏi thư viện chung)</span>
+                  </label>
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                    <button 
+                      className="bible-button"
+                      onClick={async () => {
+                        if (!newPrayerTitle.trim() || !newPrayerContent.trim()) {
+                          alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kinh nguyện!');
+                          return;
+                        }
+                        const uid = `custom-${Date.now()}`;
+                        await state.addCustomPrayer({
+                          uid,
+                          title: newPrayerTitle.trim(),
+                          category: newPrayerCategory,
+                          content: newPrayerContent.trim().replace(/\n/g, '<br />'),
+                          isPrivate: newPrayerIsPrivate
+                        });
+                        // Reset form
+                        setNewPrayerTitle('');
+                        setNewPrayerContent('');
+                        setNewPrayerIsPrivate(true);
+                        setShowAddForm(false);
+                        alert('Đã lưu lời nguyện thành công!');
+                      }}
+                    >
+                      Lưu Lời Nguyện
+                    </button>
+                    <button className="bible-button secondary" onClick={() => setShowAddForm(false)}>Hủy</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* List all categories dynamically */}
+            {state.categories
+              .filter(cat => cat.parentUid || cat.uid === 'loi-nguyen-cho-cac-ngay-le-cong-giao')
+              .map((cat) => {
+                const catPrayers = state.prayers.filter(p => p.category === cat.uid);
+                const parentCat = state.categories.find(c => c.uid === cat.parentUid);
+                const displayName = parentCat ? `${parentCat.name} ➔ ${cat.name}` : cat.name;
+
+                return (
+                  <div key={cat.uid} style={{ marginBottom: '24px' }}>
+                    <h3 style={{
+                      color: 'var(--gold-primary)',
+                      borderBottom: '1px solid var(--border-bible)',
+                      paddingBottom: '6px',
+                      marginBottom: '12px',
+                      fontSize: '13px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {displayName} ({catPrayers.length})
+                    </h3>
                   
                   {catPrayers.length === 0 ? (
                     <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', paddingLeft: '8px' }}>
@@ -325,45 +463,77 @@ export default function App() {
                     </p>
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {catPrayers.map((prayer) => (
-                        <div 
-                          key={prayer.uid} 
-                          className="bible-card" 
-                          style={{ 
-                            padding: '14px 16px', 
-                            marginBottom: 0,
-                            display: 'flex', 
-                            justifyContent: 'space-between', 
-                            alignItems: 'center',
-                            cursor: 'pointer'
-                          }}
-                          onClick={() => state.setSelectedPrayer(prayer)}
-                        >
-                          <div>
-                            <div style={{ fontWeight: 500, fontSize: '15px' }}>{prayer.title}</div>
-                            {prayer.isNovena && (
-                              <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
-                                ❖ Chuỗi 9 ngày
-                              </span>
-                            )}
+                      {catPrayers.map((prayer) => {
+                        const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
+                        return (
+                          <div 
+                            key={prayer.uid} 
+                            className="bible-card" 
+                            style={{ 
+                              padding: '14px 16px', 
+                              marginBottom: 0,
+                              display: 'flex', 
+                              justifyContent: 'space-between', 
+                              alignItems: 'center',
+                              cursor: 'pointer'
+                            }}
+                            onClick={() => state.setSelectedPrayer(prayer)}
+                          >
+                            <div>
+                              <div style={{ fontWeight: 500, fontSize: '15px' }}>{prayer.title}</div>
+                              {prayer.isNovena && (
+                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
+                                  ❖ Chuỗi 9 ngày
+                                </span>
+                              )}
+                              {isCustom && (
+                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontStyle: 'italic' }}>
+                                  ✍ Tự viết (Công cộng)
+                                </span>
+                              )}
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                              {/* If it's a Novena, allow starting it */}
+                              {prayer.isNovena && state.activeNovena?.id !== prayer.uid && (
+                                <button
+                                  className="bible-button"
+                                  style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    state.startNovena(prayer.uid, prayer.title);
+                                    state.setActiveTab('home');
+                                  }}
+                                >
+                                  Kích hoạt
+                                </button>
+                              )}
+
+                              {/* Delete button for user's custom prayers */}
+                              {isCustom && (
+                                <button
+                                  style={{ 
+                                    background: 'none', 
+                                    border: 'none', 
+                                    color: '#dc2626', 
+                                    fontSize: '13px', 
+                                    cursor: 'pointer',
+                                    padding: '6px'
+                                  }}
+                                  onClick={async (e) => {
+                                    e.stopPropagation();
+                                    if (confirm(`Bạn có chắc chắn muốn xóa kinh nguyện "${prayer.title}" không?`)) {
+                                      await state.deleteCustomPrayer(prayer.uid);
+                                    }
+                                  }}
+                                >
+                                  🗑️ Xóa
+                                </button>
+                              )}
+                            </div>
                           </div>
-                          
-                          {/* If it's a Novena, allow starting it */}
-                          {prayer.isNovena && state.activeNovena?.id !== prayer.uid && (
-                            <button
-                              className="bible-button"
-                              style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                state.startNovena(prayer.uid, prayer.title);
-                                state.setActiveTab('home');
-                              }}
-                            >
-                              Kích hoạt
-                            </button>
-                          )}
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -377,124 +547,163 @@ export default function App() {
           <div>
             <h1 className="bible-header" style={{ marginBottom: '6px' }}>Sách Kinh Của Tôi</h1>
             <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '16px' }}>
-              Lật trang sách để đọc kinh theo thứ trong tuần do chính bạn chọn
+              Lật nếp gấp ở góc sách để xem kinh theo thời khóa biểu hằng tuần của bạn
             </p>
 
             {/* Flipbook Container */}
             <div className="flipbook-container">
               <div className="book">
                 {/* Book Pages */}
-                {Array.from({ length: 7 }).map((_, idx) => {
-                  const dayNum = idx + 2; // 2 corresponds to Monday, 8 corresponds to Sunday
-                  const dayNames: { [key: number]: string } = {
-                    2: 'Thứ Hai', 3: 'Thứ Ba', 4: 'Thứ Tư', 5: 'Thứ Năm', 6: 'Thứ Sáu', 7: 'Thứ Bảy', 8: 'Chủ Nhật'
-                  };
-                  
-                  const isFlipped = currentPage > idx;
-                  const zIndex = isFlipped ? idx : 7 - idx;
+                {(() => {
+                  // Merge static prayers and all custom prayers (both public & private) for weekly scheduling
+                  const allAvailablePrayers = [
+                    ...state.prayers,
+                    ...state.customPrayers.filter(cp => cp.isPrivate).map(cp => ({
+                      uid: cp.uid,
+                      title: cp.title,
+                      category: cp.category,
+                      content: cp.content,
+                      isNovena: false
+                    }))
+                  ];
 
-                  // Get prayers assigned to this day
-                  const dayPrayerUids = state.weeklyBook[dayNum as 2 | 3 | 4 | 5 | 6 | 7 | 8] || [];
-                  const dayPrayers = dayPrayerUids
-                    .map((uid: string) => state.prayers.find((p: Prayer) => p.uid === uid))
-                    .filter((p): p is Prayer => !!p);
+                  return Array.from({ length: 7 }).map((_, idx) => {
+                    const dayNum = idx + 2; // 2 = Mon, 8 = Sun
+                    const dayNames: { [key: number]: string } = {
+                      2: 'Thứ Hai', 3: 'Thứ Ba', 4: 'Thứ Tư', 5: 'Thứ Năm', 6: 'Thứ Sáu', 7: 'Thứ Bảy', 8: 'Chủ Nhật'
+                    };
+                    
+                    const isFlipped = currentPage > idx;
+                    const zIndex = isFlipped ? idx : 7 - idx;
 
-                  return (
-                    <div 
-                      key={dayNum} 
-                      className={`page ${isFlipped ? 'flipped' : ''}`}
-                      style={{ zIndex }}
-                    >
-                      {/* Front Face of Page (Right side) */}
-                      <div className="page-face" onClick={() => {
-                        if (currentPage === idx) {
-                          setCurrentPage(currentPage + 1);
-                        }
-                      }}>
-                        <div className="page-spine"></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-                          <div>
-                            <span style={{ 
-                              fontFamily: 'var(--font-serif)', 
-                              fontSize: '20px', 
-                              fontWeight: 600, 
-                              color: 'var(--gold-primary)',
-                              display: 'block',
-                              textAlign: 'center',
-                              marginBottom: '8px'
-                            }}>
-                              {dayNames[dayNum]}
-                            </span>
-                            <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
-                            
-                            {dayPrayers.length === 0 ? (
-                              <div style={{ 
-                                textAlign: 'center', 
-                                padding: '40px 10px', 
-                                color: 'var(--text-muted)',
-                                fontStyle: 'italic',
-                                fontSize: '14px' 
-                              }}>
-                                Chưa có kinh nguyện nào cho thứ này.
-                              </div>
-                            ) : (
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                {dayPrayers.map((prayer: Prayer) => (
-                                  <div 
-                                    key={prayer.uid} 
-                                    style={{ 
-                                      padding: '10px', 
-                                      backgroundColor: 'var(--bg-parchment)', 
-                                      borderRadius: '6px', 
-                                      border: '1px solid var(--border-bible)',
-                                      cursor: 'pointer'
-                                    }}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      state.setSelectedPrayer(prayer);
-                                    }}
-                                  >
-                                    <div style={{ fontWeight: 600, fontSize: '14px' }}>{prayer.title}</div>
-                                    <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                                      {categoryNames[prayer.category]}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                    // Get prayers assigned to this day
+                    const dayPrayerUids = state.weeklyBook[dayNum as 2 | 3 | 4 | 5 | 6 | 7 | 8] || [];
+                    const dayPrayers = dayPrayerUids
+                      .map((uid: string) => allAvailablePrayers.find((p: Prayer) => p.uid === uid))
+                      .filter((p): p is Prayer => !!p);
+
+                    return (
+                      <div 
+                        key={dayNum} 
+                        className={`page ${isFlipped ? 'flipped' : ''}`}
+                        style={{ zIndex }}
+                      >
+                        {/* Front Face of Page (Right side) */}
+                        <div className="page-face" onClick={() => {
+                          if (currentPage === idx) {
+                            setCurrentPage(currentPage + 1);
+                          }
+                        }}>
+                          <div className="page-spine"></div>
                           
-                          {/* Config Button at bottom of page */}
-                          <button
-                            className="bible-button secondary"
-                            style={{ padding: '6px 12px', fontSize: '13px', marginTop: '16px' }}
+                          {/* Dog-ear folded corner for page flip */}
+                          <div 
+                            className="dog-ear" 
                             onClick={(e) => {
                               e.stopPropagation();
-                              setEditingDay(dayNum);
-                            }}
-                          >
-                            Thiết lập kinh nguyện
-                          </button>
+                              setCurrentPage(idx + 1);
+                            }} 
+                            title="Lật sang trang sau"
+                          />
+                          
+                          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                            <div>
+                              <span style={{ 
+                                fontFamily: 'var(--font-serif)', 
+                                fontSize: '20px', 
+                                fontWeight: 600, 
+                                color: 'var(--gold-primary)',
+                                display: 'block',
+                                textAlign: 'center',
+                                marginBottom: '8px'
+                              }}>
+                                {dayNames[dayNum]}
+                              </span>
+                              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
+                              
+                              {dayPrayers.length === 0 ? (
+                                <div style={{ 
+                                  textAlign: 'center', 
+                                  padding: '40px 10px', 
+                                  color: 'var(--text-muted)',
+                                  fontStyle: 'italic',
+                                  fontSize: '14px' 
+                                }}>
+                                  Chưa có kinh nguyện nào cho thứ này.
+                                </div>
+                              ) : (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                  {dayPrayers.map((prayer: Prayer) => {
+                                    const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
+                                    return (
+                                      <div 
+                                        key={prayer.uid} 
+                                        style={{ 
+                                          padding: '10px', 
+                                          backgroundColor: 'var(--bg-parchment)', 
+                                          borderRadius: '6px', 
+                                          border: '1px solid var(--border-bible)',
+                                          cursor: 'pointer'
+                                        }}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          state.setSelectedPrayer(prayer);
+                                        }}
+                                      >
+                                        <div style={{ fontWeight: 600, fontSize: '14px' }}>{prayer.title}</div>
+                                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                                          {isCustom ? '✍ Lời kinh tự viết' : (state.categories.find(c => c.uid === prayer.category)?.name || 'Kinh Nguyện')}
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                            
+                            {/* Config Button */}
+                            <button
+                              className="bible-button secondary"
+                              style={{ padding: '6px 12px', fontSize: '13px', marginTop: '16px' }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setEditingDay(dayNum);
+                              }}
+                            >
+                              Cài đặt kinh nguyện
+                            </button>
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Back Face of Page (Left side when flipped) */}
-                      <div className="page-face back" onClick={() => {
-                        if (currentPage === idx + 1) {
-                          setCurrentPage(currentPage - 1);
-                        }
-                      }}>
-                        <div className="page-spine"></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                          <span style={{ color: 'var(--gold-primary)', fontSize: '24px' }}>❖</span>
-                          <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '13px', marginTop: '8px' }}>
-                            Trang {idx + 1} / 7
-                          </span>
+                        {/* Back Face of Page (Left side when flipped) */}
+                        <div className="page-face back" onClick={() => {
+                          if (currentPage === idx + 1) {
+                            setCurrentPage(currentPage - 1);
+                          }
+                        }}>
+                          <div className="page-spine"></div>
+                          
+                          {/* Dog-ear folded corner for back page flip */}
+                          <div 
+                            className="dog-ear" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentPage(idx);
+                            }} 
+                            title="Lật lại trang trước"
+                          />
+
+                          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            <span style={{ color: 'var(--gold-primary)', fontSize: '24px' }}>❖</span>
+                            <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '13px', marginTop: '8px' }}>
+                              Trang {idx + 1} / 7
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  });
+                })()}
               </div>
             </div>
 
@@ -534,7 +743,7 @@ export default function App() {
                   fontSize: '13px'
                 }}
               >
-                Đóng
+                Đóng sách
               </button>
             </div>
           </div>
@@ -545,31 +754,45 @@ export default function App() {
           <div>
             <h1 className="bible-header">Cài Đặt</h1>
             
-            {/* Prismic CMS Config */}
+            {/* User Role Selection (Student, Worker, Married) */}
             <div className="bible-card">
-              <h3>Đồng bộ dữ liệu Prismic</h3>
+              <h3>Vai trò / Nhóm tuổi</h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                Nhập Repository Name trên Prismic để đồng bộ kinh nguyện của riêng bạn. Nếu để trống, hệ thống sẽ sử dụng kho kinh nguyện mặc định.
+                Chọn vai trò của bạn để ứng dụng tự động đề xuất những kinh nguyện phù hợp nhất (Ví dụ: ưu tiên giờ kinh học đường đối với Học sinh, hoặc kinh thánh hóa công việc đối với Người đi làm).
               </p>
-              <input
-                type="text"
-                className="bible-input"
-                placeholder="Ví dụ: my-catholic-prayers"
-                value={prismicRepoInput}
-                onChange={(e) => setPrismicRepoInput(e.target.value)}
-              />
-              <button 
-                className="bible-button"
-                onClick={async () => {
-                  setPrismicRepoName(prismicRepoInput);
-                  state.setPrismicRepo(prismicRepoInput);
-                  await state.refreshPrayers();
-                  alert('Đã cập nhật cấu hình Prismic!');
-                }}
-              >
-                Lưu & Đồng bộ
-              </button>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {(['student', 'worker', 'family'] as const).map((r) => (
+                  <label
+                    key={r}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '12px',
+                      borderRadius: '8px',
+                      border: state.userRole === r ? '2px solid var(--gold-primary)' : '1px solid var(--border-bible)',
+                      backgroundColor: state.userRole === r ? 'var(--gold-glow)' : 'transparent',
+                      cursor: 'pointer',
+                      fontWeight: state.userRole === r ? 600 : 'normal',
+                      fontSize: '14px'
+                    }}
+                  >
+                    <input
+                      type="radio"
+                      name="userRole"
+                      checked={state.userRole === r}
+                      onChange={() => state.updateUserRole(r)}
+                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                    />
+                    <span style={{ color: 'var(--text-main)' }}>
+                      {r === 'student' && '📚 Học sinh / Sinh viên'}
+                      {r === 'worker' && '💼 Người đi làm'}
+                      {r === 'family' && '🏠 Người đã có gia đình / Khác'}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* Offline Storage Cache Toggle */}
@@ -583,70 +806,32 @@ export default function App() {
                   onChange={(e) => state.toggleOfflineCache(e.target.checked)}
                 />
               </div>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-                Tải toàn bộ kinh nguyện về lưu trữ cục bộ. Phù hợp khi bạn đi nhà thờ hoặc nơi không có kết nối internet.
+              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                Tải toàn bộ cơ sở dữ liệu kinh nguyện hiện tại về bộ nhớ trình duyệt để đọc khi mất mạng.
               </p>
               {state.offlineEnabled && (
-                <div style={{ 
-                  marginTop: '12px', 
-                  padding: '8px 12px', 
-                  backgroundColor: 'var(--bg-parchment)', 
-                  borderRadius: '6px',
-                  fontSize: '13px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  color: 'var(--gold-primary)',
-                  fontWeight: 500
-                }}>
-                  <span>Trạng thái: Đã tải về máy</span>
-                  <span>Dung lượng: ~{state.offlineSize} KB</span>
+                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--gold-primary)' }}>
+                  Dung lượng lưu trữ: {state.offlineSize} KB
                 </div>
               )}
             </div>
 
-            {/* Custom Reminder Times */}
+            {/* Reminders Configuration */}
             <div className="bible-card">
-              <h3>Giờ nhắc nhở cầu nguyện</h3>
-              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                <div>
-                  <label style={{ fontSize: '13px', fontWeight: 500, display: 'block', marginBottom: '4px' }}>Đi làm buổi sáng</label>
-                  <input
-                    type="time"
-                    className="bible-input"
-                    value={state.reminders.workMorning}
-                    onChange={(e) => state.updateReminders({ ...state.reminders, workMorning: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label style={{ fontSize: '13px', fontWeight: 500, display: 'block', marginBottom: '4px' }}>Đi học buổi sáng</label>
-                  <input
-                    type="time"
-                    className="bible-input"
-                    value={state.reminders.schoolMorning}
-                    onChange={(e) => state.updateReminders({ ...state.reminders, schoolMorning: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label style={{ fontSize: '13px', fontWeight: 500, display: 'block', marginBottom: '4px' }}>Buổi tối trong tuần</label>
-                  <input
-                    type="time"
-                    className="bible-input"
-                    value={state.reminders.eveningWeekday}
-                    onChange={(e) => state.updateReminders({ ...state.reminders, eveningWeekday: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <label style={{ fontSize: '13px', fontWeight: 500, display: 'block', marginBottom: '4px' }}>Tối cuối tuần</label>
-                  <input
-                    type="time"
-                    className="bible-input"
-                    value={state.reminders.eveningWeekend}
-                    onChange={(e) => state.updateReminders({ ...state.reminders, eveningWeekend: e.target.value })}
-                  />
-                </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <h3 style={{ margin: 0 }}>Nhắc Nhở Cầu Nguyện</h3>
+                <input
+                  type="checkbox"
+                  style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                  checked={state.notificationsEnabled}
+                  onChange={(e) => state.updateNotificationsEnabled(e.target.checked)}
+                />
               </div>
+              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+                Tự động nhận thông báo đẩy trên thiết bị khi chuyển giao sang khung giờ kinh nguyện mới trong ngày (Sáng, Trưa, Chiều, Tối) tùy theo Thứ và Vai trò của bạn.
+              </p>
             </div>
 
             {/* Dark Mode Theme */}
@@ -681,7 +866,7 @@ export default function App() {
               <h3>Sao lưu và Phục hồi</h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                Sao lưu cấu hình Sách Kinh Tuần, nhắc nhở và tiến trình Tuần Cửu Nhật ra file JSON để đồng bộ sang thiết bị khác.
+                Sao lưu cấu hình Sách Kinh Tuần, các lời kinh tự viết, nhắc nhở và tiến trình cửu nhật ra tệp JSON để chuyển sang thiết bị khác.
               </p>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -703,26 +888,92 @@ export default function App() {
         )}
       </div>
 
+      {/* Novena Selection Modal */}
+      {showNovenaSelector && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 500,
+          padding: '20px'
+        }} onClick={() => setShowNovenaSelector(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-bible)',
+            borderRadius: '12px',
+            padding: '20px',
+            width: '100%',
+            maxWidth: '400px',
+            boxShadow: 'var(--shadow-card)',
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '14px', textAlign: 'center', color: 'var(--gold-primary)' }}>
+              Chọn Tuần Cửu Nhật Kích Hoạt
+            </h3>
+            
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '20px', textAlign: 'center' }}>
+              Hãy chọn một tuần kinh. Tiến trình cửu nhật sẽ tự động tính theo ngày lịch thực tế và tự hoàn thành các ngày cũ.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+              {state.prayers.filter(p => p.isNovena).map((novena) => (
+                <button
+                  key={novena.uid}
+                  className="bible-button"
+                  style={{ 
+                    padding: '14px', 
+                    textAlign: 'left', 
+                    backgroundColor: 'var(--bg-parchment)', 
+                    color: 'var(--text-main)',
+                    border: '1px solid var(--border-bible)'
+                  }}
+                  onClick={() => {
+                    state.startNovena(novena.uid, novena.title);
+                    setShowNovenaSelector(false);
+                    state.setActiveTab('home');
+                  }}
+                >
+                  <div style={{ fontWeight: 600, fontSize: '15px' }}>{novena.title}</div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>❖ Nhấp để kích hoạt chuỗi 9 ngày</div>
+                </button>
+              ))}
+            </div>
+
+            <button 
+              className="bible-button secondary"
+              onClick={() => setShowNovenaSelector(false)}
+            >
+              Hủy bỏ
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Full-Screen Reading View Overlay */}
       {state.selectedPrayer && (
         <div style={{
           position: 'fixed',
           inset: 0,
           backgroundColor: 'var(--bg-parchment)',
+          color: 'var(--text-main)',
           zIndex: 1000,
-          padding: '24px 20px',
           overflowY: 'auto',
+          padding: '24px 20px 40px 20px',
           display: 'flex',
           flexDirection: 'column'
         }}>
-          {/* Top Bar inside Reading View */}
+          {/* Reading view Header */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            marginBottom: '20px',
             borderBottom: '1px solid var(--border-bible)',
-            paddingBottom: '12px',
-            marginBottom: '20px'
+            paddingBottom: '12px'
           }}>
             <button 
               onClick={() => state.setSelectedPrayer(null)}
@@ -730,24 +981,22 @@ export default function App() {
                 background: 'none',
                 border: 'none',
                 color: 'var(--gold-primary)',
-                fontFamily: 'var(--font-sans)',
+                fontSize: '15px',
                 fontWeight: 600,
-                fontSize: '16px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px'
               }}
             >
-              ← Quay về
+              ← Quay lại
             </button>
-            
-            <span className="category-badge">
-              {categoryNames[state.selectedPrayer.category] || 'Kinh Nguyện'}
+            <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+              {state.categories.find(c => c.uid === state.selectedPrayer?.category)?.name || 'Lời kinh cá nhân'}
             </span>
           </div>
 
-          {/* Reading Content */}
+          {/* Reading view body */}
           <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <h1 className="serif-text" style={{ 
               textAlign: 'center', 
@@ -806,51 +1055,64 @@ export default function App() {
             </h3>
             
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '14px', textAlign: 'center' }}>
-              Chọn các kinh nguyện muốn đọc vào ngày này
+              Chọn các kinh nguyện muốn đọc vào ngày này (bao gồm cả các lời nguyện riêng tư của bạn)
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
-              {state.prayers.filter(p => !p.isNovena).map((prayer: Prayer) => {
-                const assigned = state.weeklyBook[editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8]?.includes(prayer.uid) || false;
-                return (
-                  <label 
-                    key={prayer.uid}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '10px',
-                      borderRadius: '8px',
-                      border: '1px solid var(--border-bible)',
-                      backgroundColor: assigned ? 'var(--gold-glow)' : 'transparent',
-                      cursor: 'pointer',
-                      fontSize: '14px'
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={assigned}
-                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                      onChange={() => {
-                        const dayKey = editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8;
-                        const currentDayList = [...(state.weeklyBook[dayKey] || [])];
-                        let newList;
-                        if (currentDayList.includes(prayer.uid)) {
-                          newList = currentDayList.filter(uid => uid !== prayer.uid);
-                        } else {
-                          newList = [...currentDayList, prayer.uid];
-                        }
-                        
-                        state.updateWeeklyBook({
-                          ...state.weeklyBook,
-                          [dayKey]: newList
-                        });
+              {(() => {
+                const allAvailablePrayers = [
+                  ...state.prayers.filter(p => !p.isNovena),
+                  ...state.customPrayers.map(cp => ({
+                    uid: cp.uid,
+                    title: cp.isPrivate ? `${cp.title} (Cá nhân)` : `${cp.title} (✍ Tự viết)`,
+                    category: cp.category,
+                    content: cp.content,
+                    isNovena: false
+                  }))
+                ];
+
+                return allAvailablePrayers.map((prayer) => {
+                  const assigned = state.weeklyBook[editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8]?.includes(prayer.uid) || false;
+                  return (
+                    <label 
+                      key={prayer.uid}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--border-bible)',
+                        backgroundColor: assigned ? 'var(--gold-glow)' : 'transparent',
+                        cursor: 'pointer',
+                        fontSize: '14px'
                       }}
-                    />
-                    <span>{prayer.title}</span>
-                  </label>
-                );
-              })}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={assigned}
+                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                        onChange={() => {
+                          const dayKey = editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8;
+                          const currentDayList = [...(state.weeklyBook[dayKey] || [])];
+                          let newList;
+                          if (currentDayList.includes(prayer.uid)) {
+                            newList = currentDayList.filter(uid => uid !== prayer.uid);
+                          } else {
+                            newList = [...currentDayList, prayer.uid];
+                          }
+                          
+                          state.updateWeeklyBook({
+                            ...state.weeklyBook,
+                            [dayKey]: newList
+                          });
+                        }}
+                      />
+                      <span style={{ color: 'var(--text-main)' }}>{prayer.title}</span>
+                    </label>
+                  );
+                });
+              })()}
             </div>
 
             <button 

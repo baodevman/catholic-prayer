@@ -3,21 +3,23 @@ import { get, set, del } from 'idb-keyval';
 // --- LocalStorage Keys ---
 const KEYS = {
   THEME: 'catholic_prayer_theme',
-  REMINDERS: 'catholic_prayer_reminders',
   NOVENA_ACTIVE: 'catholic_prayer_novena_active',
   NOVENA_HISTORY: 'catholic_prayer_novena_history',
   WEEKLY_BOOK: 'catholic_prayer_weekly_book',
   OFFLINE_ENABLED: 'catholic_prayer_offline_enabled',
+  USER_ROLE: 'catholic_prayer_user_role',
+  NOTIFICATIONS_ENABLED: 'catholic_prayer_notifications_enabled',
 };
 
 // --- Custom Types ---
-export interface Reminders {
-  morning: string; // "06:00"
-  schoolMorning: string; // "07:00"
-  workMorning: string; // "07:30"
-  eveningWeekday: string; // "21:00"
-  eveningWeekend: string; // "21:30"
-  novena: string; // "19:00"
+export type UserRole = 'student' | 'worker' | 'family';
+
+export interface CustomPrayer {
+  uid: string;
+  title: string;
+  category: string;
+  content: string;
+  isPrivate: boolean; // true = Private, false = Public
 }
 
 export interface ActiveNovena {
@@ -46,15 +48,6 @@ export interface WeeklyBook {
 }
 
 // --- Default Values ---
-export const DEFAULT_REMINDERS: Reminders = {
-  morning: '06:00',
-  schoolMorning: '07:00',
-  workMorning: '07:30',
-  eveningWeekday: '21:00',
-  eveningWeekend: '21:30',
-  novena: '19:00',
-};
-
 export const DEFAULT_WEEKLY_BOOK: WeeklyBook = {
   2: [],
   3: [],
@@ -89,9 +82,13 @@ export const storage = {
   getTheme: () => getLocal<'light' | 'dark' | 'system'>(KEYS.THEME, 'system'),
   setTheme: (theme: 'light' | 'dark' | 'system') => setLocal(KEYS.THEME, theme),
 
-  // Reminders
-  getReminders: (): Reminders => getLocal<Reminders>(KEYS.REMINDERS, DEFAULT_REMINDERS),
-  setReminders: (reminders: Reminders) => setLocal(KEYS.REMINDERS, reminders),
+  // User Role settings
+  getUserRole: (): UserRole => getLocal<UserRole>(KEYS.USER_ROLE, 'worker'),
+  setUserRole: (role: UserRole) => setLocal(KEYS.USER_ROLE, role),
+
+  // Notifications enabled
+  isNotificationsEnabled: (): boolean => getLocal<boolean>(KEYS.NOTIFICATIONS_ENABLED, false),
+  setNotificationsEnabled: (enabled: boolean) => setLocal(KEYS.NOTIFICATIONS_ENABLED, enabled),
 
   // Active Novena
   getActiveNovena: (): ActiveNovena | null => getLocal<ActiveNovena | null>(KEYS.NOVENA_ACTIVE, null),
@@ -138,6 +135,41 @@ export const storage = {
       await del('prismic_prayers_cache_time');
     } catch (e) {
       console.error('Error clearing IndexedDB cache', e);
+    }
+  },
+
+  // --- IndexedDB for Custom User Prayers (Private / Public) ---
+  getCustomPrayers: async (): Promise<CustomPrayer[]> => {
+    try {
+      const list = await get('custom_prayers_db');
+      return list || [];
+    } catch {
+      return [];
+    }
+  },
+
+  saveCustomPrayer: async (prayer: CustomPrayer): Promise<void> => {
+    try {
+      const list = await storage.getCustomPrayers();
+      const index = list.findIndex(p => p.uid === prayer.uid);
+      if (index > -1) {
+        list[index] = prayer; // Update
+      } else {
+        list.push(prayer); // Add new
+      }
+      await set('custom_prayers_db', list);
+    } catch (e) {
+      console.error('Error saving custom prayer', e);
+    }
+  },
+
+  deleteCustomPrayer: async (uid: string): Promise<void> => {
+    try {
+      const list = await storage.getCustomPrayers();
+      const updated = list.filter(p => p.uid !== uid);
+      await set('custom_prayers_db', updated);
+    } catch (e) {
+      console.error('Error deleting custom prayer', e);
     }
   },
 

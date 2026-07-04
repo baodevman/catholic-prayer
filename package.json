@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "prayers:import": "tsx scripts/import-prayers.ts"
+    "prayers:import": "tsx scripts/import-prayers.ts",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@prismicio/client": "^7.21.8",
@@ -19,11 +20,14 @@
   },
   "devDependencies": {
     "@prismicio/migrate": "^0.0.2",
+    "@slicemachine/adapter-next": "^0.3.96",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "next": "^16.2.10",
     "oxlint": "^1.71.0",
+    "slice-machine-ui": "^2.21.3",
     "tsx": "^4.23.0",
     "typescript": "~6.0.2",
     "vite": "^8.1.1"

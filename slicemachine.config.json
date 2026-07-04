@@ -1,0 +1,7 @@
+{
+  "repositoryName": "catholic-prayer",
+  "adapter": "@slicemachine/adapter-next",
+  "libraries": [
+    "./slices"
+  ]
+}

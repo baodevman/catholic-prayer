@@ -1,4 +1,14 @@
 {
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git"
+      ]
+    }
+  ],
   "hosting": {
     "public": "dist",
     "ignore": [
@@ -7,6 +17,14 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      {
+        "source": "/api/submit-prayer",
+        "function": "submitPrayer"
+      },
+      {
+        "source": "/api/subscribe-to-alerts",
+        "function": "subscribeToAlerts"
+      },
       {
         "source": "**",
         "destination": "/index.html"

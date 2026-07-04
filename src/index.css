@@ -281,6 +281,70 @@ h3 {
   transform: rotateY(-180deg);
 }
 
+/* Dog-ear folded corner for book pages */
+.dog-ear {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, transparent 50%, rgba(197, 168, 128, 0.25) 50%);
+  z-index: 25;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0 0 12px 0;
+}
+
+.dog-ear::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 16px 16px 0 0;
+  border-color: var(--gold-primary) transparent transparent transparent;
+  transform: rotate(-90deg);
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.dog-ear:hover {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, transparent 50%, rgba(197, 168, 128, 0.4) 50%);
+}
+
+.dog-ear:hover::after {
+  border-width: 21px 21px 0 0;
+}
+
+/* Back page dog-ear (bottom-left corner) */
+.page-face.back .dog-ear {
+  right: auto;
+  left: 0;
+  background: linear-gradient(225deg, transparent 50%, rgba(197, 168, 128, 0.25) 50%);
+  border-radius: 0 0 0 12px;
+}
+
+.page-face.back .dog-ear::after {
+  right: auto;
+  left: 0;
+  border-width: 0 16px 16px 0;
+  border-color: transparent var(--gold-primary) transparent transparent;
+  transform: rotate(90deg);
+  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.page-face.back .dog-ear:hover {
+  background: linear-gradient(225deg, transparent 50%, rgba(197, 168, 128, 0.4) 50%);
+}
+
+.page-face.back .dog-ear:hover::after {
+  border-width: 0 21px 21px 0;
+}
+
 /* Page spine effect */
 .page-spine {
   position: absolute;
