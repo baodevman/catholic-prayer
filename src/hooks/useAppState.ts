@@ -222,23 +222,43 @@ export const useAppState = () => {
     const hour = today.getHours();
     const dayOfWeek = today.getDay(); // 0 = Sun, 6 = Sat, 1-5 = Mon-Fri
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    const isEvening = hour >= 18 || hour < 4;
 
     let suggestions: Prayer[] = [];
 
-    if (isWeekend) {
-      // WEEKEND SUGGESTIONS
-      if (hour >= 18 || hour < 4) {
-        // Evening / weekend evening: loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan / loi-nguyen-cuoi-ngay-sau-mot-chuyen-di
+    if (isEvening) {
+      // EVENING SUGGESTIONS (Common for both Weekdays and Weekends)
+      if (userRole === 'family') {
         suggestions = prayers.filter(p => 
-          p.category === 'loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan' ||
+          p.category === 'loi-nguyen-cho-su-hoa-thuan-yeu-thuong' ||
+          p.category === 'loi-nguyen-cho-long-hieu-thao' ||
+          p.category === 'loi-nguyen-cho-su-binh-an-cua-cha-me-ong-ba' ||
+          p.category === 'loi-nguyen-danh-cho-con-cai'
+        );
+      } else if (userRole === 'student') {
+        suggestions = prayers.filter(p => p.category === 'loi-nguyen-cuoi-ngay-di-hoc');
+      } else {
+        // worker / default
+        suggestions = prayers.filter(p => 
+          p.category === 'loi-nguyen-cuoi-ngay-di-lam' ||
           p.category === 'loi-nguyen-cuoi-ngay-sau-mot-chuyen-di'
         );
-      } else {
-        // Feasts: loi-nguyen-cho-cac-ngay-le-cong-giao
-        suggestions = prayers.filter(p => p.category === 'loi-nguyen-cho-cac-ngay-le-cong-giao');
       }
+
+      // Fallback evening filters if empty
+      if (suggestions.length === 0) {
+        suggestions = prayers.filter(p => 
+          p.category === 'loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan' ||
+          p.category === 'loi-nguyen-cuoi-ngay-di-lam' ||
+          p.category === 'loi-nguyen-cuoi-ngay-di-hoc' ||
+          p.category === 'loi-nguyen-cho-su-hoa-thuan-yeu-thuong'
+        );
+      }
+    } else if (isWeekend) {
+      // WEEKEND DAY TIME SUGGESTIONS
+      suggestions = prayers.filter(p => p.category === 'loi-nguyen-cho-cac-ngay-le-cong-giao');
     } else {
-      // WEEKDAY SUGGESTIONS (Mon-Fri)
+      // WEEKDAY DAY TIME SUGGESTIONS (Mon-Fri)
       if (hour >= 4 && hour < 10) {
         // Morning work & morning school
         const workPrayers = prayers.filter(p => p.category === 'loi-nguyen-cau-truoc-khi-di-lam');
@@ -259,23 +279,16 @@ export const useAppState = () => {
         if (suggestions.length === 0) {
           suggestions = prayers.filter(p => p.category === 'loi-nguyen-cau-cho-su-khon-ngoan');
         }
-      } else if (hour >= 15 && hour < 18) {
-        // Thanksgiving + safe trip home: loi-nguyen-cuoi-ngay-sau-mot-chuyen-di / loi-nguyen-cuoi-nam
+      } else {
+        // 15h00 - 18h00: Thanksgiving + safe trip home
         suggestions = prayers.filter(p => 
           p.category === 'loi-nguyen-cuoi-ngay-sau-mot-chuyen-di' || 
           p.title.toLowerCase().includes('tạ ơn')
         );
-      } else {
-        // Evening Weekday (18h00 - 04h00): loi-nguyen-cuoi-ngay-di-lam, loi-nguyen-cuoi-ngay-di-hoc, loi-nguyen-cho-su-hoa-thuan-yeu-thuong
-        suggestions = prayers.filter(p => 
-          p.category === 'loi-nguyen-cuoi-ngay-di-lam' ||
-          p.category === 'loi-nguyen-cuoi-ngay-di-hoc' ||
-          p.category === 'loi-nguyen-cho-su-hoa-thuan-yeu-thuong'
-        );
       }
     }
 
-    // Default Fallback
+    // Default Fallback if no match found
     if (suggestions.length === 0) {
       suggestions = prayers.slice(0, 2);
     }

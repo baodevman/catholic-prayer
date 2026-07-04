@@ -25,9 +25,24 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Dark Mode - Luxury Leather & Soft Parchment */
+/* Dark Mode - Class-based & Media-query fallback */
+:root.dark {
+  --bg-parchment: #12100E;
+  --bg-card: #1C1917;
+  --text-main: #FAF6EE;
+  --text-muted: #A3978E;
+  --gold-primary: #C5A880;
+  --gold-light: #E5D5C0;
+  --gold-dark: #9E7E40;
+  --gold-glow: rgba(197, 168, 128, 0.1);
+  --border-bible: #2E2722;
+  --border-focus: #FAF6EE;
+  --shadow-subtle: rgba(0, 0, 0, 0.2) 0 4px 12px;
+  --shadow-card: rgba(0, 0, 0, 0.4) 0 10px 25px -5px;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --bg-parchment: #12100E;
     --bg-card: #1C1917;
     --text-main: #FAF6EE;
