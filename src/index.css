@@ -1,0 +1,393 @@
+:root {
+  /* Bible Parchment Palette - Light Mode */
+  --bg-parchment: #FAF6EE;
+  --bg-card: #FFFFFF;
+  --text-main: #2C2520;
+  --text-muted: #70635C;
+  --gold-primary: #9E7E40;
+  --gold-light: #C5A880;
+  --gold-dark: #7A5F2C;
+  --gold-glow: rgba(197, 168, 128, 0.15);
+  --border-bible: #E6DFD5;
+  --border-focus: #C5A880;
+  --shadow-subtle: rgba(44, 37, 32, 0.04) 0 4px 12px;
+  --shadow-card: rgba(44, 37, 32, 0.08) 0 10px 25px -5px, rgba(44, 37, 32, 0.03) 0 8px 10px -6px;
+
+  /* Typography */
+  --font-serif: 'Lora', 'Georgia', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* General settings */
+  font-family: var(--font-sans);
+  color-scheme: light dark;
+  color: var(--text-main);
+  background-color: var(--bg-parchment);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dark Mode - Luxury Leather & Soft Parchment */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-parchment: #12100E;
+    --bg-card: #1C1917;
+    --text-main: #FAF6EE;
+    --text-muted: #A3978E;
+    --gold-primary: #C5A880;
+    --gold-light: #E5D5C0;
+    --gold-dark: #9E7E40;
+    --gold-glow: rgba(197, 168, 128, 0.1);
+    --border-bible: #2E2722;
+    --border-focus: #FAF6EE;
+    --shadow-subtle: rgba(0, 0, 0, 0.2) 0 4px 12px;
+    --shadow-card: rgba(0, 0, 0, 0.4) 0 10px 25px -5px;
+  }
+}
+
+/* Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-parchment);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-parchment);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* Main Layout Shell */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  max-width: 640px; /* Mobile App Shell width */
+  margin: 0 auto;
+  background-color: var(--bg-parchment);
+  position: relative;
+  border-left: 1px solid var(--border-bible);
+  border-right: 1px solid var(--border-bible);
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 40px;
+}
+
+/* Content Container */
+.app-content {
+  flex-grow: 1;
+  padding: 24px 20px 96px 20px; /* bottom padding for Nav Bar */
+  overflow-y: auto;
+}
+
+/* Typography styles */
+.serif-text {
+  font-family: var(--font-serif);
+}
+
+.bible-header {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--gold-primary);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Headings */
+h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gold-primary);
+  line-height: 1.3;
+}
+
+h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Bible Ornamental Divider */
+.ornamental-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  color: var(--gold-light);
+}
+.ornamental-divider::before,
+.ornamental-divider::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+  margin: 0 16px;
+}
+.ornamental-divider .icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Elegant Cards */
+.bible-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.bible-card:hover {
+  border-color: var(--gold-light);
+  box-shadow: var(--shadow-card);
+}
+
+/* App Bottom Navigation Bar */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-bible);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+  flex: 1;
+  height: 100%;
+}
+
+.nav-item.active {
+  color: var(--gold-primary);
+}
+
+.nav-item svg {
+  margin-bottom: 4px;
+  transition: transform 0.2s;
+}
+
+.nav-item.active svg {
+  transform: translateY(-2px);
+}
+
+/* Flipbook Component Styling */
+.flipbook-container {
+  perspective: 1200px;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  margin: 20px 0;
+  position: relative;
+}
+
+.book {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: inset 3px 0 10px rgba(0,0,0,0.05);
+}
+
+.page-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  padding: 24px;
+  border: 1px solid var(--border-bible);
+  border-radius: 0 12px 12px 0;
+  background-color: var(--bg-card);
+  overflow-y: auto;
+  box-shadow: var(--shadow-card);
+}
+
+/* Book page background texture */
+.page-face::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--border-bible);
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.page-face.back {
+  transform: rotateY(180deg);
+  border-radius: 12px 0 0 12px;
+  box-shadow: -5px 5px 15px rgba(0,0,0,0.1);
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* Page spine effect */
+.page-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.page.flipped .page-spine {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+}
+
+/* Form inputs & interactive styles */
+.bible-input, .bible-select, .bible-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-bible);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.bible-input:focus, .bible-select:focus, .bible-textarea:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.bible-button {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background-color: var(--gold-primary);
+  color: #FAF6EE;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.bible-button:hover {
+  background-color: var(--gold-dark);
+}
+
+.bible-button:active {
+  transform: scale(0.98);
+}
+
+.bible-button.secondary {
+  background-color: transparent;
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+}
+
+.bible-button.secondary:hover {
+  background-color: var(--gold-glow);
+}
+
+/* Badge/Tag styling */
+.category-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--gold-glow);
+  color: var(--gold-primary);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Dashboard Morning suggest widget */
+.dashboard-suggest {
+  text-align: center;
+  background: radial-gradient(circle at top, var(--gold-glow), transparent);
+  padding: 32px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border-bible);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.dashboard-suggest .time-meta {
+  color: var(--gold-primary);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dashboard-suggest .prayer-title {
+  margin: 12px 0;
+  font-size: 24px;
+}

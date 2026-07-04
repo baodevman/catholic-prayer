@@ -1,0 +1,19 @@
+[
+  {
+    "title": "Kinh dâng lời cầu nguyện khi thức dậy",
+    "category": "morning-work",
+    "content": "<p>Lạy Chúa, con tạ ơn Chúa đã cho con qua một đêm bình an và thức dậy trong ngày mới này. Con xin dâng ngày hôm nay cho Trái Tim Cực Thánh Chúa. Xin gìn giữ linh hồn con hôm nay khỏi sa chước cám dỗ và tội lỗi. Amen.</p>"
+  },
+  {
+    "title": "Tuần Cửu Nhật Kính Thánh Gia Thất - Ngày 1",
+    "category": "novena",
+    "isNovena": true,
+    "novenaDays": [
+      {
+        "day": 1,
+        "title": "Ngày 1: Gia đình là đền thờ tình yêu",
+        "content": "<p>Lạy Thánh Gia Thất Nazareth, xin nâng đỡ gia đình chúng con trong đức tin và tình yêu thương hằng ngày. Amen.</p>"
+      }
+    ]
+  }
+]
