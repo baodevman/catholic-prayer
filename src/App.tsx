@@ -832,6 +832,47 @@ export default function App() {
               <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
                 Tự động nhận thông báo đẩy trên thiết bị khi chuyển giao sang khung giờ kinh nguyện mới trong ngày (Sáng, Trưa, Chiều, Tối) tùy theo Thứ và Vai trò của bạn.
               </p>
+              
+              {state.notificationsEnabled && (
+                <div style={{
+                  marginTop: '12px',
+                  padding: '10px 12px',
+                  borderRadius: '8px',
+                  background: 'rgba(0, 0, 0, 0.02)',
+                  border: '1px solid var(--border-bible)',
+                  fontSize: '11px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px'
+                }}>
+                  <div style={{ fontWeight: 600, color: 'var(--gold-primary)', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                    🔍 Chẩn Đoán Đăng Ký (Diagnostics):
+                  </div>
+                  <div>
+                    <span style={{ fontWeight: 600 }}>Tình trạng:</span> {state.pushDebugStatus}
+                  </div>
+                  {state.pushDebugError && (
+                    <div style={{ color: '#D32F2F', fontWeight: 600 }}>
+                      <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>Chi tiết lỗi:</span> {state.pushDebugError}
+                    </div>
+                  )}
+                  {state.pushDebugToken && (
+                    <div style={{
+                      wordBreak: 'break-all',
+                      color: 'var(--text-muted)',
+                      fontFamily: 'monospace',
+                      maxHeight: '60px',
+                      overflowY: 'auto',
+                      padding: '4px',
+                      background: 'rgba(0, 0, 0, 0.01)',
+                      borderRadius: '4px',
+                      border: '1px solid var(--border-bible)'
+                    }}>
+                      <span style={{ fontWeight: 600, color: 'var(--text-main)', fontFamily: 'var(--font-sans)' }}>Device Token:</span> {state.pushDebugToken}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Dark Mode Theme */}

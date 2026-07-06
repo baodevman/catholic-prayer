@@ -28,6 +28,11 @@ export const useAppState = () => {
   const [fixedMorningUid, setFixedMorningUid] = useState<string | null>(null);
   const [fixedEveningUid, setFixedEveningUid] = useState<string | null>(null);
 
+  // Web Push Diagnostics Telemetry State
+  const [pushDebugStatus, setPushDebugStatus] = useState<string>('Chưa kích hoạt');
+  const [pushDebugToken, setPushDebugToken] = useState<string>('');
+  const [pushDebugError, setPushDebugError] = useState<string>('');
+
   // Load and refresh prayers
   const refreshPrayers = useCallback(async () => {
     setLoading(true);
@@ -94,14 +99,21 @@ export const useAppState = () => {
     // Check if it's the 13th of the month (Our Lady of Fatima)
     const today = new Date();
     setIsFatimaDay(today.getDate() === 13);
-  }, [refreshPrayers]);
 
-  // Request notifications permission on mount
-  useEffect(() => {
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
+    // Initial Push Diagnostic check
+    if (storage.isNotificationsEnabled()) {
+      if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+          subscribeToWebPush();
+        } else if (Notification.permission === 'denied') {
+          setPushDebugStatus('Bị chặn ❌');
+          setPushDebugError('Trình duyệt báo: Quyền gửi thông báo bị từ chối trong Cài đặt trang web.');
+        } else {
+          setPushDebugStatus('Chưa cấp quyền ⚠️');
+        }
+      }
     }
-  }, []);
+  }, [refreshPrayers]);
 
   // Sync / calculate real-time Novena Day progress
   useEffect(() => {
@@ -331,43 +343,71 @@ export const useAppState = () => {
   };
 
   const subscribeToWebPush = async () => {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      try {
-        const registration = await navigator.serviceWorker.ready;
-        let subscription = await registration.pushManager.getSubscription();
-        if (!subscription) {
-          const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || 'BEl62vPPTgEt2mYIGY43C4U8-y453J23'; 
-          const padding = '='.repeat((4 - vapidPublicKey.length % 4) % 4);
-          const base64 = (vapidPublicKey + padding).replace(/\-/g, '+').replace(/_/g, '/');
-          const rawData = window.atob(base64);
-          const outputArray = new Uint8Array(rawData.length);
-          for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
-          }
-          
-          subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: outputArray
-          });
+    setPushDebugError('');
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      setPushDebugStatus('Trình duyệt không hỗ trợ Web Push ❌');
+      return;
+    }
+
+    try {
+      setPushDebugStatus('Đang nạp Service Worker...');
+      const registration = await navigator.serviceWorker.ready;
+      
+      setPushDebugStatus('Đang quét thông tin đăng ký cũ...');
+      let subscription = await registration.pushManager.getSubscription();
+      
+      if (!subscription) {
+        setPushDebugStatus('Đang xin chứng chỉ VAPID từ Firebase...');
+        const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || ''; 
+        
+        if (!vapidPublicKey || vapidPublicKey === 'BEl62vPPTgEt2mYIGY43C4U8-y453J23') {
+          throw new Error('Chưa cấu hình VITE_VAPID_PUBLIC_KEY trên Vercel/Local.');
         }
         
-        if (subscription) {
-          console.log('Web Push Subscription thành công:', JSON.stringify(subscription));
-          
-          const response = await fetch('/api/subscribe-to-alerts', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token: subscription }),
-          });
-          if (response.ok) {
-            console.log('Đăng ký nhận tin thành công trên server!');
-          }
+        const padding = '='.repeat((4 - vapidPublicKey.length % 4) % 4);
+        const base64 = (vapidPublicKey + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
         }
-      } catch (e) {
-        console.error('Không thể đăng ký Web Push:', e);
+        
+        setPushDebugStatus('Đang cấp token trình duyệt...');
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: outputArray
+        });
       }
+      
+      if (subscription) {
+        setPushDebugStatus('Đã có Token. Đang đồng bộ lên Vercel...');
+        const tokenStr = JSON.stringify(subscription);
+        setPushDebugToken(tokenStr);
+        console.log('Web Push Subscription thành công:', tokenStr);
+        
+        const response = await fetch('/api/subscribe-to-alerts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: subscription }),
+        });
+        
+        if (response.ok) {
+          setPushDebugStatus('Đăng ký Reminders thành công! ✅');
+          console.log('Đăng ký nhận tin thành công trên server!');
+        } else {
+          const errData = await response.json().catch(() => ({}));
+          setPushDebugStatus('Đồng bộ lên Vercel thất bại ❌');
+          setPushDebugError(errData.error || response.statusText);
+        }
+      } else {
+        setPushDebugStatus('Không nhận được token ❌');
+      }
+    } catch (e: any) {
+      console.error('Không thể đăng ký Web Push:', e);
+      setPushDebugStatus('Lỗi thiết lập ❌');
+      setPushDebugError(e.message || String(e));
     }
   };
 
@@ -375,15 +415,30 @@ export const useAppState = () => {
     storage.setNotificationsEnabled(enabled);
     setNotificationsEnabled(enabled);
     if (enabled) {
-      if ('Notification' in window && Notification.permission !== 'granted') {
-        Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') {
-            subscribeToWebPush();
-          }
-        });
+      if ('Notification' in window) {
+        if (Notification.permission === 'denied') {
+          setPushDebugStatus('Quyền bị chặn ❌');
+          setPushDebugError('Vui lòng bật quyền hiển thị thông báo trong Cài đặt trang web của Trình duyệt.');
+        } else if (Notification.permission !== 'granted') {
+          setPushDebugStatus('Đang xin quyền thông báo...');
+          Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+              subscribeToWebPush();
+            } else {
+              setPushDebugStatus('Quyền bị từ chối ❌');
+              setPushDebugError('Không thể tạo token nếu không có quyền hiển thị thông báo.');
+            }
+          });
+        } else {
+          subscribeToWebPush();
+        }
       } else {
-        subscribeToWebPush();
+        setPushDebugStatus('Trình duyệt không hỗ trợ Web Notification.');
       }
+    } else {
+      setPushDebugStatus('Chưa kích hoạt (Đã tắt)');
+      setPushDebugToken('');
+      setPushDebugError('');
     }
   };
 
@@ -519,6 +574,9 @@ export const useAppState = () => {
     fixedMorningUid,
     fixedEveningUid,
     pinPrayerAsMorning,
-    pinPrayerAsEvening
+    pinPrayerAsEvening,
+    pushDebugStatus,
+    pushDebugToken,
+    pushDebugError
   };
 };
