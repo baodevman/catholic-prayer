@@ -24,6 +24,10 @@ export const useAppState = () => {
   const [isFatimaDay, setIsFatimaDay] = useState<boolean>(false);
   const [suggestedPrayers, setSuggestedPrayers] = useState<Prayer[]>([]);
 
+  // Pinned/Fixed prayers for 6:00 and 19:00 notifications
+  const [fixedMorningUid, setFixedMorningUid] = useState<string | null>(null);
+  const [fixedEveningUid, setFixedEveningUid] = useState<string | null>(null);
+
   // Load and refresh prayers
   const refreshPrayers = useCallback(async () => {
     setLoading(true);
@@ -31,6 +35,12 @@ export const useAppState = () => {
       // 1. Fetch dynamic categories first
       const catData = await fetchAllCategories();
       setCategories(catData);
+
+      // Fetch pinned prayers from IndexedDB
+      const morningUid = await storage.getFixedMorningPrayer();
+      const eveningUid = await storage.getFixedEveningPrayer();
+      setFixedMorningUid(morningUid);
+      setFixedEveningUid(eveningUid);
 
       // 2. Fetch static public prayers
       const staticData = await fetchAllPrayers();
@@ -466,6 +476,17 @@ export const useAppState = () => {
     await refreshPrayers();
   };
 
+  // Pin actions
+  const pinPrayerAsMorning = async (uid: string | null) => {
+    await storage.setFixedMorningPrayer(uid);
+    setFixedMorningUid(uid);
+  };
+
+  const pinPrayerAsEvening = async (uid: string | null) => {
+    await storage.setFixedEveningPrayer(uid);
+    setFixedEveningUid(uid);
+  };
+
   return {
     activeTab,
     setActiveTab,
@@ -494,6 +515,10 @@ export const useAppState = () => {
     isFatimaDay,
     suggestedPrayers,
     addCustomPrayer,
-    deleteCustomPrayer
+    deleteCustomPrayer,
+    fixedMorningUid,
+    fixedEveningUid,
+    pinPrayerAsMorning,
+    pinPrayerAsEvening
   };
 };

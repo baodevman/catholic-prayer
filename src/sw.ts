@@ -1,4 +1,5 @@
 import { precacheAndRoute } from 'workbox-precaching';
+import { get } from 'idb-keyval';
 
 declare const self: any;
 
@@ -10,6 +11,7 @@ self.addEventListener('push', (event: any) => {
   let title = 'Giờ Kinh Nguyện';
   let body = 'Hãy mở Sách Kinh của bạn để dâng lời nguyện cầu hằng ngày.';
   let icon = '/favicon.svg';
+  let period = ''; // 'morning' or 'evening'
 
   if (event.data) {
     try {
@@ -17,12 +19,13 @@ self.addEventListener('push', (event: any) => {
       title = data.title || title;
       body = data.body || body;
       icon = data.icon || icon;
+      period = data.period || '';
     } catch {
       body = event.data.text() || body;
     }
   }
 
-  const options = {
+  const options: any = {
     body,
     icon,
     badge: '/favicon.svg',
@@ -33,7 +36,40 @@ self.addEventListener('push', (event: any) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification(title, options)
+    (async () => {
+      try {
+        if (period === 'morning' || period === 'evening') {
+          // 1. Check if the user has pinned a custom prayer for this period
+          const dbKey = period === 'morning' ? 'fixed_morning_prayer' : 'fixed_evening_prayer';
+          const fixedUid = await get(dbKey);
+
+          if (fixedUid) {
+            // 2. Load cached prayers and custom user prayers from IndexedDB
+            const cachedPrayers = await get('prismic_prayers_cache');
+            const customPrayers = await get('custom_prayers_db');
+
+            const allPrayers = [
+              ...(Array.isArray(cachedPrayers) ? cachedPrayers : []),
+              ...(Array.isArray(customPrayers) ? customPrayers : [])
+            ];
+
+            // 3. Find the prayer matching the pinned UID
+            const matched = allPrayers.find((p: any) => p.uid === fixedUid);
+            if (matched) {
+              title = matched.title;
+              // Strip HTML tags for safe notification body presentation
+              const cleanContent = (matched.content || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+              options.body = cleanContent.substring(0, 120) + (cleanContent.length > 120 ? '...' : '');
+              console.log(`SW: Pinned prayer matched! Pushing custom notification: "${title}"`);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching pinned prayer in Service Worker:', err);
+      }
+
+      return self.registration.showNotification(title, options);
+    })()
   );
 });
 

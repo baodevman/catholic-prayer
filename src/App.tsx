@@ -1009,6 +1009,61 @@ export default function App() {
             </h1>
             <div className="ornamental-divider" style={{ width: '60%' }}><CrossSymbol /></div>
             
+            {/* Pinned settings bar */}
+            {!state.selectedPrayer.isNovena && (
+              <div style={{
+                display: 'flex',
+                gap: '12px',
+                margin: '16px 0 24px 0',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                background: 'var(--gold-glow)',
+                border: '1px dashed var(--gold-light)',
+                fontSize: '12px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap'
+              }}>
+                <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Cài đặt thông báo:</span>
+                
+                {/* Morning Pin Button */}
+                <button
+                  onClick={() => {
+                    const isPinned = state.fixedMorningUid === state.selectedPrayer?.uid;
+                    state.pinPrayerAsMorning(isPinned ? null : state.selectedPrayer?.uid || null);
+                  }}
+                  className={`bible-button ${state.fixedMorningUid === state.selectedPrayer?.uid ? '' : 'secondary'}`}
+                  style={{
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    borderRadius: '12px',
+                    minWidth: 'auto',
+                    height: 'auto'
+                  }}
+                >
+                  {state.fixedMorningUid === state.selectedPrayer?.uid ? '☀️ Đã ghim sáng 6h' : '☀️ Ghim sáng 6h'}
+                </button>
+
+                {/* Evening Pin Button */}
+                <button
+                  onClick={() => {
+                    const isPinned = state.fixedEveningUid === state.selectedPrayer?.uid;
+                    state.pinPrayerAsEvening(isPinned ? null : state.selectedPrayer?.uid || null);
+                  }}
+                  className={`bible-button ${state.fixedEveningUid === state.selectedPrayer?.uid ? '' : 'secondary'}`}
+                  style={{
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    borderRadius: '12px',
+                    minWidth: 'auto',
+                    height: 'auto'
+                  }}
+                >
+                  {state.fixedEveningUid === state.selectedPrayer?.uid ? '🌙 Đã ghim tối 19h' : '🌙 Ghim tối 19h'}
+                </button>
+              </div>
+            )}
+            
             <div 
               className="serif-text"
               style={{

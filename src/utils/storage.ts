@@ -188,5 +188,48 @@ export const storage = {
       return await navigator.storage.persisted();
     }
     return false;
+  },
+
+  // --- Fixed Prayers for Web Push Customizations ---
+  getFixedMorningPrayer: async (): Promise<string | null> => {
+    try {
+      const val = await get('fixed_morning_prayer');
+      return val || null;
+    } catch {
+      return null;
+    }
+  },
+
+  setFixedMorningPrayer: async (uid: string | null): Promise<void> => {
+    try {
+      if (uid) {
+        await set('fixed_morning_prayer', uid);
+      } else {
+        await del('fixed_morning_prayer');
+      }
+    } catch (e) {
+      console.error('Error setting fixed morning prayer', e);
+    }
+  },
+
+  getFixedEveningPrayer: async (): Promise<string | null> => {
+    try {
+      const val = await get('fixed_evening_prayer');
+      return val || null;
+    } catch {
+      return null;
+    }
+  },
+
+  setFixedEveningPrayer: async (uid: string | null): Promise<void> => {
+    try {
+      if (uid) {
+        await set('fixed_evening_prayer', uid);
+      } else {
+        await del('fixed_evening_prayer');
+      }
+    } catch (e) {
+      console.error('Error setting fixed evening prayer', e);
+    }
   }
 };

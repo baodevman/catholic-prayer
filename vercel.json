@@ -1,0 +1,26 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/submit-prayer",
+      "destination": "/api/submit-prayer.js"
+    },
+    {
+      "source": "/api/subscribe-to-alerts",
+      "destination": "/api/subscribe-to-alerts.js"
+    },
+    {
+      "source": "/api/send-scheduled-prayer",
+      "destination": "/api/send-scheduled-prayer.js"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/send-scheduled-prayer?period=morning",
+      "schedule": "0 23 * * *"
+    },
+    {
+      "path": "/api/send-scheduled-prayer?period=evening",
+      "schedule": "0 12 * * *"
+    }
+  ]
+}
