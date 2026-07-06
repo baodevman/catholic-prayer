@@ -38,8 +38,6 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // Subscribe the token to FCM topic
-    // FCM subscription token can be a string or a registration token object
     const registrationToken = typeof token === 'string' ? token : (token.token || token.endpoint);
     
     if (!registrationToken) {

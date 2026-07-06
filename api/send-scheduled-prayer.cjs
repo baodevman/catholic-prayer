@@ -24,14 +24,6 @@ function prismicRichTextToPlain(richTextArray) {
 }
 
 module.exports = async (req, res) => {
-  // Verify Vercel Cron authorization header (optional but recommended for security)
-  // Vercel sends a CRON authorization token or bypass if testing
-  const cronAuth = req.headers.authorization;
-  const isLocalDev = process.env.NODE_ENV === 'development';
-  
-  // You can trigger manually via browser, but we log it
-  console.log(`Cron check triggered. Method: ${req.method}, Query:`, req.query);
-
   const period = req.query.period || 'morning'; // 'morning' or 'evening'
   const repoName = process.env.PRISMIC_REPO || 'easyforpray';
 
@@ -67,7 +59,6 @@ module.exports = async (req, res) => {
         });
         
         if (morningPrayers.length > 0) {
-          // Select one randomly for variety
           selectedPrayer = morningPrayers[Math.floor(Math.random() * morningPrayers.length)];
         }
       } else {
@@ -96,7 +87,6 @@ module.exports = async (req, res) => {
     }
 
     if (!selectedPrayer) {
-      // Absolute fallback if no matching category prayers
       selectedPrayer = response[0];
     }
 

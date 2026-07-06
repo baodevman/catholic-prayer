@@ -3,15 +3,15 @@
   "rewrites": [
     {
       "source": "/api/submit-prayer",
-      "destination": "/api/submit-prayer.js"
+      "destination": "/api/submit-prayer.cjs"
     },
     {
       "source": "/api/subscribe-to-alerts",
-      "destination": "/api/subscribe-to-alerts.js"
+      "destination": "/api/subscribe-to-alerts.cjs"
     },
     {
       "source": "/api/send-scheduled-prayer",
-      "destination": "/api/send-scheduled-prayer.js"
+      "destination": "/api/send-scheduled-prayer.cjs"
     }
   ],
   "crons": [
