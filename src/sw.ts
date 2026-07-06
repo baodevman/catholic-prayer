@@ -10,7 +10,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 self.addEventListener('push', (event: any) => {
   let title = 'Giờ Kinh Nguyện';
   let body = 'Hãy mở Sách Kinh của bạn để dâng lời nguyện cầu hằng ngày.';
-  let icon = '/favicon.svg';
+  let icon = '/icon.png';
   let period = ''; // 'morning' or 'evening'
 
   if (event.data) {
@@ -28,7 +28,7 @@ self.addEventListener('push', (event: any) => {
   const options: any = {
     body,
     icon,
-    badge: '/favicon.svg',
+    badge: '/icon.png',
     vibrate: [200, 100, 200],
     data: {
       url: '/'
