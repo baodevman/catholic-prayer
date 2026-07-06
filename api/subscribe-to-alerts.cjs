@@ -38,10 +38,21 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const registrationToken = typeof token === 'string' ? token : (token.token || token.endpoint);
-    
+    let registrationToken = '';
+    if (typeof token === 'string') {
+      registrationToken = token;
+    } else if (token && typeof token === 'object') {
+      const endpoint = token.endpoint || '';
+      if (endpoint.includes('/') && (endpoint.startsWith('http://') || endpoint.startsWith('https://'))) {
+        const parts = endpoint.split('/');
+        registrationToken = parts[parts.length - 1];
+      } else {
+        registrationToken = token.token || token.endpoint || '';
+      }
+    }
+
     if (!registrationToken) {
-       return res.status(400).json({ error: 'Invalid registration token format' });
+       return res.status(400).json({ error: 'Không thể trích xuất Registration Token từ trình duyệt.' });
     }
 
     const response = await admin.messaging().subscribeToTopic(registrationToken, 'prayer-alerts');

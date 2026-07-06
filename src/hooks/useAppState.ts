@@ -399,7 +399,7 @@ export const useAppState = () => {
         } else {
           const errData = await response.json().catch(() => ({}));
           setPushDebugStatus('Đồng bộ lên Vercel thất bại ❌');
-          setPushDebugError(errData.error || response.statusText);
+          setPushDebugError(errData.error || `HTTP ${response.status} ${response.statusText || 'Internal Error'}`);
         }
       } else {
         setPushDebugStatus('Không nhận được token ❌');
