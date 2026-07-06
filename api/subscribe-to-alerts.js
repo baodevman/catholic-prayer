@@ -1,20 +1,20 @@
 const admin = require('firebase-admin');
 
 // Initialize Firebase Admin securely
-if (!admin.apps.length) {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    try {
+try {
+  if (!admin.apps.length) {
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
       const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
-    } catch (err) {
-      console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:', err);
-      admin.initializeApp();
+      console.log('Firebase Admin initialized successfully.');
+    } else {
+      console.warn('Warning: FIREBASE_SERVICE_ACCOUNT is missing in environment variables.');
     }
-  } else {
-    admin.initializeApp();
   }
+} catch (err) {
+  console.error('Error initializing firebase-admin:', err);
 }
 
 module.exports = async (req, res) => {

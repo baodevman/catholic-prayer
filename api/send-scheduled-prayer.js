@@ -1,21 +1,21 @@
 const admin = require('firebase-admin');
 const prismic = require('@prismicio/client');
 
-// Initialize Firebase Admin
-if (!admin.apps.length) {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-    try {
+// Initialize Firebase Admin securely
+try {
+  if (!admin.apps.length) {
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
       const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
-    } catch (err) {
-      console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:', err);
-      admin.initializeApp();
+      console.log('Firebase Admin initialized successfully.');
+    } else {
+      console.warn('Warning: FIREBASE_SERVICE_ACCOUNT is missing in environment variables.');
     }
-  } else {
-    admin.initializeApp();
   }
+} catch (err) {
+  console.error('Error initializing firebase-admin:', err);
 }
 
 function prismicRichTextToPlain(richTextArray) {
