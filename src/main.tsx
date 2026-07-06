@@ -4,11 +4,11 @@ import './index.css'
 import App from './App.tsx'
 import { registerSW } from 'virtual:pwa-register'
 
-// Register PWA service worker automatically
-registerSW({
+// Register PWA service worker automatically with refresh prompt support
+const updateServiceWorker = registerSW({
   onNeedRefresh() {
     if (confirm('Ứng dụng đã có phiên bản mới. Bạn có muốn cập nhật ngay không?')) {
-      window.location.reload();
+      updateServiceWorker(true);
     }
   },
   onOfflineReady() {

@@ -92,3 +92,10 @@ self.addEventListener('notificationclick', (event: any) => {
     })
   );
 });
+
+// Skip waiting and activate immediately when update is requested
+self.addEventListener('message', (event: any) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
