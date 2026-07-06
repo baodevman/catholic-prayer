@@ -99,11 +99,27 @@ export default async function handler(req, res) {
 
     // Send FCM Notification to all subscribed users via "prayer-alerts" topic
     const payload = {
+      notification: {
+        title,
+        body
+      },
       data: {
         title,
         body,
         period,
         uid: selectedPrayer.uid || selectedPrayer.id
+      },
+      webpush: {
+        headers: {
+          Urgency: 'high'
+        },
+        notification: {
+          title,
+          body,
+          icon: '/icon.png',
+          badge: '/icon.png',
+          requireInteraction: true
+        }
       },
       topic: 'prayer-alerts'
     };
