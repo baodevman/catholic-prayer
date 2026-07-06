@@ -336,7 +336,7 @@ export const useAppState = () => {
         const registration = await navigator.serviceWorker.ready;
         let subscription = await registration.pushManager.getSubscription();
         if (!subscription) {
-          const vapidPublicKey = 'BEl62vPPTgEt2mYIGY43C4U8-y453J23'; 
+          const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || 'BEl62vPPTgEt2mYIGY43C4U8-y453J23'; 
           const padding = '='.repeat((4 - vapidPublicKey.length % 4) % 4);
           const base64 = (vapidPublicKey + padding).replace(/\-/g, '+').replace(/_/g, '/');
           const rawData = window.atob(base64);
