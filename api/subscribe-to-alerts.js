@@ -1,4 +1,4 @@
-const admin = require('firebase-admin');
+import admin from 'firebase-admin';
 
 // Initialize Firebase Admin securely
 try {
@@ -17,7 +17,7 @@ try {
   console.error('Error initializing firebase-admin:', err);
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -63,4 +63,4 @@ module.exports = async (req, res) => {
     console.error('Error subscribing token to FCM topic:', error);
     return res.status(500).json({ error: error.message || 'Không thể đăng ký thiết bị nhận thông báo.' });
   }
-};
+}

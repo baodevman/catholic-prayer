@@ -1,5 +1,5 @@
-const admin = require('firebase-admin');
-const prismic = require('@prismicio/client');
+import admin from 'firebase-admin';
+import * as prismic from '@prismicio/client';
 
 // Initialize Firebase Admin securely
 try {
@@ -23,7 +23,7 @@ function prismicRichTextToPlain(richTextArray) {
   return richTextArray.map(block => block.text || '').join('\n');
 }
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   const period = req.query.period || 'morning'; // 'morning' or 'evening'
   const repoName = process.env.PRISMIC_REPO || 'easyforpray';
 
@@ -123,4 +123,4 @@ module.exports = async (req, res) => {
       details: error.message || error
     });
   }
-};
+}
