@@ -28,7 +28,10 @@ export default async function handler(req, res) {
   const repoName = process.env.PRISMIC_REPO || 'easyforpray';
 
   try {
-    const client = prismic.createClient(repoName);
+    const accessToken = process.env.PRISMIC_ACCESS_TOKEN || process.env.VITE_PRISMIC_ACCESS_TOKEN || '';
+    const client = prismic.createClient(repoName, {
+      accessToken: accessToken || undefined
+    });
     const response = await client.getAllByType('prayer');
 
     if (response.length === 0) {
