@@ -188,3 +188,31 @@ export const fetchAllCategories = async (): Promise<PrismicCategory[]> => {
 
   return [];
 };
+
+// Fetch Catholic Saints documents from Prismic with fallback to local CATHOLIC_SAINTS dataset
+export const fetchSaintsFromPrismic = async (): Promise<any[]> => {
+  const repoName = getPrismicRepoName();
+  if (repoName) {
+    try {
+      const accessToken = getPrismicAccessToken();
+      const client = createClient(repoName, accessToken ? { accessToken } : undefined);
+      const response = await client.getAllByType('catholic_saint');
+
+      if (response && response.length > 0) {
+        return response.map((doc: any) => ({
+          id: doc.uid || doc.data.saint_id || doc.id,
+          name: doc.data.name || '',
+          saintTitle: doc.data.saint_title || doc.data.name || '',
+          date: doc.data.date || '01-01',
+          month: Number((doc.data.date || '01-01').split('-')[0]),
+          day: Number((doc.data.date || '01-01').split('-')[1]),
+          type: doc.data.type || 'memorial',
+          description: doc.data.description || ''
+        }));
+      }
+    } catch (e) {
+      console.warn('Prismic fetch catholic_saint failed, using local dataset fallback', e);
+    }
+  }
+  return [];
+};

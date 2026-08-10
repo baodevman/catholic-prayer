@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAppState } from './hooks/useAppState';
 import type { Prayer } from './utils/prismic';
+import { CATHOLIC_SAINTS } from './utils/catholicSaints';
 import './App.css';
 
 // SVG Icons as React Components
@@ -53,6 +54,198 @@ export default function App() {
   const [newPrayerCategory, setNewPrayerCategory] = useState<string>('loi-nguyen-cau-truoc-khi-di-lam');
   const [newPrayerContent, setNewPrayerContent] = useState<string>('');
   const [newPrayerIsPrivate, setNewPrayerIsPrivate] = useState<boolean>(true);
+  // Library Filter & Accordion States
+  const [librarySearchQuery, setLibrarySearchQuery] = useState<string>('');
+  const [openCategoryUid, setOpenCategoryUid] = useState<string | null>(null);
+  const [selectedHub, setSelectedHub] = useState<string>('all');
+
+  // Relative Patron Saints Form & Modal States
+  const [showPatronModal, setShowPatronModal] = useState<boolean>(false);
+  const [patronRelativeName, setPatronRelativeName] = useState<string>('');
+  const [patronSaintId, setPatronSaintId] = useState<string>('st-joseph');
+  const [patronPhone, setPatronPhone] = useState<string>('');
+  const [patronNote, setPatronNote] = useState<string>('');
+  // Zalo Greeting Editor Modal States
+  const [showZaloModal, setShowZaloModal] = useState<boolean>(false);
+  const [zaloRelativeName, setZaloRelativeName] = useState<string>('');
+  const [zaloSaintName, setZaloSaintName] = useState<string>('');
+  const [zaloPhone, setZaloPhone] = useState<string>('');
+  const [zaloMessage, setZaloMessage] = useState<string>('');
+  const [zaloTemplateIdx, setZaloTemplateIdx] = useState<number>(0);
+
+  // Duplicate Prayer Warning & Report Modal States
+  const [duplicateMatchTitle, setDuplicateMatchTitle] = useState<string>('');
+  const [duplicateReason, setDuplicateReason] = useState<string>('');
+  const [userContact, setUserContact] = useState<string>('');
+  const [showDuplicateModal, setShowDuplicateModal] = useState<boolean>(false);
+  const [showReportModal, setShowReportModal] = useState<boolean>(false);
+
+  const normalizeTextForComparison = (str: string) => {
+    return str
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]/g, '')
+      .slice(0, 100);
+  };
+
+  const handleSaveCustomPrayer = async () => {
+    if (!newPrayerTitle.trim() || !newPrayerContent.trim()) {
+      alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kinh nguyện!');
+      return;
+    }
+
+    const titleLower = newPrayerTitle.trim().toLowerCase();
+
+    // 1. Check Title / UID Duplicate
+    const existingTitleMatch = state.prayers.find(p => p.title.toLowerCase() === titleLower) ||
+      state.customPrayers.find(p => p.title.toLowerCase() === titleLower);
+
+    if (existingTitleMatch) {
+      alert(`❌ Tiêu đề "${newPrayerTitle.trim()}" đã tồn tại trên hệ thống (Lời nguyện: "${existingTitleMatch.title}"). Vui lòng đặt tiêu đề khác.`);
+      return;
+    }
+
+    // 2. Check First 100 Characters Fuzzy Content Match
+    const newNorm100 = normalizeTextForComparison(newPrayerContent);
+    const existingContentMatch = state.prayers.find(p => {
+      const norm = normalizeTextForComparison(p.content.replace(/<[^>]*>?/gm, ''));
+      return norm.length > 15 && newNorm100.length > 15 && (norm.startsWith(newNorm100) || newNorm100.startsWith(norm));
+    }) || state.customPrayers.find(p => {
+      const norm = normalizeTextForComparison(p.content.replace(/<[^>]*>?/gm, ''));
+      return norm.length > 15 && newNorm100.length > 15 && (norm.startsWith(newNorm100) || newNorm100.startsWith(norm));
+    });
+
+    if (existingContentMatch) {
+      setDuplicateMatchTitle(existingContentMatch.title);
+      setShowDuplicateModal(true);
+      return;
+    }
+
+    // Save locally
+    const uid = `custom-${Date.now()}`;
+    await state.addCustomPrayer({
+      uid,
+      title: newPrayerTitle.trim(),
+      category: newPrayerCategory,
+      content: newPrayerContent.trim().replace(/\n/g, '<br />'),
+      isPrivate: newPrayerIsPrivate
+    });
+
+    // If public/community shared, submit draft to Prismic backend
+    if (!newPrayerIsPrivate) {
+      try {
+        await fetch('/api/submit-community-prayer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: newPrayerTitle.trim(),
+            category: newPrayerCategory,
+            content: newPrayerContent.trim(),
+            is_reported_duplicate: false
+          })
+        });
+      } catch (e) {
+        console.warn('Prismic API push warning:', e);
+      }
+      alert('Đã lưu lời nguyện và gửi bản nháp lên cộng đồng để Admin phê duyệt!');
+    } else {
+      alert('Đã lưu lời nguyện riêng tư của bạn!');
+    }
+
+    setNewPrayerTitle('');
+    setNewPrayerContent('');
+    setNewPrayerIsPrivate(true);
+    setShowAddForm(false);
+  };
+
+  const handleReportFalsePositive = async () => {
+    if (!userContact.trim()) {
+      alert('Vui lòng nhập Email hoặc Số điện thoại liên hệ!');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/submit-community-prayer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: newPrayerTitle.trim(),
+          category: newPrayerCategory,
+          content: newPrayerContent.trim(),
+          is_reported_duplicate: true,
+          report_reason: duplicateReason.trim() || 'Người dùng báo cáo phát hiện trùng lặp chưa chính xác.',
+          user_contact: userContact.trim()
+        })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        alert(data.message || 'Đã gửi yêu cầu xem xét lên Admin thành công!');
+        setShowReportModal(false);
+        setShowDuplicateModal(false);
+        setShowAddForm(false);
+        setNewPrayerTitle('');
+        setNewPrayerContent('');
+        setDuplicateReason('');
+        setUserContact('');
+      } else {
+        alert(data.error || 'Có lỗi xảy ra khi gửi báo cáo.');
+      }
+    } catch (e) {
+      alert('Lỗi kết nối khi gửi báo cáo.');
+    }
+  };
+
+  const GREETING_TEMPLATES = [
+    (rel: string, saint: string) =>
+      `Chúc mừng ngày Lễ Bổn Mạng ${saint} của ${rel}! Nguyện xin Thánh Quan Thầy luôn chuyển cầu và tuôn đổ muôn ơn lành, bình an và sức khỏe xuống trên ${rel} trong cuộc sống.`,
+    (rel: string, saint: string) =>
+      `Nhân ngày Lễ Bổn Mạng ${saint}, chúc ${rel} luôn dồi dào niềm vui đức tin, an lành và hạnh phúc dưới sự che chở của Thánh Quan Thầy. Thân chúc!`,
+    (rel: string, saint: string) =>
+      `Cầu chúc ${rel} một ngày Lễ Bổn Mạng ${saint} thật nhiều niềm vui, bình an và hồng ân Thiên Chúa qua sự bảo trợ của Thánh Quan Thầy. Gia đình luôn yêu thương và cầu nguyện cho ${rel}!`
+  ];
+
+  const openZaloGreetingModal = (relName: string, saintName: string, phone?: string, tmplIdx: number = 0) => {
+    setZaloRelativeName(relName);
+    setZaloSaintName(saintName);
+    setZaloPhone(phone || '');
+    setZaloTemplateIdx(tmplIdx);
+    setZaloMessage(GREETING_TEMPLATES[tmplIdx](relName, saintName));
+    setShowZaloModal(true);
+  };
+
+  const handleSelectTemplate = (idx: number) => {
+    setZaloTemplateIdx(idx);
+    setZaloMessage(GREETING_TEMPLATES[idx](zaloRelativeName || 'bạn', zaloSaintName || 'Thánh Quan Thầy'));
+  };
+
+  const handleSendZalo = (msg: string, phoneStr?: string) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(msg);
+    }
+
+    if (navigator.share) {
+      navigator.share({
+        title: `Chúc Mừng Lễ Bổn Mạng ${zaloSaintName}`,
+        text: msg
+      }).catch(() => {
+        openZaloDirect(phoneStr);
+      });
+    } else {
+      openZaloDirect(phoneStr);
+    }
+  };
+
+  const openZaloDirect = (phoneStr?: string) => {
+    if (phoneStr && phoneStr.trim()) {
+      const cleanPhone = phoneStr.trim().replace(/[^0-9]/g, '');
+      window.open(`https://zalo.me/${cleanPhone}`, '_blank');
+    } else {
+      window.open(`https://zalo.me`, '_blank');
+    }
+    alert('Đã sao chép lời chúc vào bộ nhớ tạm và mở Zalo! Bạn có thể dán (Paste) để gửi tin nhắn cho người thân.');
+  };
 
   // Local backups JSON generation
   const handleExportData = () => {
@@ -62,7 +255,8 @@ export default function App() {
         activeNovena: state.activeNovena,
         notificationsEnabled: state.notificationsEnabled,
         userRole: state.userRole,
-        customPrayers: state.customPrayers
+        customPrayers: state.customPrayers,
+        relativePatrons: state.relativePatrons
       })
     );
     const downloadAnchor = document.createElement('a');
@@ -87,6 +281,11 @@ export default function App() {
           if (parsed.customPrayers && Array.isArray(parsed.customPrayers)) {
             for (const cp of parsed.customPrayers) {
               await state.addCustomPrayer(cp);
+            }
+          }
+          if (parsed.relativePatrons && Array.isArray(parsed.relativePatrons)) {
+            for (const rp of parsed.relativePatrons) {
+              state.saveRelativePatron(rp);
             }
           }
           alert('Khôi phục dữ liệu sao lưu thành công!');
@@ -213,6 +412,137 @@ export default function App() {
                 ))}
               </div>
             )}
+
+            {/* Patron Saint & Relatives Reminders Section */}
+            <div className="bible-card" style={{ marginTop: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <h3 style={{ margin: 0, fontSize: '16px', color: 'var(--gold-primary)' }}>👑 Lịch Bổn Mạng & Người Thân</h3>
+                <button
+                  className="bible-button"
+                  style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
+                  onClick={() => {
+                    setPatronRelativeName('');
+                    setPatronSaintId('st-joseph');
+                    setPatronPhone('');
+                    setPatronNote('');
+                    setShowPatronModal(true);
+                  }}
+                >
+                  + Thêm Người Thân
+                </button>
+              </div>
+              <div className="ornamental-divider" style={{ margin: '6px 0' }}><CrossSymbol /></div>
+
+              {/* Check Today's Relatives Feast */}
+              {(() => {
+                const now = new Date();
+                const monthStr = String(now.getMonth() + 1).padStart(2, '0');
+                const dayStr = String(now.getDate()).padStart(2, '0');
+                const todayDateStr = `${monthStr}-${dayStr}`;
+
+                const todayRelatives = state.relativePatrons.filter(p => p.feastDate === todayDateStr);
+                const todaySaints = CATHOLIC_SAINTS.filter(s => s.date === todayDateStr);
+
+                if (todayRelatives.length > 0) {
+                  return (
+                    <div style={{
+                      background: 'linear-gradient(135deg, var(--gold-glow), var(--bg-parchment))',
+                      border: '2px solid var(--gold-primary)',
+                      borderRadius: '10px',
+                      padding: '12px 14px',
+                      marginBottom: '14px'
+                    }}>
+                      <div style={{ fontWeight: 700, fontSize: '14px', color: 'var(--gold-primary)' }}>
+                        🎉 HÔM NAY LÀ LỄ BỔN MẠNG!
+                      </div>
+                      <div style={{ fontSize: '13px', marginTop: '6px' }}>
+                        Lễ <b>{todayRelatives[0].saintName}</b> ({now.getDate()}/{now.getMonth() + 1}) - Mừng bổn mạng của:{' '}
+                        <b>{todayRelatives.map(r => r.name).join(', ')}</b>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+                        {todayRelatives.map(rel => (
+                          <button
+                            key={rel.id}
+                            className="bible-button"
+                            style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
+                            onClick={() => openZaloGreetingModal(rel.name, rel.saintName, rel.phone)}
+                          >
+                            💌 Gửi Lời Chúc {rel.name} (Zalo)
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                } else if (todaySaints.length > 0) {
+                  return (
+                    <div style={{
+                      background: 'rgba(0, 0, 0, 0.02)',
+                      border: '1px dashed var(--border-bible)',
+                      borderRadius: '8px',
+                      padding: '10px 12px',
+                      marginBottom: '14px',
+                      fontSize: '12px',
+                      color: 'var(--text-muted)'
+                    }}>
+                      <span>✝ Hôm nay: <b>{todaySaints.map(s => s.saintTitle).join(', ')}</b></span>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
+
+              {/* List of saved relatives */}
+              {state.relativePatrons.length === 0 ? (
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', textAlign: 'center', margin: '12px 0' }}>
+                  Chưa có người thân nào được gắn ngày Lễ Bổn Mạng. Hãy nhấn <b>"+ Thêm Người Thân"</b> để lưu và nhận nhắc nhở hằng năm!
+                </p>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
+                  {state.relativePatrons.map((rel) => (
+                    <div 
+                      key={rel.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '10px 12px',
+                        backgroundColor: 'var(--bg-parchment)',
+                        borderRadius: '8px',
+                        border: '1px solid var(--border-bible)'
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
+                          {rel.name} <span style={{ fontSize: '12px', color: 'var(--gold-primary)', fontWeight: 500 }}>(Lễ {rel.saintName})</span>
+                        </div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                          🗓 Ngày {rel.feastDate.split('-')[1]}/{rel.feastDate.split('-')[0]} {rel.phone ? `• 📞 Zalo: ${rel.phone}` : ''} {rel.note ? `• ${rel.note}` : ''}
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                        <button
+                          className="bible-button"
+                          style={{ width: 'auto', padding: '4px 10px', fontSize: '11px' }}
+                          onClick={() => openZaloGreetingModal(rel.name, rel.saintName, rel.phone)}
+                        >
+                          💌 Chúc Zalo
+                        </button>
+                        <button
+                          style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '13px', cursor: 'pointer', padding: '4px' }}
+                          onClick={() => {
+                            if (confirm(`Bạn có chắc muốn xóa nhắc nhở bổn mạng của "${rel.name}"?`)) {
+                              state.deleteRelativePatron(rel.id);
+                            }
+                          }}
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Active Novena Progress Checklist (Calendar-tracked) */}
             {state.activeNovena ? (
@@ -350,14 +680,14 @@ export default function App() {
                 style={{ width: 'auto', padding: '10px 20px', fontSize: '14px' }}
                 onClick={() => setShowAddForm(!showAddForm)}
               >
-                {showAddForm ? '✕ Đóng biểu mẫu nhập' : '✍ Tự viết kinh nguyện mới'}
+                {showAddForm ? '✕ Đóng biểu mẫu nhập' : '✍ Tự viết lời nguyện mới'}
               </button>
             </div>
 
             {/* Custom Prayer Input Form */}
             {showAddForm && (
               <div className="bible-card" style={{ marginBottom: '30px', border: '2px solid var(--gold-light)' }}>
-                <h3 style={{ color: 'var(--gold-primary)', marginBottom: '12px', textAlign: 'center' }}>Tạo Lời Kinh Của Bạn</h3>
+                <h3 style={{ color: 'var(--gold-primary)', marginBottom: '12px', textAlign: 'center' }}>Tạo Lời Nguyện Của Bạn</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <div>
                     <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Tiêu đề kinh nguyện</label>
@@ -385,11 +715,11 @@ export default function App() {
                     </select>
                   </div>
                   <div>
-                    <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Nội dung lời kinh</label>
+                    <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Nội dung lời nguyện</label>
                     <textarea 
                       className="bible-textarea" 
                       rows={6}
-                      placeholder="Nhập nội dung lời kinh tại đây..." 
+                      placeholder="Nhập nội dung lời nguyện tại đây..." 
                       value={newPrayerContent}
                       onChange={(e) => setNewPrayerContent(e.target.value)}
                     />
@@ -406,26 +736,7 @@ export default function App() {
                   <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
                     <button 
                       className="bible-button"
-                      onClick={async () => {
-                        if (!newPrayerTitle.trim() || !newPrayerContent.trim()) {
-                          alert('Vui lòng nhập đầy đủ tiêu đề và nội dung kinh nguyện!');
-                          return;
-                        }
-                        const uid = `custom-${Date.now()}`;
-                        await state.addCustomPrayer({
-                          uid,
-                          title: newPrayerTitle.trim(),
-                          category: newPrayerCategory,
-                          content: newPrayerContent.trim().replace(/\n/g, '<br />'),
-                          isPrivate: newPrayerIsPrivate
-                        });
-                        // Reset form
-                        setNewPrayerTitle('');
-                        setNewPrayerContent('');
-                        setNewPrayerIsPrivate(true);
-                        setShowAddForm(false);
-                        alert('Đã lưu lời nguyện thành công!');
-                      }}
+                      onClick={handleSaveCustomPrayer}
                     >
                       Lưu Lời Nguyện
                     </button>
@@ -435,45 +746,138 @@ export default function App() {
               </div>
             )}
 
-            {/* List all categories dynamically */}
-            {state.categories
-              .filter(cat => cat.parentUid || cat.uid === 'loi-nguyen-cho-cac-ngay-le-cong-giao')
-              .map((cat) => {
-                const catPrayers = state.prayers.filter(p => p.category === cat.uid);
-                const parentCat = state.categories.find(c => c.uid === cat.parentUid);
-                const displayName = parentCat ? `${parentCat.name} ➔ ${cat.name}` : cat.name;
+            {/* Search Bar */}
+            <div style={{ marginBottom: '16px' }}>
+              <input
+                type="text"
+                className="bible-input"
+                placeholder="🔍 Tìm nhanh tên lời nguyện, từ khóa..."
+                value={librarySearchQuery}
+                onChange={(e) => setLibrarySearchQuery(e.target.value)}
+                style={{
+                  fontSize: '14px',
+                  padding: '10px 14px',
+                  borderRadius: '20px',
+                  borderColor: 'var(--gold-primary)'
+                }}
+              />
+            </div>
 
-                return (
-                  <div key={cat.uid} style={{ marginBottom: '24px' }}>
-                    <h3 style={{
-                      color: 'var(--gold-primary)',
-                      borderBottom: '1px solid var(--border-bible)',
-                      paddingBottom: '6px',
-                      marginBottom: '12px',
-                      fontSize: '13px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>
-                      {displayName} ({catPrayers.length})
-                    </h3>
-                  
-                  {catPrayers.length === 0 ? (
-                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', paddingLeft: '8px' }}>
-                      Chưa có kinh nguyện nào trong danh mục này.
-                    </p>
-                  ) : (
+            {/* Category Hub Filter Pills (Dynamically generated from Prismic Top-Level Categories) */}
+            {!librarySearchQuery && (
+              <div style={{
+                display: 'flex',
+                gap: '6px',
+                overflowX: 'auto',
+                paddingBottom: '12px',
+                marginBottom: '16px',
+                WebkitOverflowScrolling: 'touch'
+              }}>
+                <button
+                  className="bible-button"
+                  style={{
+                    width: 'auto',
+                    whiteSpace: 'nowrap',
+                    padding: '6px 14px',
+                    fontSize: '12px',
+                    borderRadius: '16px',
+                    backgroundColor: selectedHub === 'all' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                    color: selectedHub === 'all' ? '#FFF' : 'var(--text-main)',
+                    border: '1px solid var(--border-bible)',
+                    fontWeight: selectedHub === 'all' ? 600 : 'normal'
+                  }}
+                  onClick={() => setSelectedHub('all')}
+                >
+                  Tất cả
+                </button>
+                {state.categories
+                  .filter(cat => !cat.parentUid)
+                  .map((parentCat) => (
+                    <button
+                      key={parentCat.uid}
+                      className="bible-button"
+                      style={{
+                        width: 'auto',
+                        whiteSpace: 'nowrap',
+                        padding: '6px 14px',
+                        fontSize: '12px',
+                        borderRadius: '16px',
+                        backgroundColor: selectedHub === parentCat.uid ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                        color: selectedHub === parentCat.uid ? '#FFF' : 'var(--text-main)',
+                        border: '1px solid var(--border-bible)',
+                        fontWeight: selectedHub === parentCat.uid ? 600 : 'normal'
+                      }}
+                      onClick={() => setSelectedHub(parentCat.uid)}
+                    >
+                      {parentCat.name}
+                    </button>
+                  ))}
+                {state.customPrayers.length > 0 && (
+                  <button
+                    className="bible-button"
+                    style={{
+                      width: 'auto',
+                      whiteSpace: 'nowrap',
+                      padding: '6px 14px',
+                      fontSize: '12px',
+                      borderRadius: '16px',
+                      backgroundColor: selectedHub === 'custom' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                      color: selectedHub === 'custom' ? '#FFF' : 'var(--text-main)',
+                      border: '1px solid var(--border-bible)',
+                      fontWeight: selectedHub === 'custom' ? 600 : 'normal'
+                    }}
+                    onClick={() => setSelectedHub('custom')}
+                  >
+                    ✍ Lời Nguyện Cá Nhân
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Search Results View */}
+            {librarySearchQuery.trim() ? (
+              <div>
+                <h3 style={{ fontSize: '13px', color: 'var(--gold-primary)', marginBottom: '10px', textTransform: 'uppercase' }}>
+                  Kết quả tìm kiếm cho: "{librarySearchQuery}"
+                </h3>
+                {(() => {
+                  const queryLower = librarySearchQuery.trim().toLowerCase();
+                  const allPrayersList = [
+                    ...state.prayers,
+                    ...state.customPrayers.map(cp => ({
+                      uid: cp.uid,
+                      title: cp.title,
+                      category: cp.category,
+                      content: cp.content,
+                      isNovena: false
+                    }))
+                  ];
+                  const searchResults = allPrayersList.filter(p =>
+                    p.title.toLowerCase().includes(queryLower) ||
+                    p.content.toLowerCase().includes(queryLower)
+                  );
+
+                  if (searchResults.length === 0) {
+                    return (
+                      <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', padding: '12px' }}>
+                        Không tìm thấy lời nguyện nào phù hợp.
+                      </p>
+                    );
+                  }
+
+                  return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {catPrayers.map((prayer) => {
+                      {searchResults.map((prayer) => {
                         const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
                         return (
-                          <div 
-                            key={prayer.uid} 
-                            className="bible-card" 
-                            style={{ 
-                              padding: '14px 16px', 
+                          <div
+                            key={prayer.uid}
+                            className="bible-card"
+                            style={{
+                              padding: '12px 14px',
                               marginBottom: 0,
-                              display: 'flex', 
-                              justifyContent: 'space-between', 
+                              display: 'flex',
+                              justifyContent: 'space-between',
                               alignItems: 'center',
                               cursor: 'pointer'
                             }}
@@ -481,64 +885,228 @@ export default function App() {
                           >
                             <div>
                               <div style={{ fontWeight: 500, fontSize: '15px' }}>{prayer.title}</div>
-                              {prayer.isNovena && (
-                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
-                                  ❖ Chuỗi 9 ngày
-                                </span>
-                              )}
-                              {isCustom && (
-                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontStyle: 'italic' }}>
-                                  ✍ Tự viết (Công cộng)
-                                </span>
-                              )}
+                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                                {isCustom ? '✍ Lời nguyện cá nhân' : (state.categories.find(c => c.uid === prayer.category)?.name || 'Kinh Nguyện')}
+                              </span>
                             </div>
-                            
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                              {/* If it's a Novena, allow starting it */}
-                              {prayer.isNovena && state.activeNovena?.id !== prayer.uid && (
-                                <button
-                                  className="bible-button"
-                                  style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    state.startNovena(prayer.uid, prayer.title);
-                                    state.setActiveTab('home');
-                                  }}
-                                >
-                                  Kích hoạt
-                                </button>
-                              )}
-
-                              {/* Delete button for user's custom prayers */}
-                              {isCustom && (
-                                <button
-                                  style={{ 
-                                    background: 'none', 
-                                    border: 'none', 
-                                    color: '#dc2626', 
-                                    fontSize: '13px', 
-                                    cursor: 'pointer',
-                                    padding: '6px'
-                                  }}
-                                  onClick={async (e) => {
-                                    e.stopPropagation();
-                                    if (confirm(`Bạn có chắc chắn muốn xóa kinh nguyện "${prayer.title}" không?`)) {
-                                      await state.deleteCustomPrayer(prayer.uid);
-                                    }
-                                  }}
-                                >
-                                  🗑️ Xóa
-                                </button>
-                              )}
-                            </div>
+                            <button className="bible-button" style={{ width: 'auto', padding: '4px 10px', fontSize: '11px' }}>
+                              Xem
+                            </button>
                           </div>
                         );
                       })}
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                  );
+                })()}
+              </div>
+            ) : (
+              /* Accordion Folders View */
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {state.categories
+                  .filter(cat => cat.parentUid)
+                  .filter(cat => {
+                    if (selectedHub === 'all') return true;
+                    if (selectedHub === 'custom') return false;
+                    return cat.parentUid === selectedHub || cat.uid === selectedHub;
+                  })
+                  .map((cat) => {
+                    const catPrayers = state.prayers.filter(p => p.category === cat.uid);
+                    const parentCat = state.categories.find(c => c.uid === cat.parentUid);
+                    const displayName = parentCat ? `${parentCat.name} ➔ ${cat.name}` : cat.name;
+                    const isOpen = openCategoryUid === cat.uid;
+
+                    return (
+                      <div
+                        key={cat.uid}
+                        style={{
+                          borderRadius: '10px',
+                          border: '1px solid var(--border-bible)',
+                          backgroundColor: 'var(--bg-card)',
+                          overflow: 'hidden'
+                        }}
+                      >
+                        {/* Folder Header Button */}
+                        <button
+                          type="button"
+                          style={{
+                            width: '100%',
+                            padding: '14px 16px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            background: isOpen ? 'var(--gold-glow)' : 'transparent',
+                            border: 'none',
+                            borderBottom: isOpen ? '1px solid var(--border-bible)' : 'none',
+                            cursor: 'pointer',
+                            textAlign: 'left'
+                          }}
+                          onClick={() => setOpenCategoryUid(isOpen ? null : cat.uid)}
+                        >
+                          <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
+                            📁 {displayName} <span style={{ fontSize: '12px', color: 'var(--gold-primary)', fontWeight: 500 }}>({catPrayers.length})</span>
+                          </div>
+                          <span style={{ fontSize: '14px', color: 'var(--gold-primary)', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                            ▼
+                          </span>
+                        </button>
+
+                        {/* Collapsible Content */}
+                        {isOpen && (
+                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: 'var(--bg-parchment)' }}>
+                            {catPrayers.length === 0 ? (
+                              <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
+                                Chưa có lời nguyện nào trong danh mục này.
+                              </p>
+                            ) : (
+                              catPrayers.map((prayer) => {
+                                const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
+                                return (
+                                  <div
+                                    key={prayer.uid}
+                                    style={{
+                                      padding: '10px 12px',
+                                      borderRadius: '8px',
+                                      backgroundColor: 'var(--bg-card)',
+                                      border: '1px solid var(--border-bible)',
+                                      display: 'flex',
+                                      justifyContent: 'space-between',
+                                      alignItems: 'center',
+                                      cursor: 'pointer'
+                                    }}
+                                    onClick={() => state.setSelectedPrayer(prayer)}
+                                  >
+                                    <div>
+                                      <div style={{ fontWeight: 500, fontSize: '14px' }}>{prayer.title}</div>
+                                      {prayer.isNovena && (
+                                        <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
+                                          ❖ Chuỗi 9 ngày
+                                        </span>
+                                      )}
+                                      {isCustom && (
+                                        <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontStyle: 'italic' }}>
+                                          ✍ Lời nguyện cá nhân
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                                      {prayer.isNovena && state.activeNovena?.id !== prayer.uid && (
+                                        <button
+                                          className="bible-button"
+                                          style={{ width: 'auto', padding: '4px 10px', fontSize: '11px' }}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            state.startNovena(prayer.uid, prayer.title);
+                                            state.setActiveTab('home');
+                                          }}
+                                        >
+                                          Kích hoạt
+                                        </button>
+                                      )}
+                                      {isCustom && (
+                                        <button
+                                          style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '12px', cursor: 'pointer' }}
+                                          onClick={async (e) => {
+                                            e.stopPropagation();
+                                            if (confirm(`Bạn có chắc muốn xóa lời nguyện "${prayer.title}"?`)) {
+                                              await state.deleteCustomPrayer(prayer.uid);
+                                            }
+                                          }}
+                                        >
+                                          🗑️
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                {/* User's Custom Prayers Accordion Folder */}
+                {state.customPrayers.length > 0 && (selectedHub === 'all' || selectedHub === 'custom') && (
+                  <div
+                    style={{
+                      borderRadius: '10px',
+                      border: '1px solid var(--gold-primary)',
+                      backgroundColor: 'var(--bg-card)',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <button
+                      type="button"
+                      style={{
+                        width: '100%',
+                        padding: '14px 16px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        background: openCategoryUid === 'user-custom-folder' ? 'var(--gold-glow)' : 'transparent',
+                        border: 'none',
+                        borderBottom: openCategoryUid === 'user-custom-folder' ? '1px solid var(--border-bible)' : 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left'
+                      }}
+                      onClick={() => setOpenCategoryUid(openCategoryUid === 'user-custom-folder' ? null : 'user-custom-folder')}
+                    >
+                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--gold-primary)' }}>
+                        ✍ Lời Nguyện Cá Nhân Của Tôi <span style={{ fontSize: '12px', fontWeight: 500 }}>({state.customPrayers.length})</span>
+                      </div>
+                      <span style={{ fontSize: '14px', color: 'var(--gold-primary)', transform: openCategoryUid === 'user-custom-folder' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                        ▼
+                      </span>
+                    </button>
+
+                    {openCategoryUid === 'user-custom-folder' && (
+                      <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: 'var(--bg-parchment)' }}>
+                        {state.customPrayers.map((cp) => (
+                          <div
+                            key={cp.uid}
+                            style={{
+                              padding: '10px 12px',
+                              borderRadius: '8px',
+                              backgroundColor: 'var(--bg-card)',
+                              border: '1px solid var(--border-bible)',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              cursor: 'pointer'
+                            }}
+                            onClick={() => state.setSelectedPrayer({
+                              uid: cp.uid,
+                              title: cp.title,
+                              category: cp.category,
+                              content: cp.content
+                            })}
+                          >
+                            <div>
+                              <div style={{ fontWeight: 500, fontSize: '14px' }}>{cp.title}</div>
+                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                                {cp.isPrivate ? '🔒 Riêng tư' : '🌐 Công cộng (Bản nháp)'}
+                              </span>
+                            </div>
+                            <button
+                              style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '12px', cursor: 'pointer' }}
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                if (confirm(`Bạn có chắc muốn xóa lời nguyện "${cp.title}"?`)) {
+                                  await state.deleteCustomPrayer(cp.uid);
+                                }
+                              }}
+                            >
+                              🗑️ Xóa
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -652,7 +1220,7 @@ export default function App() {
                                       >
                                         <div style={{ fontWeight: 600, fontSize: '14px' }}>{prayer.title}</div>
                                         <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                                          {isCustom ? '✍ Lời kinh tự viết' : (state.categories.find(c => c.uid === prayer.category)?.name || 'Kinh Nguyện')}
+                                          {isCustom ? '✍ Lời nguyện cá nhân' : (state.categories.find(c => c.uid === prayer.category)?.name || 'Kinh Nguyện')}
                                         </div>
                                       </div>
                                     );
@@ -833,46 +1401,95 @@ export default function App() {
                 Tự động nhận thông báo đẩy trên thiết bị khi chuyển giao sang khung giờ kinh nguyện mới trong ngày (Sáng, Trưa, Chiều, Tối) tùy theo Thứ và Vai trò của bạn.
               </p>
               
-              {state.notificationsEnabled && (
-                <div style={{
-                  marginTop: '12px',
+            </div>
+
+            {/* Notification Troubleshooting Guide */}
+            <div className="bible-card">
+              <h3 style={{ margin: 0, color: 'var(--gold-primary)', fontSize: '15px' }}>
+                💡 Hướng Dẫn Nếu Không Nhận Được Thông Báo
+              </h3>
+              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                Nếu bạn đã bật công tắc nhắc nhở mà thiết bị chưa hiển thị banner thông báo, vui lòng kiểm tra cài đặt theo hệ điều hành dưới đây:
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {/* macOS */}
+                <details style={{
                   padding: '10px 12px',
                   borderRadius: '8px',
-                  background: 'rgba(0, 0, 0, 0.02)',
                   border: '1px solid var(--border-bible)',
-                  fontSize: '11px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '6px'
+                  backgroundColor: 'var(--bg-parchment)',
+                  fontSize: '12px'
                 }}>
-                  <div style={{ fontWeight: 600, color: 'var(--gold-primary)', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
-                    🔍 Chẩn Đoán Đăng Ký (Diagnostics):
+                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
+                    🍏 Máy tính macOS (MacBook / Mac mini / iMac)
+                  </summary>
+                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                    1. Vào <b>System Settings (Cài đặt hệ thống) ➔ Notifications (Thông báo)</b>.<br />
+                    2. Tìm trình duyệt bạn đang dùng (Google Chrome, Safari, Brave...) và chọn <b>Allow Notifications</b>.<br />
+                    3. Đặt kiểu cảnh báo là <b>Banners</b> hoặc <b>Alerts</b>.<br />
+                    4. Kiểm tra xem máy có đang bật chế độ <b>Focus / Do Not Disturb (Không làm phiền)</b> ở góc trên bên phải màn hình không.
                   </div>
-                  <div>
-                    <span style={{ fontWeight: 600 }}>Tình trạng:</span> {state.pushDebugStatus}
+                </details>
+
+                {/* Windows */}
+                <details style={{
+                  padding: '10px 12px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-bible)',
+                  backgroundColor: 'var(--bg-parchment)',
+                  fontSize: '12px'
+                }}>
+                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
+                    🪟 Máy tính Windows (Windows 10 / Windows 11)
+                  </summary>
+                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                    1. Vào <b>Start ➔ Settings (Cài đặt) ➔ System ➔ Notifications</b>.<br />
+                    2. Đảm bảo công tắc <b>Notifications</b> ở trên cùng đang được bật <b>ON</b>.<br />
+                    3. Cuộn xuống tìm trình duyệt (Chrome, Edge...) và bật thông báo.<br />
+                    4. Tắt chế độ <b>Focus Assist / Do Not Disturb</b> ở góc dưới bên phải thanh Taskbar.
                   </div>
-                  {state.pushDebugError && (
-                    <div style={{ color: '#D32F2F', fontWeight: 600 }}>
-                      <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>Chi tiết lỗi:</span> {state.pushDebugError}
-                    </div>
-                  )}
-                  {state.pushDebugToken && (
-                    <div style={{
-                      wordBreak: 'break-all',
-                      color: 'var(--text-muted)',
-                      fontFamily: 'monospace',
-                      maxHeight: '60px',
-                      overflowY: 'auto',
-                      padding: '4px',
-                      background: 'rgba(0, 0, 0, 0.01)',
-                      borderRadius: '4px',
-                      border: '1px solid var(--border-bible)'
-                    }}>
-                      <span style={{ fontWeight: 600, color: 'var(--text-main)', fontFamily: 'var(--font-sans)' }}>Device Token:</span> {state.pushDebugToken}
-                    </div>
-                  )}
-                </div>
-              )}
+                </details>
+
+                {/* iPhone / iOS */}
+                <details style={{
+                  padding: '10px 12px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-bible)',
+                  backgroundColor: 'var(--bg-parchment)',
+                  fontSize: '12px'
+                }}>
+                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
+                    📱 Điện thoại iPhone / iPad (iOS 16.4 trở lên)
+                  </summary>
+                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                    1. Mở trang web này bằng trình duyệt <b>Safari</b>.<br />
+                    2. Nhấn vào nút <b>Chia sẻ (Share)</b> ở thanh công cụ dưới ➔ Chọn <b>Thêm vào Màn hình chính (Add to Home Screen)</b>.<br />
+                    3. Mở biểu tượng ứng dụng PWA vừa thêm từ Màn hình chính.<br />
+                    4. Vào <b>Cài đặt ➔ Nhắc Nhở Cầu Nguyện</b> và chọn <b>Cho phép (Allow)</b> khi iOS hỏi quyền.<br />
+                    5. Đảm bảo vào <b>Cài đặt iPhone ➔ Thông báo ➔ Kinh Nguyện PWA</b> đã chọn <b>Cho phép thông báo</b>.
+                  </div>
+                </details>
+
+                {/* Android */}
+                <details style={{
+                  padding: '10px 12px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border-bible)',
+                  backgroundColor: 'var(--bg-parchment)',
+                  fontSize: '12px'
+                }}>
+                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
+                    🤖 Điện thoại Android (Samsung, Xiaomi, OPPO, vivo...)
+                  </summary>
+                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                    1. Nhấn vào biểu tượng 🔒 Khóa hoặc Cài đặt trang web trên thanh địa chỉ trình duyệt ➔ Chọn <b>Cho phép Thông báo</b>.<br />
+                    2. Vào <b>Cài đặt Android ➔ Ứng dụng ➔ Chrome (hoặc ứng dụng Kinh Nguyện PWA) ➔ Thông báo</b> ➔ Bật <b>Hiển thị thông báo</b>.<br />
+                    3. Vào mục <b>Tối ưu hóa Pin (Battery Optimization)</b> ➔ Chuyển sang <b>Không tối ưu hóa (Unrestricted)</b> để ứng dụng gửi thông báo đúng giờ ngầm khi tắt màn hình.
+                  </div>
+                </details>
+              </div>
             </div>
 
             {/* Dark Mode Theme */}
@@ -907,7 +1524,7 @@ export default function App() {
               <h3>Sao lưu và Phục hồi</h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                Sao lưu cấu hình Sách Kinh Tuần, các lời kinh tự viết, nhắc nhở và tiến trình cửu nhật ra tệp JSON để chuyển sang thiết bị khác.
+                Sao lưu cấu hình Sách Kinh Tuần, các lời nguyện cá nhân, nhắc nhở và tiến trình cửu nhật ra tệp JSON để chuyển sang thiết bị khác.
               </p>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -1033,7 +1650,7 @@ export default function App() {
               ← Quay lại
             </button>
             <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-              {state.categories.find(c => c.uid === state.selectedPrayer?.category)?.name || 'Lời kinh cá nhân'}
+              {state.categories.find(c => c.uid === state.selectedPrayer?.category)?.name || 'Lời nguyện cá nhân'}
             </span>
           </div>
 
@@ -1217,6 +1834,344 @@ export default function App() {
             >
               Hoàn tất
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Add Relative Patron Saint */}
+      {showPatronModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 600,
+          padding: '20px'
+        }} onClick={() => setShowPatronModal(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-bible)',
+            borderRadius: '12px',
+            padding: '20px',
+            width: '100%',
+            maxWidth: '420px',
+            boxShadow: 'var(--shadow-card)',
+            maxHeight: '85vh',
+            overflowY: 'auto'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '14px', textAlign: 'center', color: 'var(--gold-primary)' }}>
+              Gắn Bổn Mạng Người Thân
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Tên người thân (ví dụ: Ba, Chú Tuấn, Chị Mai...)
+                </label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Nhập tên người thân..."
+                  value={patronRelativeName}
+                  onChange={(e) => setPatronRelativeName(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Chọn Thánh / Ngày Lễ Bổn Mạng
+                </label>
+                <select
+                  className="bible-select"
+                  value={patronSaintId}
+                  onChange={(e) => setPatronSaintId(e.target.value)}
+                >
+                  {CATHOLIC_SAINTS.map((saint) => (
+                    <option key={saint.id} value={saint.id}>
+                      {saint.name} ({saint.date.split('-')[1]}/{saint.date.split('-')[0]})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Số điện thoại Zalo (Tùy chọn)
+                </label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Ví dụ: 0901234567"
+                  value={patronPhone}
+                  onChange={(e) => setPatronPhone(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Ghi chú (Tùy chọn)
+                </label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Ví dụ: Bổn mạng ông nội / Anh hai..."
+                  value={patronNote}
+                  onChange={(e) => setPatronNote(e.target.value)}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button
+                  className="bible-button"
+                  onClick={() => {
+                    if (!patronRelativeName.trim()) {
+                      alert('Vui lòng nhập tên người thân!');
+                      return;
+                    }
+                    const selectedSaint = CATHOLIC_SAINTS.find(s => s.id === patronSaintId);
+                    if (!selectedSaint) return;
+
+                    state.saveRelativePatron({
+                      name: patronRelativeName.trim(),
+                      saintId: selectedSaint.id,
+                      saintName: selectedSaint.name,
+                      feastDate: selectedSaint.date,
+                      phone: patronPhone.trim(),
+                      note: patronNote.trim()
+                    });
+
+                    setShowPatronModal(false);
+                    setPatronRelativeName('');
+                    setPatronPhone('');
+                    setPatronNote('');
+                    alert(`Đã thêm Lễ Bổn Mạng ${selectedSaint.name} cho ${patronRelativeName}!`);
+                  }}
+                >
+                  Lưu Người Thân
+                </button>
+                <button className="bible-button secondary" onClick={() => setShowPatronModal(false)}>Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Zalo Greeting Editor */}
+      {showZaloModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 600,
+          padding: '20px'
+        }} onClick={() => setShowZaloModal(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-bible)',
+            borderRadius: '12px',
+            padding: '20px',
+            width: '100%',
+            maxWidth: '440px',
+            boxShadow: 'var(--shadow-card)',
+            maxHeight: '85vh',
+            overflowY: 'auto'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)' }}>
+              💌 Gửi Lời Chúc Bổn Mạng Qua Zalo
+            </h3>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px', textAlign: 'center' }}>
+              Dành cho: <b>{zaloRelativeName}</b> (Lễ {zaloSaintName})
+            </p>
+
+            {/* Select Template */}
+            <div style={{ marginBottom: '12px' }}>
+              <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '6px' }}>
+                Chọn câu chúc mẫu Công giáo:
+              </label>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                {['Trang trọng', 'Thân tình', 'Gia đình'].map((label, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    style={{
+                      flex: 1,
+                      padding: '6px 4px',
+                      fontSize: '11px',
+                      borderRadius: '6px',
+                      border: zaloTemplateIdx === idx ? '2px solid var(--gold-primary)' : '1px solid var(--border-bible)',
+                      backgroundColor: zaloTemplateIdx === idx ? 'var(--gold-glow)' : 'transparent',
+                      fontWeight: zaloTemplateIdx === idx ? 600 : 'normal',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleSelectTemplate(idx)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Message Textarea */}
+            <div style={{ marginBottom: '14px' }}>
+              <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                Nội dung lời chúc (Có thể tự do chỉnh sửa):
+              </label>
+              <textarea
+                className="bible-textarea"
+                rows={5}
+                value={zaloMessage}
+                onChange={(e) => setZaloMessage(e.target.value)}
+              />
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                className="bible-button"
+                onClick={() => handleSendZalo(zaloMessage, zaloPhone)}
+              >
+                📱 Gửi Qua Zalo (1-Tap Share)
+              </button>
+
+              <button
+                className="bible-button secondary"
+                onClick={() => {
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(zaloMessage);
+                  }
+                  alert('Đã sao chép lời chúc vào bộ nhớ tạm!');
+                }}
+              >
+                📋 Sao Chép Lời Chúc
+              </button>
+
+              <button
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '13px', cursor: 'pointer', marginTop: '4px' }}
+                onClick={() => setShowZaloModal(false)}
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Warning Duplicate Prayer */}
+      {showDuplicateModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 700,
+          padding: '20px'
+        }} onClick={() => setShowDuplicateModal(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-bible)',
+            borderRadius: '12px',
+            padding: '20px',
+            width: '100%',
+            maxWidth: '420px',
+            boxShadow: 'var(--shadow-card)',
+            textAlign: 'center'
+          }} onClick={(e) => e.stopPropagation()}>
+            <div style={{ fontSize: '28px', marginBottom: '8px' }}>⚠️</div>
+            <h3 style={{ color: '#D32F2F', marginBottom: '10px' }}>Phát Hiện Có Thể Trùng Lặp</h3>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '14px' }}>
+              Nội dung đoạn đầu của lời nguyện này có thể tương tự hoặc trùng với lời nguyện đã có trên ứng dụng:
+              <br />
+              <b style={{ color: 'var(--gold-primary)', fontSize: '14px' }}>"{duplicateMatchTitle}"</b>
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button className="bible-button" onClick={() => setShowDuplicateModal(false)}>
+                ✍ Sửa Lại Nội Dung Lời Nguyện
+              </button>
+              <button
+                className="bible-button secondary"
+                style={{ borderColor: 'var(--gold-primary)', color: 'var(--gold-primary)' }}
+                onClick={() => {
+                  setShowDuplicateModal(false);
+                  setShowReportModal(true);
+                }}
+              >
+                🚨 Nếu Sai, Gửi Yêu Cầu Xem Xét Cho Admin
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal False Positive Report Form */}
+      {showReportModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 750,
+          padding: '20px'
+        }} onClick={() => setShowReportModal(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-bible)',
+            borderRadius: '12px',
+            padding: '20px',
+            width: '100%',
+            maxWidth: '430px',
+            boxShadow: 'var(--shadow-card)'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)' }}>
+              🚨 Gửi Yêu Cầu Xem Xét Cho Admin
+            </h3>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px', textAlign: 'center' }}>
+              Nếu nhận diện trùng lặp chưa chính xác, hãy gửi thông tin này để Admin xem xét và phê duyệt thủ công.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Lý do giải thích vì sao không trùng:
+                </label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Ví dụ: Đây là lời nguyện riêng theo ý lễ của gia đình tôi..."
+                  value={duplicateReason}
+                  onChange={(e) => setDuplicateReason(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
+                  Email hoặc Số điện thoại liên hệ (bắt buộc):
+                </label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Ví dụ: 0901234567 hoặc user@gmail.com"
+                  value={userContact}
+                  onChange={(e) => setUserContact(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button className="bible-button" onClick={handleReportFalsePositive}>
+                Gửi Cho Admin Duyệt
+              </button>
+              <button className="bible-button secondary" onClick={() => setShowReportModal(false)}>Hủy</button>
+            </div>
           </div>
         </div>
       )}

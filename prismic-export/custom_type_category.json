@@ -1,0 +1,26 @@
+{
+  "id": "category",
+  "label": "Category",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "name": {
+        "type": "Text",
+        "config": {
+          "label": "Tên Danh Mục"
+        }
+      },
+      "parent": {
+        "type": "Link",
+        "config": {
+          "label": "Danh Mục Cha",
+          "select": "document",
+          "customtypes": [
+            "category"
+          ]
+        }
+      }
+    }
+  }
+}

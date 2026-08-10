@@ -16,10 +16,13 @@ self.addEventListener('push', (event: any) => {
   if (event.data) {
     try {
       const data = event.data.json();
-      title = data.title || title;
-      body = data.body || body;
-      icon = data.icon || icon;
-      period = data.period || '';
+      const payloadNotification = data.notification || {};
+      const payloadData = data.data || {};
+
+      title = payloadNotification.title || payloadData.title || data.title || title;
+      body = payloadNotification.body || payloadData.body || data.body || body;
+      icon = payloadNotification.icon || payloadData.icon || data.icon || icon;
+      period = payloadData.period || data.period || '';
     } catch {
       body = event.data.text() || body;
     }

@@ -1,224 +1,818 @@
 [
   {
-    "uid": "kinh-dang-ngay-truoc-khi-di-lam",
-    "title": "Kinh dâng ngày trước khi đi làm",
-    "category": "morning-work",
-    "content": "<p>Lạy Chúa, con cảm tạ Chúa đã ban cho con một ngày mới và một công việc để làm. Con xin dâng lên Chúa trọn vẹn ngày làm việc hôm nay: mọi nỗ lực, mệt mỏi, niềm vui và cả những thử thách.</p><p>Xin ban Thần Khí Chúa soi sáng để mọi quyết định của con được ngay thẳng, lời nói của con tràn đầy lòng nhân ái, và hành động của con phản chiếu tình yêu của Chúa. Xin cho con biết làm việc hết lòng, trung thực và trách nhiệm, coi công việc như một phương tiện để tôn vinh Chúa và phục vụ tha nhân. Amen.</p>"
+    "uid": "kinh-xin-on-tap-trung-lam-viec-hieu-qua",
+    "title": "Kinh xin ơn tập trung làm việc hiệu quả",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Chúa Giêsu, Đấng luôn chu toàn ý muốn của Chúa Cha trong sự tĩnh lặng và kiên định, con xin dâng lên Chúa công việc sắp tới của con.</p><p>Xin ban ơn trợ giúp để con xua tan mọi xao nhãng xung quanh, giữ cho trí óc luôn sáng suốt và tập trung hoàn thành nhiệm vụ trước mắt. Con muốn làm việc này không phải vì danh vọng cá nhân, nhưng là để làm vinh danh Chúa và phục vụ tha nhân. Lạy Chúa Thánh Thần, xin ngự trị và điều khiển mọi ý nghĩ của con hôm nay.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
   },
   {
-    "uid": "kinh-xin-thanh-hoa-cong-viec",
-    "title": "Kinh thánh hóa công việc hằng ngày",
-    "category": "morning-work",
-    "content": "<p>Lạy Chúa Giêsu, Đấng đã từng lao động vất vả tại Nazareth, xin ở bên con trong giờ làm việc hôm nay. Xin chúc lành cho đôi tay, khối óc và công sức của con.</p><p>Khi gặp khó khăn hay áp lực, xin ban cho con sự kiên nhẫn. Khi gặp bất đồng với đồng nghiệp, xin ban cho con lòng bao dung và hòa nhã. Con dâng tất cả những giọt mồ hôi hôm nay để cầu nguyện cho gia đình con và cho những ai đang thất nghiệp. Chớ gì công việc của con hôm nay mang lại hoa trái tốt lành. Amen.</p>"
+    "uid": "loi-nguyen-xin-on-vuot-qua-su-chia-tri-va-lo-la",
+    "title": "Lời nguyện xin ơn vượt qua sự chia trí và lơ là",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Thiên Chúa là nguồn mạch sự bình an, Chúa thấu suốt sự yếu đuối và tâm trí dễ dao động của con. Mỗi khi bắt tay vào học tập hay làm việc, con rất dễ bị thu hút bởi những cám dỗ thế gian.</p><p>Xin Chúa gửi Thần Khí bình an đến dọn dẹp tâm hồn con, giúp con biết tập trung vào bổn phận hiện tại. Xin cho con nhận ra giá trị thiêng liêng của phút giây hiện tại để lao động và cộng tác vào công trình sáng tạo của Chúa một cách trọn vẹn nhất. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
   },
   {
-    "uid": "kinh-dang-ngay-truoc-khi-di-hoc",
-    "title": "Kinh dâng buổi sáng của học sinh",
-    "category": "morning-school",
-    "content": "<p>Lạy Chúa Giêsu Cực Thánh, con dâng ngày học hôm nay cho Chúa. Con xin dâng lên Chúa trí thông minh, trí nhớ và sự tập trung của con.</p><p>Xin Chúa soi sáng tâm trí con, giúp con hiểu bài nhanh chóng và ghi nhớ sâu sắc những điều bổ ích. Xin cho con biết kính trọng thầy cô, yêu thương và giúp đỡ bạn bè xung quanh. Con quyết tâm học tập thật tốt để cha mẹ được vui lòng và chuẩn bị hành trang phục vụ Giáo Hội và xã hội trong tương lai. Amen.</p>"
+    "uid": "kinh-thanh-hoa-gio-lam-viec-cung-chua-giesu",
+    "title": "Kinh thánh hóa giờ làm việc cùng Chúa Giêsu",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Chúa Giêsu, Đấng đã từng làm việc thầm lặng tại Nazareth, Ngài hiểu áp lực của sự bận rộn và mỏi mệt. Xin hãy đến làm việc cùng con hôm nay.</p><p>Xin ban cho con ơn tập trung cao độ để hoàn thành xuất sắc các chỉ tiêu và công việc được giao. Khi gặp bất kỳ sự chia trí nào, xin nhắc nhở con rằng con đang làm việc dưới ánh mắt yêu thương của Ngài. Xin thánh hóa từng giây phút làm việc của con. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
   },
   {
-    "uid": "kinh-xin-on-khon-ngoan-hoc-hanh",
-    "title": "Kinh cầu xin ơn Khôn Ngoan",
-    "category": "morning-school",
-    "content": "<p>Lạy Chúa Thánh Thần, nguồn mạch ánh sáng và sự khôn ngoan, xin ngự xuống trên con. Xin xua tan bóng tối của sự u mê và lười biếng trong tâm hồn con.</p><p>Xin ban cho con một trí tuệ nhạy bén, một trí nhớ kiên vững và khả năng tiếp thu mọi kiến thức hữu ích. Lạy Mẹ Maria, Thao Tòa Đấng Khôn Ngoan, xin cầu bầu cùng Chúa cho con học tập hôm nay được kết quả tốt đẹp nhất. Mẹ Thánh Cả Giuse, xin hộ phù cho con. Amen.</p>"
+    "uid": "kinh-cau-xin-on-khiem-nhuong-trong-cuoc-song",
+    "title": "Kinh cầu xin ơn khiêm nhường trong cuộc sống",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Chúa Giêsu hiền hậu và khiêm nhường trong lòng, xin biến đổi trái tim con nên giống Chúa.</p><p>Xin giải thoát con khỏi ham muốn được ca tụng, được tôn vinh và được ưu tiên hơn người khác. Xin cho con ơn nhận ra sự nhỏ bé của mình trước nhan Chúa và biết tôn trọng, yêu thương anh chị em xung quanh. Xin ban cho con một tâm hồn khiêm cung để luôn sẵn sàng phục vụ trong âm thầm. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
   },
   {
-    "uid": "kinh-toi-trong-tuan",
-    "title": "Kinh tối trong tuần",
-    "category": "evening-weekday",
-    "content": "<p>Lạy Chúa là Cha nhân lành, một ngày dài hoạt động đã trôi qua, giờ đây con tìm về bên Chúa để nghỉ ngơi và cầu nguyện.</p><p>Con xin dâng lời tạ ơn vì muôn vàn ơn lành Chúa đã đổ xuống trên con ngày hôm nay. Con cũng xin thành tâm sám hối vì những thiếu sót, những lần con lỗi phạm đến Chúa và anh chị em qua tư tưởng, lời nói hay hành động của con. Xin Chúa tha thứ và ban cho con một giấc ngủ an lành, để ngày mai con lại thức dậy với sức sống mới dâng hiến cho Chúa. Amen.</p>"
+    "uid": "loi-nguyen-cau-xin-on-khiem-ton-truoc-moi-thanh-cong",
+    "title": "Lời nguyện cầu xin ơn khiêm tốn trước mọi thành công",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Chúa, mọi tài năng, sức khỏe và thành công con có được hôm nay đều là quà tặng nhưng không từ lòng nhân lành của Chúa.</p><p>Xin gìn giữ con khỏi cạm bẫy của sự kiêu ngạo và tự mãn. Khi được người đời khen ngợi, xin cho con biết quy hướng mọi vinh quang về Chúa và ghi nhớ rằng không có ơn Chúa giúp, con chẳng thể làm được việc gì tốt đẹp. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
   },
   {
-    "uid": "kinh-xet-minh-cuoi-ngay",
-    "title": "Kinh xét mình và Ăn Năn Tội",
-    "category": "evening-weekday",
-    "content": "<p>Lạy Chúa là Thiên Chúa của con, dưới ánh sáng tình yêu Chúa, con nhìn lại ngày hôm nay...</p><p>(Dành vài giây thinh lặng để xét mình)</p><p>Lạy Chúa, con đau đớn vì những tội lỗi con đã phạm ngày hôm nay. Con ghét tội lỗi con vì nó xúc phạm đến Chúa là Đấng vô cùng nhân hậu. Con quyết chí, nhờ ơn Chúa trợ giúp, sẽ cố gắng lánh xa dịp tội và chừa cải tội lỗi. Lạy Chúa, xin thương xót và tha thứ cho con. Amen.</p>"
+    "uid": "kinh-tu-bo-cai-toi-ich-ky-de-phuc-vu-tha-nhan",
+    "title": "Kinh từ bỏ cái tôi ích kỷ để phục vụ tha nhân",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Chúa Cứu Thế, Ngài đã rửa chân cho các môn đệ để làm gương về lòng hạ mình. Con cầu xin Chúa dẹp bỏ tính tự ái và cái tôi quá lớn trong con.</p><p>Xin cho con biết vui mừng trước thành công của đồng nghiệp, biết chấp nhận sự sửa dạy từ người khác và biết nhường nhịn trong những cuộc tranh luận vô bổ. Chớ gì con biết nhỏ bé đi để Chúa được lớn lên trong con. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
   },
   {
-    "uid": "kinh-toi-gia-dinh-cuoi-tuan",
-    "title": "Kinh tối gia đình ngày cuối tuần",
-    "category": "evening-weekend",
-    "content": "<p>Lạy Chúa Giêsu, Chúa đã thánh hóa đời sống gia đình tại Nazareth, chúng con cùng quy tụ nơi đây để tạ ơn Chúa sau một tuần làm việc và học tập.</p><p>Chúng con dâng lên Chúa gia đình của chúng con. Xin gìn giữ gia đình chúng con luôn hiệp nhất, yêu thương và hòa thuận. Xin ban bình an cho ông bà, cha mẹ và con cái. Dù gặp gian nan khốn khó, xin cho chúng con luôn tin tưởng vào Chúa và biết nâng đỡ lẫn nhau. Xin Chúa chúc lành cho đêm nghỉ này của chúng con. Amen.</p>"
+    "uid": "kinh-cau-xin-on-khon-ngoan-cua-chua-thanh-than",
+    "title": "Kinh cầu xin ơn Khôn Ngoan của Chúa Thánh Thần",
+    "category": "loi-nguyen-cau-cho-su-khon-ngoan",
+    "content": "<p>Lạy Chúa Thánh Thần, Thần Khí của sự thật và ánh sáng, con nài xin Ngài tuôn đổ ơn khôn ngoan xuống trên con hôm nay.</p><p>Xin ban cho con khả năng phân định điều lành dữ, sự sáng suốt để đưa ra những quyết định đúng đắn đẹp ý Chúa trong học tập cũng như cuộc sống. Xin hướng dẫn lời nói và hành động của con để luôn đem lại sự bình an và xây dựng cho mọi người xung quanh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
   },
   {
-    "uid": "kinh-ta-on-cuoi-tuan",
-    "title": "Kinh tạ ơn tối Chúa Nhật",
-    "category": "evening-weekend",
-    "content": "<p>Lạy Thiên Chúa toàn năng, con tạ ơn Chúa vì ngày Chúa Nhật thánh thiện con được tham dự Thánh Lễ và nghỉ ngơi bên gia đình.</p><p>Cảm tạ Chúa đã nuôi dưỡng linh hồn con bằng Lời Ngài và Bí Tích Thánh Thể. Xin cho con biết đem tình yêu Chúa đã nhận được hôm nay đi vào tuần lễ mới, chia sẻ niềm vui phục sinh cho mọi người con gặp gỡ trong công việc và học tập sắp tới. Amen.</p>"
+    "uid": "loi-nguyen-xin-su-khon-ngoan-phan-dinh-y-chua",
+    "title": "Lời nguyện xin sự khôn ngoan phân định ý Chúa",
+    "category": "loi-nguyen-cau-cho-su-khon-ngoan",
+    "content": "<p>Lạy Thiên Chúa là Cha toàn năng, đứng trước những ngã rẽ và sự chọn lựa quan trọng của cuộc đời, lòng con thường bối rối và bất an.</p><p>Xin ban cho con ơn khôn ngoan thiêng liêng để nhận ra tiếng Chúa gọi, từ bỏ ý riêng để đi theo con đường Chúa đã vạch sẵn. Con tin tưởng vào tình yêu và sự an bài khôn ngoan của Chúa trên cuộc đời con. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
   },
   {
-    "uid": "kinh-dang-ngay-le-giang-sinh",
-    "title": "Lời nguyện ngày đại lễ Giáng Sinh",
-    "category": "feast-holiday",
-    "content": "<p>Lạy Chúa Hài Đồng Giêsu, Ngôi Hai Thiên Chúa làm người, chúng con tôn thờ và ca tụng tình yêu vĩ đại của Ngài.</p><p>Hôm nay, trong niềm vui Con Chúa giáng sinh, xin ban bình an của Ngài xuống trên tâm hồn chúng con, gia đình chúng con và toàn thể nhân loại. Xin cho chúng con biết mở rộng lòng đón tiếp Ngài, biết chia sẻ tình yêu thương và sự sưởi ấm cho những người nghèo khổ, cô đơn xung quanh chúng con. Vinh danh Thiên Chúa trên các tầng trời, và bình an dưới thế cho người thiện tâm. Amen.</p>"
+    "uid": "loi-nguyen-cau-xin-su-sang-suot-trong-hoc-hanh-thi-cu",
+    "title": "Lời nguyện cầu xin sự sáng suốt trong học hành thi cử",
+    "category": "loi-nguyen-cau-cho-su-khon-ngoan",
+    "content": "<p>Lạy Chúa Giêsu, Ngài là Đường, là Sự Thật và là Sự Sống. Trong quá trình tích lũy tri thức, xin ban cho con một trí tuệ nhạy bén và khôn ngoan.</p><p>Giúp con biết tiếp thu những kiến thức bổ ích, nhận ra chân lý thiêng liêng và sử dụng những hiểu biết ấy để phục vụ Giáo hội và xã hội một cách tốt đẹp nhất dưới sự hướng dẫn của Chúa Thánh Thần. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
   },
   {
-    "uid": "kinh-nguyen-ngay-tet-co-truyen",
-    "title": "Lời nguyện cầu bình an năm mới (Tết Nguyên Đán)",
-    "category": "feast-holiday",
-    "content": "<p>Lạy Chúa là Đấng làm chủ thời gian và lịch sử, trong những ngày đầu xuân năm mới, chúng con dâng lên Chúa lời chúc tụng kính tôn.</p><p>Chúng con tạ ơn Chúa vì một năm cũ đã qua với muôn ơn lành. Bước vào năm mới, chúng con xin phó dâng mọi sự trong bàn tay an bài của Chúa. Xin ban cho quê hương Việt Nam được thanh bình, gia đình được an khang thịnh vượng, và mọi người chúng con được sống trong tình yêu thương và ơn nghĩa của Chúa. Chúng con cũng xin tưởng nhớ và cầu nguyện cho tổ tiên, ông bà cha mẹ đã qua đời. Amen.</p>"
+    "uid": "kinh-cau-xin-on-song-thanh-thien-hang-ngay",
+    "title": "Kinh cầu xin ơn sống thánh thiện hằng ngày",
+    "category": "loi-nguyen-cau-cho-su-thanh-thien",
+    "content": "<p>Lạy Thiên Chúa Ba Ngôi cực thánh, Chúa kêu gọi chúng con nên thánh như Cha trên trời là Đấng Thánh. Xin ban ơn giúp con sống thánh thiện ngay trong những bổn phận nhỏ nhặt hằng ngày.</p><p>Giúp con biết tránh xa mọi dịp tội, gìn giữ tư tưởng trong sạch, lời nói bác ái và hành động vị tha. Xin cho con biết yêu mến cầu nguyện và siêng năng lãnh nhận các Bí Tích để linh hồn luôn được kết hiệp cùng Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
   },
   {
-    "uid": "tuan-cuu-nhat-long-thuong-xot",
+    "uid": "loi-nguyen-cau-xin-on-thanh-hoa-tam-hon-va-than-xac",
+    "title": "Lời nguyện cầu xin ơn thánh hóa tâm hồn và thân xác",
+    "category": "loi-nguyen-cau-cho-su-thanh-thien",
+    "content": "<p>Lạy Chúa Giêsu, xin lấy Máu Cực Thánh Chúa tẩy rửa tâm hồn con sạch mọi vết nhơ tội lỗi. Xin thánh hóa mọi giác quan, suy nghĩ và ước muốn của con.</p><p>Xin ban cho con ơn can đảm chiến đấu chống lại những lôi cuốn của thế gian, xác thịt và ma quỷ. Xin chắp cánh cho linh hồn con bay cao trên con đường trọn lành, hằng ngày biết yêu mến Chúa nhiều hơn. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-xin-on-kien-tri-tren-con-duong-nhan-duc",
+    "title": "Lời xin ơn kiên trì trên con đường nhân đức",
+    "category": "loi-nguyen-cau-cho-su-thanh-thien",
+    "content": "<p>Lạy Chúa, con biết con người con mỏng giòn và dễ sa ngã. Con khao khát nên thánh nhưng lại thiếu kiên nhẫn và lòng trung thành.</p><p>Xin ban ơn trợ lực để con biết đứng lên sau mỗi lần vấp ngã, luôn trông cậy vào lòng thương xót vô biên của Chúa và trung kiên bước đi trên con đường nhân đức cho đến hơi thở cuối cùng. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "kinh-dang-ngay-moi-truoc-khi-di-lam",
+    "title": "Kinh dâng ngày mới trước khi đi làm",
+    "category": "loi-nguyen-cau-truoc-khi-di-lam",
+    "content": "<p>Lạy Chúa, khi ánh bình minh ngày mới bắt đầu, con xin dâng hiến trọn vẹn ngày làm việc hôm nay cho Trái Tim Cực Thánh Chúa Giêsu qua bàn tay hiền mẫu của Mẹ Maria.</p><p>Mọi tư tưởng, lời nói, việc làm và những mệt mỏi khó nhọc của con hôm nay, con xin dâng để cầu nguyện cho gia đình, cho các linh mục và cho hòa bình thế giới. Xin Chúa chúc lành cho công việc hôm nay của con được hanh thông. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-xin-binh-an-truoc-gio-lam-viec",
+    "title": "Lời nguyện cầu xin bình an trước giờ làm việc",
+    "category": "loi-nguyen-cau-truoc-khi-di-lam",
+    "content": "<p>Lạy Chúa Giêsu Kitô, Ngài là Đấng dẫn đường chỉ lối cho con. Trước khi bắt đầu công việc hôm nay, con xin đặt bản thân dưới sự bảo trợ của Ngài.</p><p>Xin ban cho con sự bình an, vui tươi và tràn đầy năng lượng để làm việc hiệu quả. Xin gìn giữ con khỏi những tai nạn, rủi ro ngoài ý muốn và giúp con luôn sống hòa nhã, lịch sự với các đồng nghiệp xung quanh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-dang-hien-cong-suc-lao-dong-cho-chua",
+    "title": "Lời dâng hiến công sức lao động cho Chúa",
+    "category": "loi-nguyen-cau-truoc-khi-di-lam",
+    "content": "<p>Lạy Cha nhân ái, lao động là hồng ân Cha ban để con nuôi sống bản thân và gia đình. Con xin dâng lên Cha mọi giọt mồ hôi và sự nỗ lực hôm nay.</p><p>Xin cho con biết làm việc trung thực, không lười biếng, biết tôn trọng của công và coi công việc như một phương thế hữu hiệu để thánh hóa bản thân và tích lũy kho báu trên thiên đàng. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "kinh-dang-ngay-hoc-moi-cua-hoc-sinh",
+    "title": "Kinh dâng ngày học mới của học sinh",
+    "category": "loi-nguyen-cau-truoc-khi-di-hoc",
+    "content": "<p>Lạy Chúa Giêsu yêu quý, con dâng ngày học hôm nay cho Chúa. Con cầu xin Chúa mở mang trí tuệ, ban cho con sự minh mẫn để tiếp thu bài giảng.</p><p>Xin ban cho con ơn biết kính trọng, vâng lời thầy cô giáo, yêu thương hòa thuận với bạn bè, tránh xa mọi thói xấu như gian lận trong thi cử hay bắt nạt bạn học. Con quyết tâm học chăm để dâng tặng cha mẹ món quà ý nghĩa nhất. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-truoc-khi-vao-lop-hoc",
+    "title": "Lời nguyện cầu trước khi vào lớp học",
+    "category": "loi-nguyen-cau-truoc-khi-di-hoc",
+    "content": "<p>Lạy Chúa Thánh Thần là Đấng giáo dục tối cao, xin đến ngự trị trong lớp học của con hôm nay. Xin soi sáng tâm trí con và ban ơn thông hiểu.</p><p>Giúp con biết lắng nghe bài giảng một cách chăm chú, biết tự giác suy nghĩ và tiếp nhận tri thức khoa học cũng như đạo lý làm người. Con xin dâng ngày học này để tôn vinh danh Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-xin-chua-dong-hanh-tren-duong-di-hoc",
+    "title": "Lời nguyện cầu xin Chúa đồng hành trên đường đi học",
+    "category": "loi-nguyen-cau-truoc-khi-di-hoc",
+    "content": "<p>Lạy Chúa, đường đi học của con hôm nay có nhiều xe cộ đông đúc và nguy hiểm. Con xin Chúa và các Thiên Thần bản mệnh cùng đồng hành bên con.</p><p>Gìn giữ con đi đến nơi về đến chốn an toàn. Xin cho mỗi ngày con đến trường là một ngày vui, giúp con ngày một lớn khôn cả về thể xác lẫn tinh thần trong tình yêu của Chúa. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-buoi-sang-danh-cho-nguoi-lon-tuoi",
+    "title": "Lời nguyện buổi sáng dành cho người lớn tuổi",
+    "category": "loi-nguyen-cau-danh-cho-nguoi-lon-tuoi",
+    "content": "<p>Lạy Chúa, con tạ ơn Chúa đã gìn giữ con bình an qua một đêm dài và ban cho con thêm một ngày sống mới.</p><p>Dù tuổi già mang lại nhiều mệt mỏi, đau nhức về thể xác, con xin dâng tất cả những khó nhọc đó hiệp thông với Cuộc Khổ Nạn của Chúa Giêsu để mưu cầu ơn ích cho con cháu. Xin ban cho con sự bình an, vui vẻ chấp nhận tuổi già và luôn cậy trông vững vàng vào Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-tuoi-gia-va-cau-binh-an",
+    "title": "Kinh tạ ơn tuổi già và cầu bình an",
+    "category": "loi-nguyen-cau-danh-cho-nguoi-lon-tuoi",
+    "content": "<p>Lạy Thiên Chúa là Cha nhân từ, con tạ ơn Cha vì hồng ân cuộc đời dài lâu mà Cha đã thương ban cho con.</p><p>Xin gìn giữ con cháu con luôn sống đạo đức, hiếu thảo và hòa thuận. Xin ban sức khỏe hồn xác cho con và giúp con luôn sống trong tâm tình cầu nguyện hằng ngày, làm gương sáng đức tin cho thế hệ trẻ trong gia đình. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-pho-thac-tuoi-gia-cho-chua",
+    "title": "Lời cầu nguyện phó thác tuổi già cho Chúa",
+    "category": "loi-nguyen-cau-danh-cho-nguoi-lon-tuoi",
+    "content": "<p>Lạy Chúa Giêsu, Ngài là chốn nương thân duy nhất của con. Khi sức khỏe suy giảm, trí nhớ phai nhạt theo năm tháng, xin Ngài đừng bỏ rơi con.</p><p>Xin ban cho con trái tim ngập tràn tình yêu thương, không oán trách, luôn bao dung với mọi người xung quanh. Con xin phó thác linh hồn và những năm tháng cuối đời trong bàn tay an bài đầy yêu thương của Ngài. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "kinh-dang-chuyen-di-xa-cau-binh-an",
+    "title": "Kinh dâng chuyến đi xa cầu bình an",
+    "category": "loi-nguyen-truoc-mot-chuyen-di",
+    "content": "<p>Lạy Thiên Chúa, Đấng đã hướng dẫn tổ phụ Abraham và con cái Israel bình an băng qua sa mạc hoang vu, con xin phó dâng hành trình sắp tới của con cho Chúa.</p><p>Xin ban bình an cho phương tiện con di chuyển, gìn giữ mọi chặng đường con qua được an toàn. Xin sai các Thiên Thần bản mệnh đi trước dọn đường và gìn giữ con khỏi mọi tai ương rủi ro dọc đường. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-truoc-khi-buoc-len-xe-di-chuyen",
+    "title": "Lời cầu nguyện trước khi bước lên xe di chuyển",
+    "category": "loi-nguyen-truoc-mot-chuyen-di",
+    "content": "<p>Lạy Chúa Giêsu Kitô, Ngài là bạn đồng hành trung thành của con. Trước khi khởi hành chuyến đi hôm nay, con xin dâng chuyến đi này cho Ngài.</p><p>Xin ban cho người tài xế sự tỉnh táo, khôn ngoan xử lý mọi tình huống giao thông phức tạp. Xin chúc lành cho mọi hành khách trên xe được bình an hồn xác và đi đến đích an toàn đẹp ý Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-xin-on-binh-an-tren-moi-neo-duong-di-chuyen",
+    "title": "Lời xin ơn bình an trên mọi nẻo đường di chuyển",
+    "category": "loi-nguyen-truoc-mot-chuyen-di",
+    "content": "<p>Lạy Chúa Thánh Thần là ngọn hải đăng dẫn lối, xin soi sáng cho hành trình của con. Xin cho chuyến đi này không chỉ an toàn về phần xác, nhưng còn là cơ hội để con nhận ra vẻ đẹp thiên nhiên Chúa sáng tạo.</p><p>Và giúp con đem niềm vui, sự tử tế chia sẻ với những người con gặp gỡ trên đường đi. Chúng con cầu xin nhờ Đức Kitô, Chúa chúng con. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-ta-on-cuoi-ngay-lam-viec",
+    "title": "Lời nguyện cầu tạ ơn cuối ngày làm việc",
+    "category": "loi-nguyen-cuoi-ngay-di-lam",
+    "content": "<p>Lạy Thiên Chúa là Cha nhân lành, một ngày dài lao động vất vả đã khép lại. Con tìm về bên Chúa để dâng lời tạ ơn chân thành.</p><p>Cám ơn Chúa vì sức khỏe Chúa ban, vì công việc con hoàn thành và những thử thách giúp con trưởng thành hơn ngày hôm nay. Con xin phó dâng mọi thành quả lao động của con trong tay Chúa và xin Chúa chúc lành cho đêm nghỉ ngơi này. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-dang-nhung-moi-met-cuoi-ngay-cho-chua",
+    "title": "Kinh dâng những mỏi mệt cuối ngày cho Chúa",
+    "category": "loi-nguyen-cuoi-ngay-di-lam",
+    "content": "<p>Lạy Chúa Giêsu, Ngài đã từng trải qua một ngày làm việc mệt mỏi tại xưởng mộc Nazareth. Giờ đây con xin dâng lên Ngài tất cả sự rã rời, lo âu còn sót lại.</p><p>Xin xoa dịu những căng thẳng trong tâm trí con, giúp con biết trút bỏ mọi vướng bận công việc ngoài cửa để dành trọn vẹn tình yêu và sự quan tâm cho gia đình thân yêu của con tối nay. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-xin-binh-an-khi-tro-ve-nha",
+    "title": "Lời nguyện cầu xin bình an khi trở về nhà",
+    "category": "loi-nguyen-cuoi-ngay-di-lam",
+    "content": "<p>Lạy Chúa, đường trở về nhà sau giờ làm việc thường đông đúc, khói bụi và nhiều nguy hiểm. Xin bảo hộ con được đi đường bình an, lành lặn về đến nhà.</p><p>Xin cho ngôi nhà con luôn là bến đỗ bình yên, tràn ngập tiếng cười và sự yêu thương của các thành viên. Con tạ ơn Chúa vô cùng vì đã gìn giữ con suốt ngày hôm nay. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-cuoi-ngay-hoc-cua-hoc-sinh",
+    "title": "Kinh tạ ơn cuối ngày học của học sinh",
+    "category": "loi-nguyen-cuoi-ngay-di-hoc",
+    "content": "<p>Lạy Chúa Giêsu yêu mến, con tạ ơn Chúa vì một ngày học tập đầy ý nghĩa đã trôi qua bình an.</p><p>Cám ơn Chúa đã giúp con hiểu bài, hoàn thành các bài tập và có những giờ phút vui chơi cùng bạn bè. Xin Chúa tha thứ cho những giây phút con chia trí lười biếng hay nghịch ngợm không nghe lời thầy cô. Xin chúc lành cho giấc ngủ tối nay của con. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-dang-no-luc-hoc-hanh-cuoi-ngay-cho-chua",
+    "title": "Lời dâng nỗ lực học hành cuối ngày cho Chúa",
+    "category": "loi-nguyen-cuoi-ngay-di-hoc",
+    "content": "<p>Lạy Thiên Chúa là nguồn tri thức vô tận, con xin dâng lên Chúa tất cả những kiến thức con học được ngày hôm nay.</p><p>Xin giúp con khắc ghi sâu sắc những điều bổ ích, dùng tri thức ấy để hoàn thiện nhân cách bản thân. Con xin dâng những mệt mỏi của việc ôn thi học tập để cầu nguyện cho cha mẹ con, những người đã vất vả nuôi con ăn học. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-xin-on-sua-doi-sau-ngay-hoc-tap",
+    "title": "Lời cầu nguyện xin ơn sửa đổi sau ngày học tập",
+    "category": "loi-nguyen-cuoi-ngay-di-hoc",
+    "content": "<p>Lạy Chúa Thánh Thần, dưới ánh sáng của Ngài, con nhìn lại ngày học hôm nay. Con xin sám hối vì những lời nói thiếu tế nhị với bạn bè hay thái độ chưa tôn trọng thầy cô.</p><p>Xin biến đổi con để ngày mai con trở nên một học trò ngoan hiền hơn, biết siêng năng học hỏi và lan tỏa tình yêu thương của Chúa trong trường lớp. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-ta-on-vi-chuyen-di-thuong-lo-binh-an-tro-ve",
+    "title": "Lời tạ ơn vì chuyến đi thượng lộ bình an trở về",
+    "category": "loi-nguyen-cuoi-ngay-sau-mot-chuyen-di",
+    "content": "<p>Lạy Thiên Chúa là Cha toàn năng, con xin dâng lời tạ ơn sâu sắc vì Chúa đã gìn giữ con đi đường bình an và đưa con trở về nhà an toàn.</p><p>Cám ơn Chúa vì đã bảo vệ xe cộ, phương tiện di chuyển của con không gặp trục trặc hay tai nạn rủi ro. Sự bình an trở về tối nay là hồng ân vĩ đại từ lòng thương xót Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-chua-dong-hanh-tren-moi-neo-duong",
+    "title": "Kinh tạ ơn Chúa đồng hành trên mọi nẻo đường",
+    "category": "loi-nguyen-cuoi-ngay-sau-mot-chuyen-di",
+    "content": "<p>Lạy Chúa Giêsu, Ngài đã cùng đồng hành với con trong suốt hành trình đi xa ngày hôm nay. Con xin tạ ơn Ngài đã luôn ở bên che chở con.</p><p>Cám ơn Ngài vì những cuộc gặp gỡ tốt đẹp, vì con đã hoàn thành công việc của chuyến đi một cách trọn vẹn. Con xin phó thác đêm nghỉ ngơi này trong sự giữ gìn của Ngài. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ta-on-thien-than-ho-thu-sau-chuyen-di",
+    "title": "Lời nguyện tạ ơn Thiên Thần Hộ Thủ sau chuyến đi",
+    "category": "loi-nguyen-cuoi-ngay-sau-mot-chuyen-di",
+    "content": "<p>Lạy Thiên Thần Hộ Thủ yêu quý, Đấng được Thiên Chúa sai đến bảo vệ con, con cảm ơn ngài đã âm thầm nâng đỡ, gìn giữ bước chân con trong suốt chuyến đi dài hôm nay.</p><p>Xin ngài tiếp tục thức canh bên giường ngủ của con tối nay, xua đuổi mọi chước cám dỗ dữ và gìn giữ gia đình con trong sự bình an vô hạn của Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-trong-nhung-ngay-gian-nan-thu-thach",
+    "title": "Lời nguyện trong những ngày gian nan thử thách",
+    "category": "loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan",
+    "content": "<p>Lạy Chúa Giêsu, ngày hôm nay con đã trải qua nhiều đau khổ, thất vọng và thử thách nặng nề. Lòng con đang trĩu nặng âu lo và chán nản.</p><p>Con xin chạy đến nép mình dưới bóng cánh chở che của Chúa. Xin ban ơn nâng đỡ linh hồn yếu đuối của con, tiếp thêm sức mạnh đức tin để con hiểu rằng Chúa vẫn đang đồng hành và nâng đỡ con qua cơn bão táp này. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-cay-trong-kien-nhan-vuot-qua-nghich-canh",
+    "title": "Lời nguyện xin ơn cậy trông kiên nhẫn vượt qua nghịch cảnh",
+    "category": "loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan",
+    "content": "<p>Lạy Cha nhân từ, đứng trước những khó khăn chất chồng trong công việc và cuộc sống, con rất dễ nản lòng và oán trách Chúa.</p><p>Xin Chúa ban cho con ơn kiên nhẫn chịu đựng khó nhọc với tinh thần đức tin, biết trông cậy vững vàng vào sự an bài khôn ngoan của Chúa. Con xin dâng những đau khổ hôm nay để đền bù tội lỗi con và cầu nguyện cho gia đình con. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-pho-thac-moi-lo-au-phien-muon-cho-chua",
+    "title": "Lời cầu nguyện phó thác mọi lo âu phiền muộn cho Chúa",
+    "category": "loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan",
+    "content": "<p>Lạy Chúa Giêsu, Ngài đã phán: \"Tất cả những ai mang gánh nặng nề, hãy đến cùng tôi, tôi sẽ cho nghỉ ngơi\". Giờ đây con xin trút bỏ mọi gánh nặng của ngày hôm nay vào Trái Tim Cực Thương Xót Chúa.</p><p>Xin ban cho con một giấc ngủ an lành, dọn dẹp tâm hồn con sạch bóng những ưu tư để ngày mai con thức dậy với sức sống mới trong ơn nghĩa Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-toi-gia-dinh-xin-su-hiep-nhat-va-yeu-thuong",
+    "title": "Kinh tối gia đình xin sự hiệp nhất và yêu thương",
+    "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
+    "content": "<p>Lạy Chúa Giêsu, Chúa đã thánh hóa đời sống gia đình tại Nazareth. Giờ đây gia đình chúng con cùng quy tụ để dâng lời cầu nguyện.</p><p>Xin Chúa ngự trị trong ngôi nhà chúng con, ban ơn giúp chúng con luôn biết yêu thương, nhường nhịn và tha thứ cho nhau. Xin dập tắt mọi bất hòa, ghen ghét và ban cho chúng con lòng quảng đại để luôn thấu hiểu, chia sẻ khó nhọc cùng nhau dưới mái ấm gia đình. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-xin-su-binh-an-va-hoa-thuan-trong-nha",
+    "title": "Lời nguyện cầu xin sự bình an và hòa thuận trong nhà",
+    "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
+    "content": "<p>Lạy Chúa là Cha nhân lành, xin gìn giữ gia đình chúng con luôn hiệp nhất một lòng trong Chúa. Xin ban ơn chúc lành cho ông bà, cha mẹ và con cái.</p><p>Giúp chúng con biết kiến tạo hòa bình ngay trong lời ăn tiếng nói hằng ngày, biết nâng đỡ nhau khi gặp gian nan hoạn nạn. Chớ gì nhà chúng con luôn là tổ ấm ngập tràn tình yêu thương Chúa ban. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cho-cac-thanh-vien-biet-tha-thu-cho-nhau",
+    "title": "Lời nguyện cầu cho các thành viên biết tha thứ cho nhau",
+    "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
+    "content": "<p>Lạy Chúa Cứu Thế, Ngài đã dạy chúng con phải tha thứ đến bảy mươi lần bảy. Chúng con xin sám hối vì những lần nổi nóng, lời nói cộc cằn gây tổn thương nhau trong gia đình hôm nay.</p><p>Xin ban ơn chữa lành những rạn nứt, giúp chúng con can đảm xin lỗi và sẵn lòng bỏ qua lỗi lầm của nhau, để cùng chung sống trong sự bình an và nhân hậu của Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cho-con-cai-biet-kinh-trong-cha-me",
+    "title": "Lời nguyện cầu cho con cái biết kính trọng cha mẹ",
+    "category": "loi-nguyen-cho-long-hieu-thao",
+    "content": "<p>Lạy Chúa, Ngài đã ban điều răn thứ tư dạy chúng con phải thảo kính cha mẹ. Con xin cầu nguyện cho bản thân con và các anh chị em con trong nhà.</p><p>Xin ban ơn giúp chúng con biết kính trọng, vâng lời và đỡ đần cha mẹ khi các ngài còn khỏe mạnh cũng như lúc ốm đau bệnh tật. Cho con biết ghi sâu công ơn sinh thành dưỡng dục như trời biển của cha mẹ để sống hiếu thảo hằng ngày. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-cho-long-hieu-thao-cua-con-cai-trong-gia-dinh",
+    "title": "Lời cầu cho lòng hiếu thảo của con cái trong gia đình",
+    "category": "loi-nguyen-cho-long-hieu-thao",
+    "content": "<p>Lạy Chúa Giêsu, Ngài đã nêu gương hiếu thảo tuyệt vời đối với Mẹ Maria và Thánh Cả Giuse tại Nazareth. Xin ban cho chúng con lòng thảo kính sâu sắc.</p><p>Giúp chúng con biết lắng nghe những lời dạy bảo khôn ngoan của cha mẹ, biết nhẫn nại và ân cần chăm sóc cha mẹ khi tuổi già sức yếu, để cuộc đời chúng con là niềm an ủi và tự hào của các ngài. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-gin-giu-bon-phan-hieu-nghia-lam-con",
+    "title": "Lời nguyện xin ơn gìn giữ bổn phận hiếu nghĩa làm con",
+    "category": "loi-nguyen-cho-long-hieu-thao",
+    "content": "<p>Lạy Thiên Chúa là Cha chung toàn năng, xin ban cho con trái tim nhạy cảm để nhận ra những lo toan, vất vả in hằn trên khuôn mặt cha mẹ con.</p><p>Xin cho con biết cầu nguyện cho cha mẹ hằng ngày, nỗ lực học tập và làm việc lương thiện để làm vui lòng cha mẹ, hoàn thành trọn vẹn bổn phận làm con đức hạnh đẹp lòng Chúa. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cho-cha-me-ong-ba-hon-an-xac-manh",
+    "title": "Lời nguyện cầu cho cha mẹ ông bà hồn an xác mạnh",
+    "category": "loi-nguyen-cho-su-binh-an-cua-cha-me-ong-ba",
+    "content": "<p>Lạy Chúa Giêsu đầy lòng thương xót, con xin dâng lên Chúa cha mẹ và ông bà kính yêu của con. Xin Chúa ban cho các ngài sức khỏe hồn xác.</p><p>Xin che chở các ngài khỏi mọi bệnh tật nguy hiểm, ban bình an và niềm vui thiêng liêng trong cuộc sống hằng ngày. Xin đền đáp muôn ơn lành và sự vất vả các ngài đã hy sinh vì con suốt cuộc đời. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-cau-cho-dang-sinh-thanh-duoc-binh-an-hanh-phuc",
+    "title": "Kinh cầu cho đấng sinh thành được bình an hạnh phúc",
+    "category": "loi-nguyen-cho-su-binh-an-cua-cha-me-ong-ba",
+    "content": "<p>Lạy Thiên Chúa toàn năng, Chúa đặt để cha mẹ ông bà như những người đại diện của Chúa để chăm sóc con. Con cầu xin Chúa ban bình an cho các ngài tối nay.</p><p>Xin cho các ngài luôn cảm nhận được tình yêu thương ấm áp từ con cháu, không cảm thấy cô đơn hay phiền lòng. Xin ban ơn đức tin vững vàng để các ngài luôn trông cậy vào Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-dang-cha-me-ong-ba-gia-yeu-cho-chua",
+    "title": "Lời nguyện dâng cha mẹ ông bà già yếu cho Chúa",
+    "category": "loi-nguyen-cho-su-binh-an-cua-cha-me-ong-ba",
+    "content": "<p>Lạy Chúa Cứu Thế, khi tuổi già và sự suy yếu đến với ông bà cha mẹ con, xin Ngài ghé mắt thương xem và nâng đỡ. Xin xoa dịu những cơn đau nhức thể xác của các ngài.</p><p>Xin cho con biết tận tâm chăm sóc, gần gũi động viên các ngài, để những năm tháng xế chiều của các đấng sinh thành luôn tràn đầy sự ấm áp, bình an thiêng liêng từ Trái Tim Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cua-cha-me-dang-con-cai-cho-chua",
+    "title": "Lời nguyện cầu của cha mẹ dâng con cái cho Chúa",
+    "category": "loi-nguyen-danh-cho-con-cai",
+    "content": "<p>Lạy Chúa, con cái là món quà quý giá Chúa tin tưởng trao phó cho chúng con. Hôm nay con xin dâng con cái của con trong bàn tay bảo bọc của Chúa.</p><p>Xin giữ gìn đức tin trong sạch của chúng trước những cám dỗ và cạm bẫy của thế giới hiện đại. Xin ban cho chúng sức khỏe, trí thông minh và lòng đạo đức để lớn khôn trở thành người có ích cho Giáo hội và xã hội. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-cho-con-cai-ngoan-ngoan-va-khon-lon",
+    "title": "Lời cầu cho con cái ngoan ngoãn và khôn lớn",
+    "category": "loi-nguyen-danh-cho-con-cai",
+    "content": "<p>Lạy Thiên Chúa là Cha nhân lành, xin chúc lành và ban ơn khôn ngoan cho con cái chúng con. Giúp chúng biết yêu mến cầu nguyện, siêng năng đi lễ và học giáo lý.</p><p>Ban cho chúng tấm lòng nhân hậu, biết thương yêu kính trọng người lớn tuổi, ngoan ngoãn vâng lời cha mẹ thầy cô và biết tránh xa những thói hư tật xấu ngoài xã hội. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-chua-gin-giu-tuong-lai-con-chau",
+    "title": "Lời nguyện xin Chúa gìn giữ tương lai con cháu",
+    "category": "loi-nguyen-danh-cho-con-cai",
+    "content": "<p>Lạy Chúa Giêsu, Đấng hằng yêu mến và chúc lành cho trẻ thơ, xin gìn giữ và hướng dẫn tương lai của con cái chúng con.</p><p>Dù đi học hay đi làm xa nhà, xin hãy gửi các Thiên Thần bản mệnh theo gìn giữ bước chân chúng được an toàn. Xin cho chúng luôn ghi nhớ đạo nghĩa Công giáo để sống trung thực, lương thiện đẹp lòng Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "tuan-cuu-nhat-kinh-duc-me-hang-cuu-giup",
+    "title": "Tuần Cửu Nhật Kính Đức Mẹ Hằng Cứu Giúp",
+    "category": "tuan-cuu-nhat-kinh-duc-me",
+    "isNovena": true,
+    "content": "Tuần Cửu Nhật dâng kính Đức Mẹ Hằng Cứu Giúp cầu xin Mẹ ghé mắt thương xem và trợ giúp linh hồn chúng con trong mọi thử thách khó khăn hằng ngày.",
+    "novenaDays": [
+      {
+        "day": 1,
+        "title": "Ngày thứ nhất: Chạy đến cùng Mẹ",
+        "content": "<p>Lạy Thánh Nữ Đồng Trinh Maria, Mẹ đã ban cho chúng con bức linh ảnh Hằng Cứu Giúp quý giá. Hôm nay, ngày đầu tiên của tuần cửu nhật, con chạy đến sấp mình dưới chân Mẹ. Con dâng lên Mẹ tất cả những lo âu, đau khổ của con.</p><p>Xin Mẹ dạy con biết hoàn toàn tin cậy vào lòng nhân từ của Mẹ như một người con thảo đối với người Mẹ hiền. Xin Mẹ nhậm lời khẩn nguyện của con trong tuần cửu nhật này. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 2,
+        "title": "Ngày thứ hai: Cầu xin lòng cậy trông",
+        "content": "<p>Lạy Mẹ Hằng Cứu Giúp, Mẹ là máng thông mọi ơn thiên đàng. Xin ban cho con lòng trông cậy vững vàng vào Chúa và sự bảo trợ của Mẹ hằng ngày.</p><p>Khi bóng tối của sự thất vọng và nghi ngờ vây bọc linh hồn con, xin Mẹ tỏa ánh sáng của niềm hy vọng, nâng đỡ đức tin yếu kém của con để con luôn kiên trì cầu nguyện. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 3,
+        "title": "Ngày thứ ba: Cầu cho gia đình hòa thuận",
+        "content": "<p>Lạy Mẹ Maria, xin Mẹ thương gìn giữ gia đình con. Mẹ biết rõ những khó khăn, hiểu lầm và lo toan mà gia đình con đang gánh vác trong cuộc sống.</p><p>Xin Mẹ ban sự hòa thuận, niềm vui hiệp nhất và sức khỏe cho mọi thành viên trong gia đình. Chớ gì nhà con luôn có Mẹ ngự trị và hướng dẫn. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 4,
+        "title": "Ngày thứ tư: Cầu cho người đau khổ bệnh tật",
+        "content": "<p>Lạy Mẹ là niềm an ủi của kẻ âu lo, xin ghé mắt thương xem những người đang chịu đau đớn về thể xác cũng như tinh thần trên thế giới.</p><p>Xin Mẹ ban ơn nâng đỡ và chữa lành cho những người bệnh tật, những người bị bỏ rơi. Con hiệp thông những đau khổ của con cùng sự đau đớn của Mẹ dưới chân Thập Giá. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 5,
+        "title": "Ngày thứ năm: Cầu cho đức tin vững vàng",
+        "content": "<p>Lạy Mẹ rất thánh, xin bảo vệ con khỏi những cám dỗ làm lung lay đức tin của con trong thế giới hiện đại đầy rẫy khó khăn này.</p><p>Xin ban cho con một tấm lòng yêu mến Giáo Hội, siêng năng đón nhận các Bí Tích, đặc biệt là Bí Tích Hòa Giải và Thánh Thể. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 6,
+        "title": "Ngày thứ sáu: Cầu xin sự khiêm nhường",
+        "content": "<p>Lạy Mẹ khiêm nhường cực đại, xin giúp con cất bỏ lòng kiêu ngạo, ích kỷ và tự phụ trong tâm hồn mỏng giòn của con.</p><p>Xin dạy con biết sống hiền lành, yêu thương tha nhân không loại trừ ai, biết phục vụ trong âm thầm như Mẹ đã suốt đời sống làm tì nữ của Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 7,
+        "title": "Ngày thứ bảy: Cầu xin ơn ăn năn tội lỗi",
+        "content": "<p>Lạy Mẹ là đấng bầu cử cho kẻ có tội, xin giúp con nhận ra những lầm lỗi và vết thương tội lỗi đang cản trở mối tương quan của con với Chúa.</p><p>Xin cho con lòng can đảm chạy đến tòa giải tội, thành tâm ăn năn sám hối để được giao hòa cùng Thiên Chúa cực thánh. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 8,
+        "title": "Ngày thứ tám: Cầu xin ơn bền đỗ đến cùng",
+        "content": "<p>Lạy Mẹ nhân từ, điều con sợ hãi nhất là xa lìa Chúa. Xin Mẹ gìn giữ con luôn ở lại trong ơn nghĩa Chúa suốt cuộc đời con.</p><p>Xin Mẹ cứu con trong giờ lâm chung, ban cho con ơn chết lành trong vòng tay yêu thương của Mẹ và Đức Chúa Giêsu, Con cực thánh Mẹ. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      },
+      {
+        "day": 9,
+        "title": "Ngày thứ chín: Tạ ơn và phó thác vạn sự",
+        "content": "<p>Lạy Mẹ Hằng Cứu Giúp, ngày cuối cùng của tuần cửu nhật, lòng con ngập tràn niềm vui và tạ ơn sâu sắc vì Mẹ hằng cầu bầu cho con.</p><p>Con tin tưởng vững vàng Mẹ đã nghe thấy tiếng con khóc lóc cầu xin. Con xin phó dâng trọn vẹn hồn xác con, tương lai con trong tay Mẹ. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+      }
+    ]
+  },
+  {
+    "uid": "tuan-cuu-nhat-kinh-long-thuong-xot-chua",
     "title": "Tuần Cửu Nhật Kính Lòng Thương Xót Chúa",
-    "category": "novena",
+    "category": "tuan-cuu-nhat-kinh-long-chua-thuong-xot",
     "isNovena": true,
     "content": "Tuần Cửu Nhật Lòng Chúa Thương Xót bắt đầu từ ngày Thứ Sáu Tuần Thánh đến Chúa Nhật thứ hai Phục Sinh, cầu nguyện cho các nhóm linh hồn khác nhau.",
     "novenaDays": [
       {
         "day": 1,
         "title": "Ngày thứ nhất: Cầu cho toàn nhân loại, đặc biệt là người tội lỗi",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha toàn thể nhân loại, cách riêng là những người tội lỗi. Hãy dìm họ trong đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, bản tính Chúa là trắc ẩn và tha thứ, xin đừng nhìn đến tội lỗi chúng con, nhưng hãy nhìn đến lòng tin tưởng của chúng con vào lòng nhân lành vô biên của Chúa. Xin đón nhận chúng con vào nương náu trong Trái Tim cực khoan dung Chúa. Chúng con cầu xin nhân danh tình yêu kết hợp Chúa làm một cùng Chúa Cha và Chúa Thánh Thần. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha toàn thể nhân loại, cách riêng là những người tội lỗi. Hãy dìm họ trong đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, bản tính Chúa là trắc ẩn và tha thứ, xin đừng nhìn đến tội lỗi chúng con, nhưng hãy nhìn đến lòng tin tưởng của chúng con vào lòng nhân lành vô biên của Chúa. Xin đón nhận chúng con vào nương náu trong Trái Tim cực khoan dung Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 2,
         "title": "Ngày thứ hai: Cầu cho các Linh mục và các Linh hồn Tu sĩ",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha linh hồn các Linh mục và Tu sĩ. Hãy dìm họ vào lòng thương xót khôn lường của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, nguồn mạch mọi sự tốt lành, xin gia tăng ơn sủng Chúa trên các Linh mục và Tu sĩ, để họ thực hiện những công việc nhân đức xứng đáng, giúp tha nhân tôn vinh lòng thương xót của Chúa bằng lời nói và gương sáng đời sống. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha linh hồn các Linh mục và Tu sĩ. Hãy dìm họ vào lòng thương xót khôn lường của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, nguồn mạch mọi sự tốt lành, xin gia tăng ơn sủng Chúa trên các Linh mục và Tu sĩ, để họ thực hiện những công việc nhân đức xứng đáng, giúp tha nhân tôn vinh lòng thương xót của Chúa bằng lời nói và gương sáng đời sống. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 3,
         "title": "Ngày thứ ba: Cầu cho các Linh hồn trung thực và đạo đức",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn trung thực và đạo đức. Hãy dìm họ vào đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã đón nhận các linh hồn này vào Trái Tim cực khoan dung Chúa. Xin ban cho họ nguồn sức mạnh để kiên trì đi trên con đường thánh đức giữa thế giới hôm nay. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn trung thực và đạo đức. Hãy dìm họ vào đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã đón nhận các linh hồn này vào Trái Tim cực khoan dung Chúa. Xin ban cho họ nguồn sức mạnh để kiên trì đi trên con đường thánh đức giữa thế giới hôm nay. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 4,
         "title": "Ngày thứ tư: Cầu cho những người ngoại đạo và những ai chưa biết Chúa",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha những người ngoại giáo và những người chưa biết Cha. Cha vẫn hằng nghĩ đến họ.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa là ánh sáng của toàn thế giới, xin đón nhận vào Trái Tim cực nhân lành Chúa linh hồn những người chưa nhận biết Chúa, để ánh sáng ơn sủng Chúa chiếu soi họ, giúp họ cùng chúng con tôn vinh lòng thương xót vĩ đại của Chúa. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha những người ngoại giáo và những người chưa biết Cha. Cha vẫn hằng nghĩ đến họ.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa là ánh sáng của toàn thế giới, xin đón nhận vào Trái Tim cực nhân lành Chúa linh hồn những người chưa nhận biết Chúa, để ánh sáng ơn sủng Chúa chiếu soi họ, giúp họ cùng chúng con tôn vinh lòng thương xót vĩ đại của Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 5,
         "title": "Ngày thứ năm: Cầu cho những người lạc giáo và ly giáo",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha những người lạc giáo và ly giáo. Hãy dìm họ vào đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa là nguồn mạch sự thật và hiệp nhất, xin quy tụ những người lầm lạc trở về cùng Hội Thánh Chúa, gìn giữ họ trong đức tin chân thật để tất cả chúng con nên một đàn chiên dưới một Chúa chiên. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha những người lạc giáo và ly giáo. Hãy dìm họ vào đại dương thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa là nguồn mạch sự thật và hiệp nhất, xin quy tụ những người lầm lạc trở về cùng Hội Thánh Chúa, gìn giữ họ trong đức tin chân thật để tất cả chúng con nên một đàn chiên dưới một Chúa chiên. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 6,
         "title": "Ngày thứ sáu: Cầu cho những linh hồn hiền lành, khiêm nhường và các trẻ thơ",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn hiền lành, khiêm nhường và trẻ thơ. Hãy dìm họ vào lòng thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã phán \"hãy học cùng Cha vì Cha hiền lành và khiêm nhường\". Xin đón nhận vào Trái Tim cực khoan dung Chúa các trẻ nhỏ và những linh hồn có tinh thần trẻ thơ, vì họ chính là những đóa hoa thơm ngát trước tòa Chúa Cha. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn hiền lành, khiêm nhường và trẻ thơ. Hãy dìm họ vào lòng thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã phán \"hãy học cùng Cha vì Cha hiền lành và khiêm nhường\". Xin đón nhận vào Trái Tim cực khoan dung Chúa các trẻ nhỏ và những linh hồn có tinh thần trẻ thơ, vì họ chính là những đóa hoa thơm ngát trước tòa Chúa Cha. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 7,
         "title": "Ngày thứ bảy: Cầu cho những linh hồn tôn sùng lòng thương xót Chúa",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn tôn sùng và ca ngợi lòng thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Trái Tim Chúa là nguồn ủi an vô tận, xin che chở và nâng đỡ các linh hồn đã hăng say rao giảng tình thương của Chúa. Xin ban cho họ lòng can đảm chịu đựng mọi thử thách trong niềm tin yêu vững vàng. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn tôn sùng và ca ngợi lòng thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Trái Tim Chúa là nguồn ủi an vô tận, xin che chở và nâng đỡ các linh hồn đã hăng say rao giảng tình thương của Chúa. Xin ban cho họ lòng can đảm chịu đựng mọi thử thách trong niềm tin yêu vững vàng. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 8,
         "title": "Ngày thứ tám: Cầu cho các linh hồn trong luyện ngục",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn nơi luyện ngục. Hãy dìm họ vào vực sâu thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã đổ máu ra để đền tội cho nhân loại, xin cho các dòng máu cực thánh Chúa tuôn chảy xuống ngục luyện hình để xoa dịu những đau khổ của các linh hồn nơi đó, dẫn đưa họ về hưởng tôn nhan thánh Chúa. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn nơi luyện ngục. Hãy dìm họ vào vực sâu thương xót của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, Chúa đã đổ máu ra để đền tội cho nhân loại, xin cho các dòng máu cực thánh Chúa tuôn chảy xuống ngục luyện hình để xoa dịu những đau khổ của các linh hồn nơi đó, dẫn đưa họ về hưởng tôn nhan thánh Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       },
       {
         "day": 9,
         "title": "Ngày thứ chín: Cầu cho các linh hồn nguội lạnh",
-        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn nguội lạnh. Hãy dìm họ vào lòng thương xót sâu thẳm của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, xin thương nhìn đến những linh hồn đang nguội lạnh, khô khan. Nhờ ngọn lửa tình yêu nồng cháy của Chúa, xin khơi dậy trong họ lòng mến yêu nồng nàn để họ phục hồi sự sống thiêng liêng. Amen.</p>"
+        "content": "<p><b>Lời Chúa phán:</b> \"Hôm nay con hãy dâng cho Cha các linh hồn nguội lạnh. Hãy dìm họ vào lòng thương xót sâu thẳm của Cha.\"</p><p><b>Lời cầu nguyện:</b> Lạy Chúa Giêsu đầy lòng thương xót, xin thương nhìn đến những linh hồn đang nguội lạnh, khô khan. Nhờ ngọn lửa tình yêu nồng cháy của Chúa, xin khơi dậy trong họ lòng mến yêu nồng nàn để họ phục hồi sự sống thiêng liêng. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
       }
     ]
   },
   {
-    "uid": "tuan-cuu-nhat-duc-me-hang-cuu-giup",
-    "title": "Tuần Cửu Nhật Kính Đức Mẹ Hằng Cứu Giúp",
-    "category": "novena",
-    "isNovena": true,
-    "content": "Tuần Cửu Nhật dâng kính Đức Mẹ Hằng Cứu Giúp cầu xin Mẹ ghé mắt thương xem và trợ giúp linh hồn chúng con trong mọi thử thách khó khăn.",
-    "novenaDays": [
-      {
-        "day": 1,
-        "title": "Ngày thứ nhất: Chạy đến cùng Mẹ",
-        "content": "<p>Lạy Thánh Nữ Đồng Trinh Maria, Mẹ đã ban cho chúng con bức linh ảnh Hằng Cứu Giúp quý giá. Hôm nay, ngày đầu tiên của tuần cửu nhật, con chạy đến sấp mình dưới chân Mẹ. Con dâng lên Mẹ tất cả những lo âu, đau khổ của con.</p><p>Xin Mẹ dạy con biết hoàn toàn tin cậy vào lòng nhân từ của Mẹ như một người con thảo đối với người Mẹ hiền. Xin Mẹ nhậm lời khẩn nguyện của con trong tuần cửu nhật này. Amen.</p>"
-      },
-      {
-        "day": 2,
-        "title": "Ngày thứ hai: Cầu xin lòng cậy trông",
-        "content": "<p>Lạy Mẹ Hằng Cứu Giúp, Mẹ là máng thông mọi ơn thiên đàng. Xin ban cho con lòng trông cậy vững vàng vào Chúa và sự bảo trợ của Mẹ.</p><p>Khi bóng tối của sự thất vọng và nghi ngờ vây bọc linh hồn con, xin Mẹ tỏa ánh sáng của niềm hy vọng, nâng đỡ đức tin yếu kém của con để con luôn kiên trì cầu nguyện. Amen.</p>"
-      },
-      {
-        "day": 3,
-        "title": "Ngày thứ ba: Cầu cho gia đình",
-        "content": "<p>Lạy Mẹ Maria, xin Mẹ thương gìn giữ gia đình con. Mẹ biết rõ những khó khăn, hiểu lầm và lo toan mà gia đình con đang gánh vác.</p><p>Xin Mẹ ban sự hòa thuận, niềm vui hiệp nhất và sức khỏe cho mọi thành viên trong gia đình. Chớ gì nhà con luôn có Mẹ ngự trị và hướng dẫn. Amen.</p>"
-      },
-      {
-        "day": 4,
-        "title": "Ngày thứ tư: Cầu cho người đau khổ",
-        "content": "<p>Lạy Mẹ là niềm an ủi của kẻ âu lo, xin ghé mắt thương xem những người đang chịu đau đớn về thể xác cũng như tinh thần.</p><p>Xin Mẹ ban ơn nâng đỡ và chữa lành cho những người bệnh tật, những người bị bỏ rơi. Con hiệp thông những đau khổ của con cùng sự đau đớn của Mẹ dưới chân Thập Giá để cầu xin ơn lành. Amen.</p>"
-      },
-      {
-        "day": 5,
-        "title": "Ngày thứ năm: Cầu cho đức tin vững vàng",
-        "content": "<p>Lạy Mẹ rất thánh, xin bảo vệ con khỏi những cám dỗ làm lung lay đức tin của con trong thế giới hiện đại.</p><p>Xin ban cho con một tấm lòng yêu mến Giáo Hội, siêng năng đón nhận các Bí Tích, đặc biệt là Bí Tích Hòa Giải và Thánh Thể, để linh hồn con luôn được nuôi dưỡng mạnh khỏe. Amen.</p>"
-      },
-      {
-        "day": 6,
-        "title": "Ngày thứ sáu: Cầu xin sự khiêm nhường",
-        "content": "<p>Lạy Mẹ khiêm nhường cực đại, xin giúp con cất bỏ lòng kiêu ngạo, ích kỷ và tự phụ trong tâm hồn.</p><p>Xin dạy con biết sống hiền lành, yêu thương tha nhân không loại trừ ai, biết phục vụ trong âm thầm như Mẹ đã suốt đời sống làm tì nữ của Chúa. Amen.</p>"
-      },
-      {
-        "day": 7,
-        "title": "Ngày thứ bảy: Cầu xin ơn ăn năn tội lỗi",
-        "content": "<p>Lạy Mẹ là đấng bầu cử cho kẻ có tội, xin giúp con nhận ra những lầm lỗi và vết thương tội lỗi trong lòng con.</p><p>Xin cho con lòng can đảm chạy đến tòa giải tội, thành tâm ăn năn sám hối để được giao hòa cùng Thiên Chúa cực thánh. Amen.</p>"
-      },
-      {
-        "day": 8,
-        "title": "Ngày thứ tám: Cầu xin ơn bền đỗ",
-        "content": "<p>Lạy Mẹ nhân từ, điều con sợ hãi nhất là xa lìa Chúa. Xin Mẹ gìn giữ con luôn ở lại trong ơn nghĩa Chúa.</p><p>Xin Mẹ cứu con trong giờ lâm chung, ban cho con ơn chết lành trong vòng tay yêu thương của Mẹ và Đức Chúa Giêsu, Con cực thánh Mẹ. Amen.</p>"
-      },
-      {
-        "day": 9,
-        "title": "Ngày thứ chín: Tạ ơn và phó thác",
-        "content": "<p>Lạy Mẹ Hằng Cứu Giúp, ngày cuối cùng của tuần cửu nhật, lòng con ngập tràn niềm vui và tạ ơn.</p><p>Con tin tưởng vững vàng Mẹ đã nghe thấy tiếng con khóc lóc cầu xin. Con xin phó dâng trọn vẹn hồn xác con, tương lai con trong tay Mẹ. Xin Mẹ luôn ở bên con, dẫn dắt con đi trên con đường tiến về quê thật trên trời. Amen.</p>"
-      }
-    ]
-  },
-  {
-    "uid": "tuan-cuu-nhat-thanh-ca-giuse",
+    "uid": "tuan-cuu-nhat-kinh-thanh-ca-giuse",
     "title": "Tuần Cửu Nhật Kính Thánh Cả Giuse",
-    "category": "novena",
+    "category": "tuan-cuu-nhat-kinh-thanh-giuse",
     "isNovena": true,
-    "content": "Tuần Cửu Nhật kính Thánh Cả Giuse, đấng bảo trợ các gia đình, gương mẫu lao động và đấng hộ phù khi lâm tử.",
+    "content": "Tuần Cửu Nhật kính Thánh Cả Giuse, đấng bảo trợ các gia đình, gương mẫu lao động và đấng hộ phù nhân hậu khi lâm tử.",
     "novenaDays": [
       {
         "day": 1,
         "title": "Ngày thứ nhất: Thánh Giuse - Đấng Công Chính",
-        "content": "<p>Lạy Thánh Cả Giuse, Kinh Thánh ngợi ca cha là người công chính. Với lòng vâng phục âm thầm, cha đã đón nhận thánh ý Thiên Chúa cứu độ.</p><p>Xin cầu bầu cùng Chúa ban cho con tinh thần vâng phục đức tin, biết luôn tìm kiếm ý Chúa trong cuộc đời và bước đi trong đường lối ngay thẳng của Ngài. Amen.</p>"
+        "content": "<p>Lạy Thánh Cả Giuse, Kinh Thánh ngợi ca cha là người công chính. Với lòng vâng phục âm thầm, cha đã đón nhận thánh ý Thiên Chúa cứu độ.</p><p>Xin cầu bầu cùng Chúa ban cho con tinh thần vâng phục đức tin, biết luôn tìm kiếm ý Chúa trong cuộc đời và bước đi trong đường lối ngay thẳng của Ngài. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 2,
         "title": "Ngày thứ hai: Người Bạn Trăm Năm Đức Trinh Nữ Maria",
-        "content": "<p>Lạy Thánh Giuse, cha là người bạn trăm năm đồng trinh và thánh thiện của Đức Mẹ.</p><p>Xin cầu bầu cho các đôi vợ chồng biết sống chung thủy, tôn trọng và yêu thương nhau. Xin gìn giữ tâm hồn thanh thiếu niên luôn trong sạch, đức hạnh. Amen.</p>"
+        "content": "<p>Lạy Thánh Giuse, cha là người bạn trăm năm đồng trinh và thánh thiện của Đức Mẹ Maria.</p><p>Xin cầu bầu cho các đôi vợ chồng biết sống chung thủy, tôn trọng và yêu thương nhau. Xin gìn giữ tâm hồn thanh thiếu niên luôn trong sạch, đức hạnh. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 3,
         "title": "Ngày thứ ba: Cha Nuôi Đấng Cứu Thế",
-        "content": "<p>Lạy Thánh Giuse, cha đã vất vả bảo vệ Chúa Giêsu Hài Đồng thoát khỏi bàn tay bạo chúa Hêrôđê.</p><p>Xin cha hộ phù cho Đức Thánh Cha, các Đức Giám mục và Linh mục để các ngài trung kiên bảo vệ đức tin cho đoàn chiên Giáo Hội giữa muôn vàn gian nan. Amen.</p>"
+        "content": "<p>Lạy Thánh Giuse, cha đã vất vả bảo vệ Chúa Giêsu Hài Đồng thoát khỏi bàn tay bạo chúa Hêrôđê độc ác.</p><p>Xin cha hộ phù cho Đức Thánh Cha, các Đức Giám mục và Linh mục để các ngài trung kiên bảo vệ đức tin cho đoàn chiên Giáo Hội giữa muôn vàn gian nan. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 4,
         "title": "Ngày thứ tư: Gương Mẫu Của Người Lao Động",
-        "content": "<p>Lạy Thánh Giuse Thợ lao động vất vả, cha đã thánh hóa nghề mộc để nuôi sống Gia Đình Thánh Gia.</p><p>Xin cho mọi công nhân được đối xử công bằng, ban ơn nâng đỡ những người đang chịu thất nghiệp, thiếu thốn và chúc lành cho công việc làm ăn hằng ngày của con được thuận lợi. Amen.</p>"
+        "content": "<p>Lạy Thánh Giuse Thợ lao động vất vả, cha đã thánh hóa nghề mộc để nuôi sống Gia Đình Thánh Gia.</p><p>Xin cho mọi công nhân được đối xử công bằng, ban ơn nâng đỡ những người đang chịu thất nghiệp, thiếu thốn và chúc lành cho công việc làm ăn hằng ngày của con được thuận lợi. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 5,
-        "title": "Ngày thứ cựu: Đấng Gìn Giữ Gia Đình Thánh Gia",
-        "content": "<p>Lạy Thánh Cả Giuse, cha là đầu Gia Đình Thánh Gia tại Nazareth, gương mẫu đời sống gia đình.</p><p>Xin che chở gia đình con khỏi mọi chia rẽ, bất hòa. Xin ban bình an, lòng bao dung và sự hiếu thảo của con cái đối với cha mẹ. Amen.</p>"
+        "title": "Ngày thứ năm: Đấng Gìn Giữ Gia Đình Thánh Gia",
+        "content": "<p>Lạy Thánh Cả Giuse, cha là đầu Gia Đình Thánh Gia tại Nazareth, gương mẫu đời sống gia đình.</p><p>Xin che chở gia đình con khỏi mọi chia rẽ, bất hòa. Xin ban bình an, lòng bao dung và sự hiếu thảo của con cái đối với cha mẹ. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 6,
-        "title": "Ngày thứ sáu: Đấng Phù Hộ Kẻ Âu Lo",
-        "content": "<p>Lạy Thánh Giuse đầy lòng trắc ẩn, khi đối diện với những điều mơ hồ lo lắng, cha luôn tìm thấy sự bình an trong lời phán dạy của sứ thần Chúa.</p><p>Xin giúp con biết phó thác mọi lo âu, buồn phiền vào Chúa và tin tưởng vững vàng vào sự quan phòng yêu thương của Ngài. Amen.</p>"
+        "title": "Ngày thứ sáu: Đấng Đầy Lòng Thương Xót Kẻ Nghèo Khó",
+        "content": "<p>Lạy Thánh Cả Giuse, cha đã tự mình chịu nghèo cực để phục vụ Đức Mẹ và Chúa Cứu Thế. Xin cho con biết mở lòng giúp đỡ những người khó khăn.</p><p>Con xin dâng lên cha những người nghèo đói, túng quẫn trên thế giới để cha ban ơn trợ giúp nâng đỡ cuộc sống của họ. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 7,
-        "title": "Ngày thứ bảy: Đấng Nâng Đỡ Người Nghèo Khổ",
-        "content": "<p>Lạy Thánh Cả Giuse, cha đã sống cuộc đời giản dị, nghèo khó nơi trần gian.</p><p>Xin ban cho chúng con một tấm lòng quảng đại, biết chia sẻ cơm áo cho những người nghèo khổ, cô đơn và bất hạnh xung quanh chúng con. Amen.</p>"
+        "title": "Ngày thứ bảy: Đấng Bảo Trợ Những Kẻ Bệnh Tật",
+        "content": "<p>Lạy Thánh Cả Giuse, cha thấu cảm nỗi đau bệnh tật và sự mệt mỏi thể xác. Xin cha cầu bầu cùng Chúa ban ơn nâng đỡ và chữa lành cho những người đang đau bệnh.</p><p>Xin ban sức chịu đựng cho họ và chúc lành cho công việc chăm sóc của những nhân viên y tế. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 8,
-        "title": "Ngày thứ tám: Bổn Mạng Kẻ Lâm Tử",
-        "content": "<p>Lạy Thánh Giuse, cha được diễm phúc qua đời trong vòng tay yêu thương của Chúa Giêsu và Mẹ Maria.</p><p>Xin cha cầu bầu cho các linh hồn sắp qua đời hôm nay. Xin gìn giữ con luôn trung tín với Chúa đến hơi thở cuối cùng để được chết lành trong tay Chúa. Amen.</p>"
+        "title": "Ngày thứ tám: Bổn Mạng Của Những Người Lâm Tử",
+        "content": "<p>Lạy Thánh Cả Giuse, cha được phước chết lành trong vòng tay êm ái của Đức Chúa Giêsu và Đức Mẹ Maria.</p><p>Xin cầu bầu cho những người sắp qua đời hôm nay, ban ơn chết lành để linh hồn họ thoát khỏi cạm bẫy ma quỷ và được đưa về cõi hằng sống thiên đàng. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       },
       {
         "day": 9,
-        "title": "Ngày thứ chín: Người Bảo Trợ Hội Thánh",
-        "content": "<p>Lạy Thánh Cả Giuse, Đức Giáo Hoàng đã chọn cha làm Đấng Bảo Trợ Toàn Cầu Hội Thánh.</p><p>Ngày cuối cùng của tuần cửu nhật, chúng con xin dâng hiến trọn vẹn bản thân con, gia đình con và toàn Giáo Hội dưới sự bảo trợ quyền năng của cha. Xin hộ phù chúng con trong cuộc sống đời này và dẫn đưa chúng con đến quê hương hằng sống. Amen.</p>"
+        "title": "Ngày thứ chín: Đấng Bảo Trợ Giáo Hội Hoàn Vũ",
+        "content": "<p>Lạy Thánh Cả Giuse, cha đã trung thành gìn giữ Đấng Cứu Thế, xin cha cũng gìn giữ Giáo Hội là Thân Thể cực thánh của Ngài.</p><p>Xin cầu bầu cho mọi tín hữu luôn giữ vững ngọn đèn đức tin sáng chói, trung kiên phụng thờ Chúa và làm nhân chứng cho Tin Mừng giữa thế giới. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
       }
     ]
+  },
+  {
+    "uid": "loi-nguyen-ngay-dai-le-giang-sinh-thanh-thien",
+    "title": "Lời nguyện ngày đại lễ Giáng Sinh thánh thiện",
+    "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
+    "content": "<p>Lạy Chúa Hài Đồng Giêsu, Ngôi Hai Thiên Chúa làm người trong máng cỏ nghèo hèn, chúng con tôn thờ và ca tụng tình yêu vĩ đại của Ngài.</p><p>Hôm nay, trong niềm vui Con Chúa giáng sinh, xin ban bình an của Ngài xuống trên tâm hồn chúng con, gia đình chúng con và toàn thể nhân loại. Xin cho chúng con biết chia sẻ tình yêu thương và sự sưởi ấm cho những người nghèo khổ xung quanh chúng con. Vinh danh Thiên Chúa trên các tầng trời. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ngay-le-chua-phuc-sinh-ta-on",
+    "title": "Lời nguyện ngày lễ Chúa Phục Sinh tạ ơn",
+    "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
+    "content": "<p>Lạy Chúa Giêsu Kitô Phục Sinh vinh hiển, Ngài đã chiến thắng tử thần và tội lỗi để mở cửa thiên đàng cho chúng con.</p><p>Xin ban cho chúng con niềm vui và niềm hy vọng phục sinh dạt dào trong lòng. Xin xua tan bóng tối của sự sợ hãi và thất vọng, giúp chúng con bước đi trong đời sống mới thánh thiện, làm nhân chứng cho tình yêu sống lại của Ngài hằng ngày. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ngay-le-duc-me-hon-xac-ve-troi",
+    "title": "Lời nguyện ngày lễ Đức Mẹ Hồn Xác Về Trời",
+    "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
+    "content": "<p>Lạy Đức Nữ Đồng Trinh Maria, Mẹ đã được Thiên Chúa đưa cả hồn lẫn xác về hưởng phúc vinh quang trên thiên quốc.</p><p>Chúng con chúc tụng các đặc ân vĩ đại Chúa ban cho Mẹ. Xin Mẹ ghé mắt thương xem chúng con đang lữ hành nơi thung lũng nước mắt này, giúp chúng con hằng ngày hướng lòng về quê thật trên trời để mai sau được cùng Mẹ hưởng hạnh phúc bên Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-ta-on-ngay-cuoi-nam",
+    "title": "Lời nguyện cầu tạ ơn ngày cuối năm",
+    "category": "loi-nguyen-cuoi-nam",
+    "content": "<p>Lạy Thiên Chúa là Cha hằng hữu, thời gian một năm qua trôi nhanh như bóng câu qua cửa. Con xin dâng lời tạ ơn sâu sắc vì muôn vàn hồng ân Chúa ban.</p><p>Cám ơn Chúa vì những ngày nắng đẹp hạnh phúc, cả những ngày giông bão giúp con cậy trông vào Chúa hơn. Con xin sám hối vì những thiếu sót tội lỗi của con trong năm qua và xin đặt tương lai năm mới của con trong sự quan phòng của Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-dang-loi-sam-hoi-va-ta-on-dem-giao-thua",
+    "title": "Kinh dâng lời sám hối và tạ ơn đêm giao thừa",
+    "category": "loi-nguyen-cuoi-nam",
+    "content": "<p>Lạy Chúa Giêsu, trong những phút giây linh thiêng cuối cùng của năm cũ, gia đình chúng con cùng hiệp ý tạ ơn Ngài.</p><p>Xin tẩy sạch những lỗi lầm cũ trong lòng chúng con bằng Lòng Thương Xót bao la của Chúa. Xin ban ơn hiệp nhất và chữa lành cho mọi thành viên để chúng con sẵn sàng bước vào năm mới với tâm hồn thánh thiện, bình an và đầy lòng mến Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-nhin-lai-mot-nam-da-qua-dang-hien",
+    "title": "Lời nguyện nhìn lại một năm đã qua dâng hiến",
+    "category": "loi-nguyen-cuoi-nam",
+    "content": "<p>Lạy Chúa Thánh Thần, xin ban cho con sự lắng đọng tâm hồn để nhìn lại một năm đã qua dưới ánh sáng đức tin Công giáo.</p><p>Cám ơn Ngài vì những bài học sâu sắc, những lần Ngài kéo con dậy sau khi sa ngã. Con xin phó dâng tất cả những việc chưa hoàn thành lên Chúa, xin Ngài tiếp tục hoàn thiện chúng theo ý muốn tốt lành của Ngài. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-binh-an-nam-moi-tet-nguyen-dan",
+    "title": "Lời nguyện cầu bình an năm mới Tết Nguyên Đán",
+    "category": "loi-nguyen-dau-nam-moi",
+    "content": "<p>Lạy Chúa là Đấng làm chủ thời gian và lịch sử, trong những ngày đầu xuân năm mới, chúng con dâng lên Chúa lời chúc tụng tôn vinh kính cẩn.</p><p>Xin ban cho quê hương đất nước được thái bình, gia đình chúng con được khang an thịnh vượng, và mọi người luôn biết yêu thương nâng đỡ nhau trong ơn nghĩa Chúa. Xin chúc lành cho công ăn việc làm của chúng con năm nay được thuận lợi. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ngay-mong-mot-tet-xin-on-thanh-hoa-thoi-gian",
+    "title": "Lời nguyện ngày mồng một Tết xin ơn thánh hóa thời gian",
+    "category": "loi-nguyen-dau-nam-moi",
+    "content": "<p>Lạy Thiên Chúa Ba Ngôi cực thánh, ngày mồng một Tết xuân sang, chúng con quy tụ tôn vinh Chúa là cội nguồn của mọi ơn lành.</p><p>Xin thánh hóa mọi giây phút của năm mới này. Xin cho chúng con biết sử dụng thời gian Chúa ban để làm việc lành, siêng năng phụng thờ Chúa và bác ái với tha nhân, tích lũy kho tàng đức tin vững vàng cho cuộc đời. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ngay-dau-nam-moi-duong-lich-dang-van-su",
+    "title": "Lời nguyện ngày đầu năm mới dương lịch dâng vạn sự",
+    "category": "loi-nguyen-dau-nam-moi",
+    "content": "<p>Lạy Chúa, ngày đầu tiên của năm mới dương lịch, con xin phó dâng vạn sự trong tay Chúa. Mọi dự định, công việc, sức khỏe và các mối tương quan của con.</p><p>Xin Chúa làm chủ và dẫn lối để mọi việc con làm đều bắt đầu từ ơn Chúa và kết thúc đẹp lòng Chúa. Xin giữ gìn con luôn được bình an hồn xác suốt năm nay. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-nhan-ngay-hien-mau-mother-s-day",
+    "title": "Lời nguyện cầu nhân ngày hiền mẫu Mother's Day",
+    "category": "loi-nguyen-cho-ngay-cua-me-cha",
+    "content": "<p>Lạy Chúa Giêsu, nhân Ngày Của Mẹ, con xin dâng lên Chúa người mẹ kính yêu đã sinh thành và dưỡng dục con bằng tình yêu vô điều kiện.</p><p>Xin Chúa ban cho mẹ sức khỏe dồi dào, tâm hồn luôn bình an thanh thản dưới bóng chở che của Mẹ Maria rất thánh. Xin giúp con luôn ngoan ngoãn, biết yêu thương hiếu hiếu để làm niềm vui cho mẹ hằng ngày. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-nhan-ngay-hien-phu-father-s-day",
+    "title": "Lời nguyện cầu nhân ngày hiền phụ Father's Day",
+    "category": "loi-nguyen-cho-ngay-cua-me-cha",
+    "content": "<p>Lạy Thiên Chúa là Cha chung đầy lòng nhân hậu, nhân Ngày Của Cha, con dâng cha của con trong bàn tay quan phòng của Ngài.</p><p>Xin ban sức mạnh hồn xác, sự khôn ngoan và kiên nhẫn để cha tiếp tục dẫn dắt gia đình chúng con trong đức tin Công giáo vững vàng theo gương Thánh Cả Giuse đức độ. Xin đền đáp muôn hy sinh của cha. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-ta-on-dang-sinh-thanh-trong-ngay-le-cha-me",
+    "title": "Lời nguyện tạ ơn đấng sinh thành trong ngày lễ cha mẹ",
+    "category": "loi-nguyen-cho-ngay-cua-me-cha",
+    "content": "<p>Lạy Chúa, Ngài đặt để cha mẹ như những người bảo hộ cuộc đời con. Trong ngày lễ tôn vinh cha mẹ này, con xin dâng lời tạ ơn Chúa sâu sắc.</p><p>Xin ban cho các ngài tuổi già được bình an, hạnh phúc bên con cháu. Xin ban ơn giúp chúng con luôn làm tròn bổn phận kính hiếu và cầu nguyện cho các ngài mỗi ngày. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cho-thieu-nhi-dip-tet-trung-thu",
+    "title": "Lời nguyện cầu cho thiếu nhi dịp Tết Trung Thu",
+    "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
+    "content": "<p>Lạy Chúa Giêsu, nhân ngày Tết Trung Thu của trẻ thơ, chúng con dâng lên Chúa toàn thể các em thiếu nhi, thiếu niên trong giáo xứ và trên thế giới.</p><p>Xin ban cho các em một đêm trăng rằm ngập tràn tiếng cười và tình yêu thương. Xin gìn giữ tâm hồn các em luôn trong sáng, đơn sơ và ngày càng lớn khôn, khôn ngoan trước mặt Thiên Chúa và người đời. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-dang-tuoi-tho-trong-sang-cho-chua-giesu",
+    "title": "Lời nguyện dâng tuổi thơ trong sáng cho Chúa Giêsu",
+    "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
+    "content": "<p>Lạy Chúa Giêsu Hài Đồng, Ngài yêu mến sự đơn sơ của trẻ thơ và phán: \"Hãy để trẻ nhỏ đến cùng Ta\". Con xin dâng tuổi thơ của con cho Chúa tối nay.</p><p>Xin gìn giữ con sạch mọi tội lỗi, giúp con biết vâng lời cha mẹ, chăm chỉ học hành và luôn ngoan ngoãn. Xin chúc lành cho mọi ước mơ nhỏ bé của con. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-cho-tre-em-ngheo-kho-ngay-ram-trung-thu",
+    "title": "Lời cầu nguyện cho trẻ em nghèo khổ ngày rằm Trung Thu",
+    "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
+    "content": "<p>Lạy Chúa Giêsu Kitô nhân hậu, trong đêm trung thu vui tươi này, con nhớ đến những bạn nhỏ mồ côi, nghèo khổ hay đang phải nằm trên giường bệnh đau đớn.</p><p>Xin Chúa thương gửi những nhà hảo tâm đến giúp đỡ, mang bánh trung thu và tình yêu thương ấm áp đến cho các bạn. Xin xoa dịu những nỗi đau và mang niềm vui đến cho mọi trẻ em. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-tri-an-thay-co-nhan-ngay-nha-giao-viet-nam-20-11",
+    "title": "Lời nguyện tri ân thầy cô nhân ngày Nhà giáo Việt Nam 20/11",
+    "category": "loi-nguyen-cho-giao-vien-nhan-ngay-nha-giao",
+    "content": "<p>Lạy Thiên Chúa là nguồn mạch mọi chân lý, nhân ngày tri ân thầy cô giáo, chúng con dâng lời cầu nguyện cho các thầy cô kính yêu của chúng con.</p><p>Xin Chúa ban cho các thầy cô sức khỏe dồi dào, lòng nhiệt huyết và kiên nhẫn để tiếp tục sứ mạng cao cả trồng người. Xin đền đáp muôn vàn khó nhọc và tình yêu thương các thầy cô đã dành cho chúng con suốt năm học. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-chua-ban-on-khon-ngoan-cho-cac-nha-giao",
+    "title": "Lời nguyện xin Chúa ban ơn khôn ngoan cho các nhà giáo",
+    "category": "loi-nguyen-cho-giao-vien-nhan-ngay-nha-giao",
+    "content": "<p>Lạy Chúa Thánh Thần là Đấng dạy bảo sự thật, con xin cầu nguyện cho tất cả các thầy cô giáo Công giáo đang gieo mầm đức tin hằng ngày.</p><p>Xin ban cho các thầy cô sự khôn ngoan thiên liêng, gương mẫu đời sống đạo đức để không chỉ dạy kiến thức văn hóa, mà còn làm chứng nhân sống động cho Tin Mừng tình yêu của Chúa giữa học đường. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cua-nguoi-giao-vien-cong-giao-dang-su-mang",
+    "title": "Lời nguyện của người giáo viên Công giáo dâng sứ mạng",
+    "category": "loi-nguyen-cho-giao-vien-nhan-ngay-nha-giao",
+    "content": "<p>Lạy Chúa Giêsu là Thầy dạy duy nhất của con, con xin dâng lên Chúa sứ mạng giáo dục con được giao phó hằng ngày.</p><p>Xin ban cho con trái tim nhân hậu, bao dung đối với các học trò bướng bỉnh, sự nhẫn nại để chỉ dạy những em học lực yếu. Xin cho công việc dạy học của con mỗi ngày luôn phản chiếu tình yêu thương vô bờ bến của Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-chua-soi-sang-tam-tri-khi-bi-phan-tam",
+    "title": "Lời nguyện xin Chúa soi sáng tâm trí khi bị phân tâm",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Chúa Thánh Thần, Thần Khí Chân Lý và Bình An, khi tâm trí con bấn loạn giữa bao dự tính và âu lo, xin ngự đến làm chủ tư tưởng con.</p><p>Xin dẹp tan những xao nhãng nội tâm, giúp con chú tâm trọn vẹn vào công việc hiện tại. Xin dạy con biết trật tự trong tư tưởng và nhẫn nại trong lao động, để mỗi hành động của con đều mang lại hiệu quả tốt nhất nhằm vinh danh Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-dang-phut-giay-lam-viec-trong-tinh-than-tinh-thuc",
+    "title": "Kinh dâng phút giây làm việc trong tinh thần tỉnh thức",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Chúa Giêsu, Ngài dạy chúng con hãy thức tỉnh và cầu nguyện. Xin ban cho con sự tỉnh thức trong từng nhiệm vụ nhỏ bé hôm nay.</p><p>Xin giúp con không xao nhãng trước những cám dỗ lười biếng hay giải trí vô bổ. Cho con biết coi công việc như sứ mạng Chúa giao để chu toàn với niềm say mê và lòng trung thành trọn vẹn. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-ben-chi-va-chuyen-tam-lam-viec",
+    "title": "Lời nguyện xin ơn bền chí và chuyên tâm làm việc",
+    "category": "loi-nguyen-cau-cho-su-tap-trung",
+    "content": "<p>Lạy Thiên Chúa là Cha giàu lòng thương xót, con thường dễ chán nản khi công việc kéo dài hoặc gặp trở ngại.</p><p>Xin ban cho con ơn bền chí, sự chuyên tâm và dẻo dai. Xin cho con sức mạnh để vượt qua những lúc suy giảm năng lượng, giữ vững mục tiêu tốt đẹp ban đầu và hoàn thành công việc một cách xuất sắc nhất. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "kinh-cau-su-khiem-nhuong-trong-cong-viec",
+    "title": "Kinh Cầu Sự Khiêm Nhường trong công việc",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Chúa Giêsu hiền hậu và khiêm nhường trong lòng, xin nhậm lời con cầu xin.</p><p>Xin cứu con khỏi ước muốn được yêu mến hơn người khác, được tôn vinh hơn người khác, được ưu tiên hơn người khác. Xin cho con vui lòng khi người khác thành công hơn con, và cho con biết tìm niềm vui trong việc phục vụ âm thầm như chính Ngài đã phục vụ. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-tha-thu-thoi-kieu-ngao-va-tu-man",
+    "title": "Lời nguyện xin tha thứ thói kiêu ngạo và tự mãn",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Chúa, con nhận ra tâm hồn con còn chứa đựng nhiều sự tự mãn, thích phô trương và so sánh mình với anh chị em.</p><p>Xin Chúa tha thứ và ban ơn biến đổi trái tim con. Xin dạy con biết cúi xuống lắng nghe, chấp nhận những khuyết điểm của bản thân và tôn trọng giá trị của người khác với lòng bao dung chân thành. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-hoc-theo-guong-nhan-nai-va-ha-minh-cua-me-maria",
+    "title": "Lời nguyện học theo gương nhẫn nại và hạ mình của Mẹ Maria",
+    "category": "loi-nguyen-cau-cho-su-khiem-nhuong",
+    "content": "<p>Lạy Mẹ Maria, Nữ Tử khiêm nhường nhất của Thiên Chúa, Mẹ đã xin vâng trong lặng lẽ và sống trọn cuộc đời vì Thánh Ý Cha.</p><p>Xin Mẹ uốn nắn lòng con, giúp con biết sống khiêm tốn trước Chúa và rộng lượng với mọi người. Xin cho con không tìm kiếm sự chú ý của thế gian nhưng chỉ khao khát đẹp lòng Chúa trong mọi việc. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-xin-bay-on-duc-chua-thanh-than",
+    "title": "Kinh xin bảy ơn Đức Chúa Thánh Thần",
+    "category": "loi-nguyen-cau-cho-su-khon-ngoan",
+    "content": "<p>Lạy Chúa Thánh Thần, xin ngự đến tuôn đổ trên con bảy ơn thiêng của Ngài: Ơn Khôn Ngoan, Ơn Thông Hiểu, Ơn Cố Vấn, Ơn Sức Mạnh, Ơn Thông Biết, Ơn Đạo Đức và Ơn Kính Sợ Thiên Chúa.</p><p>Xin dẫn dắt các quyết định của con hôm nay để con luôn vững bước trên con đường sự thật, bác ái và bình an. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-phan-dinh-thieng-lieng-trong-thu-thach",
+    "title": "Lời nguyện xin ơn phân định thiêng liêng trong thử thách",
+    "category": "loi-nguyen-cau-cho-su-khon-ngoan",
+    "content": "<p>Lạy Chúa Giêsu, trước những ngã rẽ phức tạp và sự bủa văng của các luồng suy nghĩ trái chiều, con xin ơn phân định từ Trái Tim Ngài.</p><p>Xin ban cho con đôi mắt đức tin để nhìn thấy sự thật, trí tuệ sáng suốt để chọn điều tốt nhất và lòng can đảm để thực hiện những điều đẹp lòng Chúa. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "kinh-nguyen-xin-on-tro-nen-muoi-va-anh-sang-cho-doi",
+    "title": "Kinh nguyện xin ơn trở nên muối và ánh sáng cho đời",
+    "category": "loi-nguyen-cau-cho-su-thanh-thien",
+    "content": "<p>Lạy Chúa Giêsu, Ngài gọi chúng con là muối cho đời và ánh sáng cho thế gian. Xin thánh hóa cuộc sống hằng ngày của con.</p><p>Xin cho lời nói của con mang lại niềm hy vọng, hành động của con tỏa lan sự bác ái, và lối sống của con làm chứng cho tình yêu cứu độ của Chúa giữa môi trường lao động và học tập. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-giu-gin-long-men-va-on-nghia-chua",
+    "title": "Lời nguyện xin giữ gìn lòng mến và ơn nghĩa Chúa",
+    "category": "loi-nguyen-cau-cho-su-thanh-thien",
+    "content": "<p>Lạy Cha Chí Thánh, xin giữ gìn linh hồn con luôn sạch trong ơn nghĩa Chúa. Khi gặp cám dỗ hay gian nan, xin ban sức mạnh để con kiên quyết trung thành với Lời Ngài dạy.</p><p>Xin cho con sống trọn vẹn từng ngày như thể đó là ngày cuối cùng con được phụng sự Chúa trên đời này. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "kinh-cau-xin-su-an-toan-va-hanh-thong-noi-cong-so",
+    "title": "Kinh cầu xin sự an toàn và hanh thông nơi công sở",
+    "category": "loi-nguyen-cau-truoc-khi-di-lam",
+    "content": "<p>Lạy Thiên Chúa toàn năng, con bước ra khỏi nhà bắt đầu ngày làm việc mới. Xin thương gìn giữ con an toàn trên mọi nẻo đường đi lại.</p><p>Tại nơi làm việc, xin ban cho con sự hài hòa với cấp trên và đồng nghiệp, trí tuệ để giải quyết mọi vướng mắc và tinh thần hăng say phục vụ khách hàng cùng đối tác. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-dang-ngay-lam-viec-cho-thanh-ca-giuse-quan-thay",
+    "title": "Lời dâng ngày làm việc cho Thánh Cả Giuse quan thầy",
+    "category": "loi-nguyen-cau-truoc-khi-di-lam",
+    "content": "<p>Lạy Thánh Cả Giuse, gương mẫu tuyệt vời của người lao động, Ngài đã nuôi sống Thánh Gia bằng mồ hôi và đôi tay lao động cần cù.</p><p>Con xin nhận Ngài làm quan thầy trong công việc hôm nay. Xin Ngài cầu bầu cùng Chúa ban cho con tinh thần trung thực, trách nhiệm và niềm vui trong từng công việc dù bé nhỏ nhất. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "kinh-dang-gio-hoc-va-xin-on-kien-nhan-tich-luy-tri-thuc",
+    "title": "Kinh dâng giờ học và xin ơn kiên nhẫn tích lũy tri thức",
+    "category": "loi-nguyen-cau-truoc-khi-di-hoc",
+    "content": "<p>Lạy Chúa Giêsu, Thầy dạy duy nhất và chí thánh của chúng con. Trước khi bước vào lớp học, con xin dâng trọn giờ học này cho Ngài.</p><p>Xin ban cho con sự tập trung cao độ, khả năng tư duy logic và tinh thần hăng hái tiếp thu tri thức. Xin cho con biết dùng tri thức ấy để xây dựng một thế giới tốt đẹp hơn. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-binh-tinh-va-tu-tin-truoc-ky-thi",
+    "title": "Lời nguyện xin ơn bình tĩnh và tự tin trước kỳ thi",
+    "category": "loi-nguyen-cau-truoc-khi-di-hoc",
+    "content": "<p>Lạy Chúa là nguồn mạch sự bình an, trước giờ thi cử căng thẳng, lòng con dễ lo âu và bối rối.</p><p>Xin ban cho con sự bình tĩnh, sáng suốt để nhớ lại những kiến thức đã ôn tập và làm bài làm một cách trung thực, chính xác nhất. Xin phó dâng kết quả kỳ thi vào tay an bài của Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "kinh-dang-tuoi-gia-va-xin-on-binh-an-tam-hon",
+    "title": "Kinh dâng tuổi già và xin ơn bình an tâm hồn",
+    "category": "loi-nguyen-cau-danh-cho-nguoi-lon-tuoi",
+    "content": "<p>Lạy Chúa, khi sức lực thể xác giảm sút theo thời gian, xin cho tâm hồn con ngày càng được tươi trẻ trong tình yêu Ngài.</p><p>Xin ban cho con sự bình an, niềm vui trong cầu nguyện và sự kiên nhẫn đối với những nỗi đau yếu thể xác. Xin cho con luôn là tấm gương đức tin và tình thương cho con cháu trong gia đình. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-xin-su-am-ap-va-quan-tam-cua-con-chau",
+    "title": "Lời cầu nguyện xin sự ấm áp và quan tâm của con cháu",
+    "category": "loi-nguyen-cau-danh-cho-nguoi-lon-tuoi",
+    "content": "<p>Lạy Cha nhân ái, những năm tháng cuối đời con khao khát sự bình an và tình ấm áp gia đình.</p><p>Xin chúc lành cho con cháu của con, cho chúng được mạnh khỏe, ngoan ngoãn và biết yêu mến Chúa. Xin cho con lòng bao dung để luôn cầu nguyện và chúc lành cho thế hệ tương lai. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "kinh-xin-thien-than-ban-menh-gin-giu-tren-duong",
+    "title": "Kinh xin Thiên Thần Bản Mệnh gìn giữ trên đường",
+    "category": "loi-nguyen-truoc-mot-chuyen-di",
+    "content": "<p>Lạy Thiên Thần Bản Mệnh kính yêu, Đấng được Thiên Chúa giao nhiệm vụ đồng hành và bảo vệ con.</p><p>Trước khi khởi hành chuyến đi này, con xin gửi gắm bản thân và phương tiện di chuyển dưới sự che chở của Ngài. Xin xua đuổi mọi nguy hiểm, tai nạn và ban cho chuyến đi được bình an, tốt đẹp. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-su-bao-tro-cua-duc-me-duong-xa",
+    "title": "Lời nguyện xin sự bảo trợ của Đức Mẹ Đường Xa",
+    "category": "loi-nguyen-truoc-mot-chuyen-di",
+    "content": "<p>Lạy Mẹ Maria, Ngài đã từng trải qua những chuyến đi gian khổ đến Bêlem và Ai Cập để bảo vệ Chúa Hài Nhi.</p><p>Xin Mẹ đồng hành cùng con trong chuyến đi hôm nay. Xin che chở con khỏi mọi rủi ro thời tiết và giao thông, giúp con thượng lộ bình an và đạt được mục đích tốt đẹp của chuyến đi. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-sau-mot-ngay-lam-viec-vat-va",
+    "title": "Kinh tạ ơn sau một ngày làm việc vất vả",
+    "category": "loi-nguyen-cuoi-ngay-di-lam",
+    "content": "<p>Lạy Chúa, sau một ngày dài làm việc căng thẳng và mệt mỏi, con trở về nhà trong sự bình an.</p><p>Con xin tạ ơn Chúa vì đã gìn giữ con an toàn, ban cho con sức khỏe và hoàn thành các bổn phận. Những thiếu sót hay sơ suất trong ngày, con xin Chúa dìm vào đại dương thương xót của Ngài. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-buong-bo-ap-luc-cong-viec-de-nghi-ngoi",
+    "title": "Lời nguyện buông bỏ áp lực công việc để nghỉ ngơi",
+    "category": "loi-nguyen-cuoi-ngay-di-lam",
+    "content": "<p>Lạy Chúa Giêsu, Ngài phán: 'Tất cả những ai vất vả mang gánh nặng nề, hãy đến cùng tôi, tôi sẽ cho nghỉ ngơi dưỡng sức'.</p><p>Giờ đây con xin trút bỏ mọi lo toan, áp lực và deadline công việc vào tay Chúa. Xin ban cho con một đêm ngủ yên giấc để phục hồi sức khỏe cho ngày mai. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-chua-vi-mot-ngay-hoc-tap-nhieu-hoa-trai",
+    "title": "Kinh tạ ơn Chúa vì một ngày học tập nhiều hoa trái",
+    "category": "loi-nguyen-cuoi-ngay-di-hoc",
+    "content": "<p>Lạy Chúa Giêsu, con cảm tạ Chúa vì một ngày đi học đã hoàn thành an bình.</p><p>Cảm tạ Chúa vì những bài học hay, những tình bạn đẹp và sự giúp đỡ của thầy cô. Xin giúp con biết ôn lại kiến thức và chuẩn bị tốt cho buổi học ngày mai với niềm vui chu toàn bổn phận. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-binh-an-tro-ve-sau-chuyen-di",
+    "title": "Kinh tạ ơn bình an trở về sau chuyến đi",
+    "category": "loi-nguyen-cuoi-ngay-sau-mot-chuyen-di",
+    "content": "<p>Lạy Chúa là Đấng giữ gìn bước chân con, con xin dâng lời tạ ơn chân thành vì chuyến đi hôm nay đã kết thúc an toàn.</p><p>Cảm tạ Chúa đã đưa con đi đến nơi về đến chốn, gặp gỡ những con người nhân hậu và tích lũy thêm những trải nghiệm ý nghĩa. Xin chúc lành cho mọi người con đã gặp trên đường. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-tim-lai-su-tinh-lang-sau-dong-bao-cuoc-doi",
+    "title": "Lời cầu nguyện tìm lại sự tĩnh lặng sau dông bão cuộc đời",
+    "category": "loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan",
+    "content": "<p>Lạy Chúa Giêsu, ngày hôm nay con đã phải trải qua những thử thách nặng nề, những lời dèm pha hay mâu thuẫn đau lòng.</p><p>Dù tâm hồn con đang tổn thương, con vẫn tin rằng Chúa không bao giờ bỏ rơi con. Xin xoa dịu vết thương tâm hồn con, ban cho con sức mạnh để tha thứ và giấc ngủ an lành trong tình yêu Ngài. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "kinh-trong-cay-vao-tinh-yeu-chua-trong-dem-toi-thu-thach",
+    "title": "Kinh trông cậy vào tình yêu Chúa trong đêm tối thử thách",
+    "category": "loi-nguyen-cuoi-ngay-sau-khi-trai-qua-kho-khan",
+    "content": "<p>Lạy Cha, khi mọi thứ dường như sụp đổ và bế tắc, con xin thắp lên ngọn nến trông cậy vào lòng nhân lành Chúa.</p><p>Xin ban cho con niềm tin kiên vững rằng sau đêm tối là bình minh tươi sáng. Con xin phó dâng tương lai và mọi lo âu của con cho Chúa an bài. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "kinh-dang-mai-am-gia-dinh-cho-trai-tim-cuc-thanh-chua-giesu",
+    "title": "Kinh dâng mái ấm gia đình cho Trái Tim Cực Thánh Chúa Giêsu",
+    "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
+    "content": "<p>Lạy Chúa Giêsu, chúng con xin tôn vương Trái Tim Cực Thánh Ngài làm Chủ mái nhà này.</p><p>Xin ban cho mọi thành viên trong gia đình biết tôn trọng, lắng nghe và nhường nhịn lẫn nhau. Khi có bất đồng hay hiểu lầm, xin ban ơn tha thứ để tình yêu thương luôn chiến thắng trong ngôi nhà chúng con. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-xin-on-hieu-thao-cua-con-cai-doi-voi-cha-me",
+    "title": "Lời nguyện xin ơn hiếu thảo của con cái đối với cha mẹ",
+    "category": "loi-nguyen-cho-long-hieu-thao",
+    "content": "<p>Lạy Chúa, Ngài phán trong Giới Luật thứ bốn: 'Hãy thảo kính cha mẹ'. Con xin tạ ơn Chúa vì công ơn sinh thành dưỡng dục vĩ đại của cha mẹ.</p><p>Xin ban cho con trái tim biết ơn, sự ngoan ngoãn và vâng lời. Xin giúp con biết chăm sóc, phụng dưỡng cha mẹ khi ốm đau hay già yếu với tất cả lòng mến yêu chân thành. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-cau-cho-cha-me-ong-ba-duoc-bach-nien-hao-hop-va-an-binh",
+    "title": "Kinh cầu cho cha mẹ ông bà được bách niên hảo hợp và an bình",
+    "category": "loi-nguyen-cho-su-binh-an-cua-cha-me-ong-ba",
+    "content": "<p>Lạy Thiên Chúa là Cha giàu lòng thương xót, con xin dâng lên Chúa ông bà và cha mẹ kính yêu của con.</p><p>Xin ban cho ông bà cha mẹ được dồi dào sức khỏe, tràn đầy niềm vui đức tin và luôn sống trong sự yêu thương chăm sóc của con cháu. Xin gìn giữ các ngài khỏi mọi bệnh tật và lo âu. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cua-cha-me-xin-chua-chuc-lanh-cho-con-cai",
+    "title": "Lời nguyện của cha mẹ xin Chúa chúc lành cho con cái",
+    "category": "loi-nguyen-danh-cho-con-cai",
+    "content": "<p>Lạy Chúa, con cái là quà tặng vô giá Chúa trao gởi cho vợ chồng chúng con. Con xin dâng các con của con cho Trái Tim Chúa và Mẹ Maria.</p><p>Xin gìn giữ các con con khỏi mọi cạm bẫy xấu xa của xã hội, giúp các con lớn lên ngoan ngoãn, thông minh, giàu lòng nhân ái và luôn giữ vững đức tin Công giáo. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "tuan-cuu-nhat-kinh-thanh-ca-giuse-quan-thay-gia-dinh",
+    "title": "Tuần Cửu Nhật Kính Thánh Cả Giuse Quan Thầy Gia Đình",
+    "category": "tuan-cuu-nhat-kinh-thanh-giuse",
+    "isNovena": true,
+    "content": "<p>Tuần Cửu Nhật Kính Thánh Cả Giuse dâng lên đấng bảo hộ Thánh Gia để xin ơn bình an, công việc và sự hiệp nhất gia đình.</p>",
+    "novenaDays": [
+      {
+        "day": 1,
+        "title": "Ngày thứ 1: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 1)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 1 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 2,
+        "title": "Ngày thứ 2: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 2)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 2 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 3,
+        "title": "Ngày thứ 3: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 3)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 3 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 4,
+        "title": "Ngày thứ 4: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 4)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 4 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 5,
+        "title": "Ngày thứ 5: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 5)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 5 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 6,
+        "title": "Ngày thứ 6: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 6)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 6 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 7,
+        "title": "Ngày thứ 7: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 7)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 7 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 8,
+        "title": "Ngày thứ 8: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 8)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 8 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      },
+      {
+        "day": 9,
+        "title": "Ngày thứ 9: Cầu xin sự bảo trợ của Thánh Giuse (Ngày 9)",
+        "content": "<p><b>Lời khấn nguyện:</b> Lạy Thánh Cả Giuse, Quan Thầy đầy quyền năng trước tòa Thiên Chúa. Con xin dâng lên Ngài ước nguyện ngày thứ 9 của tuần cửu nhật này.</p><p><b>Lời cầu nguyện:</b> Xin Ngài gìn giữ công việc, gia đình và đời sống tâm linh của con luôn bình an. Xin cho con biết noi gương Ngài sống âm thầm, công chính và vâng nghe Ý Chúa trong mọi hoàn cảnh. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+      }
+    ]
+  },
+  {
+    "uid": "loi-nguyen-dang-ngay-le-phuc-sinh-mung-chua-song-lai",
+    "title": "Lời nguyện dâng ngày Lễ Phục Sinh mừng Chúa Sống Lại",
+    "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
+    "content": "<p>Alleluia! Lạy Chúa Giêsu Phục Sinh, Ngài đã chiến thắng sự chết và tội lỗi để mở ra con đường sự sống vĩnh cửu.</p><p>Xin ban niềm vui Phục Sinh tràn ngập tâm hồn chúng con, giúp chúng con dẹp bỏ những con người cũ ích kỷ để sống một cuộc đời mới chan chứa hy vọng, bình an và tình yêu thương bác ái. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-dang-ngay-le-chua-thanh-than-hien-xuong",
+    "title": "Lời nguyện dâng ngày Lễ Chúa Thánh Thần Hiện Xuống",
+    "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
+    "content": "<p>Lạy Chúa Thánh Thần, xin ngự đến làm mới lại mặt đất và tâm hồn chúng con như ngày lễ Hiện Xuống năm xưa.</p><p>Xin ban ngọn lửa mến yêu để đốt cháy sự nguội lạnh, ban làn gió ơn sủng để thổi tan những sợ hãi và giúp chúng con hăng hái ra đi làm chứng cho Phúc Âm giữa đời. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>"
+  },
+  {
+    "uid": "kinh-cau-nguyen-cho-thay-co-nhan-ngay-nha-giao-viet-nam-20-11",
+    "title": "Kinh cầu nguyện cho Thầy Cô nhân ngày Nhà Giáo Việt Nam 20/11",
+    "category": "loi-nguyen-cho-giao-vien-nhan-ngay-nha-giao",
+    "content": "<p>Lạy Thiên Chúa là Thầy Đại Tri Thức, nhân ngày Nhà Giáo, chúng con xin dâng lên Chúa các thầy cô giáo đã và đang dạy dỗ chúng con.</p><p>Xin ban cho quý thầy cô sức khỏe dồi dào, niềm đam mê với nghề kiêu hãnh và sự nhẫn nại bao la để dìu dắt bao thế hệ học sinh nên người hữu ích cho Giáo hội và xã hội. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-nguyen-cau-cho-tre-em-nhan-dip-tet-trung-thu",
+    "title": "Lời nguyện cầu cho Trẻ Em nhân dịp Tết Trung Thu",
+    "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
+    "content": "<p>Lạy Chúa Giêsu, Ngài rất yêu mến trẻ nhỏ và phán: 'Hãy để trẻ nhỏ đến cùng Ta'. Nhân đêm Rằm Trung Thu, chúng con xin dâng tất cả các em thiếu nhi cho Chúa.</p><p>Xin ban cho các em một đêm hội vầy vui tươi, được sống trong sự yêu thương chở che của gia đình và cộng đoàn, và ngày càng lớn lên trong sự khôn ngoan và ơn nghĩa Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>"
+  },
+  {
+    "uid": "kinh-ta-on-chua-ngay-cuoi-nam-31-12",
+    "title": "Kinh tạ ơn Chúa ngày Cuối Năm (31/12)",
+    "category": "loi-nguyen-cuoi-nam",
+    "content": "<p>Lạy Thiên Chúa là Đấng An Bài Mọi Sự, trong những giây phút cuối cùng của năm cũ, chúng con cùng sấp mình tạ ơn Chúa.</p><p>Cảm tạ Chúa vì 365 ngày đã qua với biết bao ơn lành, sự che chở trong gian nan và những bài học vô giá. Xin Chúa tha thứ mọi lỡ lầm của chúng con và đón nhận lời tạ ơn chân thành này. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
+  },
+  {
+    "uid": "loi-cau-nguyen-chuc-lanh-cho-ngay-dau-nam-moi-mung-1-tet",
+    "title": "Lời cầu nguyện chúc lành cho Ngày Đầu Năm Mới (Mùng 1 Tết)",
+    "category": "loi-nguyen-dau-nam-moi",
+    "content": "<p>Lạy Chúa, ngước nhìn năm mới vừa sang, chúng con thành kính dâng lên Ngài trọn vẹn 365 ngày sắp tới.</p><p>Xin ban bình an cho quê hương, thịnh vượng cho mọi gia đình, và sức khỏe cho ông bà cha mẹ. Cho chúng con biết khởi đầu năm mới bằng tình yêu thương và lòng tin tưởng tuyệt đối vào sự an toàn trong tay Chúa. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>"
   }
 ]
