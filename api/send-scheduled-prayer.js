@@ -27,6 +27,13 @@ export default async function handler(req, res) {
   const period = req.query.period || 'morning'; // 'morning' or 'evening'
   const repoName = process.env.PRISMIC_REPO || 'easyforpray';
 
+  if (!admin.apps.length) {
+    return res.status(400).json({
+      error: 'Cần cấu hình FIREBASE_SERVICE_ACCOUNT trong Environment Variables trên Vercel để gửi FCM Web Push.',
+      hint: 'Vào Vercel Dashboard -> Project Settings -> Environment Variables -> Thêm FIREBASE_SERVICE_ACCOUNT.'
+    });
+  }
+
   try {
     const accessToken = process.env.PRISMIC_ACCESS_TOKEN || process.env.VITE_PRISMIC_ACCESS_TOKEN || '';
     const client = prismic.createClient(repoName, {

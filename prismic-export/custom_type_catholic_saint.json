@@ -1,0 +1,64 @@
+{
+  "id": "catholic_saint",
+  "label": "Catholic Saint",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "saint_id": {
+        "type": "Text",
+        "config": {
+          "label": "Saint ID"
+        }
+      },
+      "name": {
+        "type": "Text",
+        "config": {
+          "label": "Tên Thánh / Ngày Lễ"
+        }
+      },
+      "saint_title": {
+        "type": "Text",
+        "config": {
+          "label": "Tên Tước Hiệu Đầy Đủ"
+        }
+      },
+      "date": {
+        "type": "Text",
+        "config": {
+          "label": "Ngày Lễ (MM-DD)"
+        }
+      },
+      "month": {
+        "type": "Number",
+        "config": {
+          "label": "Tháng"
+        }
+      },
+      "day": {
+        "type": "Number",
+        "config": {
+          "label": "Ngày"
+        }
+      },
+      "type": {
+        "type": "Select",
+        "config": {
+          "label": "Loại Lễ",
+          "options": [
+            "solemnity",
+            "feast",
+            "memorial",
+            "commemoration"
+          ]
+        }
+      },
+      "description": {
+        "type": "Text",
+        "config": {
+          "label": "Mô tả ngắn"
+        }
+      }
+    }
+  }
+}

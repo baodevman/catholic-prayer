@@ -11,6 +11,10 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.ts',
       registerType: 'prompt',
+      devOptions: {
+        enabled: true,
+        type: 'module'
+      },
       includeAssets: ['favicon.svg'],
       manifest: {
         name: 'Kinh Nguyện Công Giáo',

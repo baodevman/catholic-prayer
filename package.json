@@ -9,6 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "prayers:import": "tsx scripts/import-prayers.ts",
+    "prayers:crawl": "tsx scripts/crawl-prayers.ts",
+    "sync:prismic": "tsx scripts/sync-prismic-data.ts",
     "slicemachine": "start-slicemachine"
   },
   "dependencies": {

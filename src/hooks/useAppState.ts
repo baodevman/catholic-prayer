@@ -1,8 +1,55 @@
 import { useState, useEffect, useCallback } from 'react';
 import { storage } from '../utils/storage';
-import type { ActiveNovena, WeeklyBook, UserRole, CustomPrayer } from '../utils/storage';
+import type { ActiveNovena, WeeklyBook, UserRole, CustomPrayer, RelativePatron } from '../utils/storage';
 import { fetchAllPrayers, fetchAllCategories } from '../utils/prismic';
 import type { Prayer, PrismicCategory } from '../utils/prismic';
+
+// Helper to dispatch local & Service Worker notifications
+const dispatchNotification = async (title: string, body: string) => {
+  if (!('Notification' in window)) {
+    console.log(`🔔 BÁO THỨC: ${title} - ${body}`);
+    return;
+  }
+  if (Notification.permission !== 'granted') {
+    return;
+  }
+
+  let shownViaSW = false;
+  if ('serviceWorker' in navigator) {
+    try {
+      const registration = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), 800))
+      ]);
+      if (registration && registration.active) {
+        await registration.showNotification(title, {
+          body,
+          icon: '/favicon.svg',
+          badge: '/favicon.svg',
+          vibrate: [200, 100, 200],
+          tag: 'catholic-prayer-alert',
+          renotify: true,
+          data: { url: '/' }
+        } as any);
+        shownViaSW = true;
+      }
+    } catch (e) {
+      console.warn('SW Notification failed, falling back to direct Notification API', e);
+    }
+  }
+
+  if (!shownViaSW) {
+    try {
+      new Notification(title, {
+        body,
+        icon: '/favicon.svg',
+        badge: '/favicon.svg'
+      });
+    } catch (e) {
+      console.warn('Direct Notification API failed', e);
+    }
+  }
+};
 
 export const useAppState = () => {
   // Navigation & UI States
@@ -23,6 +70,7 @@ export const useAppState = () => {
   const [offlineSize, setOfflineSize] = useState<number>(0);
   const [isFatimaDay, setIsFatimaDay] = useState<boolean>(false);
   const [suggestedPrayers, setSuggestedPrayers] = useState<Prayer[]>([]);
+  const [relativePatrons, setRelativePatrons] = useState<RelativePatron[]>(storage.getRelativePatrons());
 
   // Pinned/Fixed prayers for 6:00 and 19:00 notifications
   const [fixedMorningUid, setFixedMorningUid] = useState<string | null>(null);
@@ -166,15 +214,10 @@ export const useAppState = () => {
   // Automatic Background Notification Scheduler on Prayer Period transitions
   useEffect(() => {
     if (!notificationsEnabled) return;
-
+    
     const checkPeriodTransition = () => {
       const now = new Date();
       const hour = now.getHours();
-      const minute = now.getMinutes();
-      
-      // Trigger exactly on the hour transitions (minute is 0)
-      if (minute !== 0) return;
-      
       let periodKey = '';
       let title = '';
       let body = '';
@@ -187,13 +230,13 @@ export const useAppState = () => {
           periodKey = 'evening_weekend';
           title = "Lời Nguyện Cầu Buổi Tối";
           body = "Đã đến giờ dâng lời tạ ơn ngày nghỉ và cầu bình an cho gia đình.";
-        } else if (hour === 4) {
+        } else if (hour === 6 || hour === 7) {
           periodKey = 'day_weekend';
           title = "Lời Nguyện Cầu Ngày Lễ";
           body = "Hãy dành thời gian ngày Chúa Nhật này dâng lời cầu nguyện.";
         }
       } else {
-        if (hour === 4) {
+        if (hour === 6 || hour === 7) {
           periodKey = 'morning_weekday';
           title = "Lời Nguyện Cầu Buổi Sáng";
           body = "Dâng ngày mới học tập và làm việc thánh hiến cho Chúa.";
@@ -205,7 +248,7 @@ export const useAppState = () => {
           periodKey = 'thanks_weekday';
           title = "Lời Tạ Ơn Chiều Muộn";
           body = "Cầu xin ơn bình an trở về nhà sau một ngày học tập/làm việc.";
-        } else if (hour === 18) {
+        } else if (hour === 18 || hour === 19) {
           periodKey = 'evening_weekday';
           title = "Lời Nguyện Cầu Buổi Tối";
           body = "Đã đến giờ dâng lời kinh nguyện tạ ơn cuối ngày.";
@@ -218,23 +261,33 @@ export const useAppState = () => {
         
         if (lastNotified !== todayKey) {
           localStorage.setItem('last_notified_period_today', todayKey);
-          
-          if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification(title, { 
-              body, 
-              icon: '/favicon.svg',
-              badge: '/favicon.svg'
-            });
-          } else {
-            console.log(`🔔 BÁO THỨC: ${title} - ${body}`);
-          }
+          dispatchNotification(title, body);
+        }
+      }
+
+      // Check relative patron saint days for today
+      const monthStr = String(now.getMonth() + 1).padStart(2, '0');
+      const dayStr = String(now.getDate()).padStart(2, '0');
+      const todayDateStr = `${monthStr}-${dayStr}`;
+      
+      const todayPatrons = relativePatrons.filter(p => p.feastDate === todayDateStr);
+      if (todayPatrons.length > 0) {
+        const patronNotifiedKey = `patron_notified_${todayDateStr}`;
+        if (localStorage.getItem(patronNotifiedKey) !== 'true') {
+          localStorage.setItem(patronNotifiedKey, 'true');
+          const names = todayPatrons.map(p => p.name).join(', ');
+          const saintName = todayPatrons[0].saintName;
+          dispatchNotification(
+            `🎉 Lễ Bổn Mạng Hôm Nay: ${saintName}`,
+            `Hôm nay là Lễ Bổn Mạng của ${names}! Hãy vào ứng dụng để gửi lời chúc mừng Zalo.`
+          );
         }
       }
     };
 
     const timer = setInterval(checkPeriodTransition, 30000); // Check every 30 seconds
     return () => clearInterval(timer);
-  }, [notificationsEnabled]);
+  }, [notificationsEnabled, relativePatrons]);
 
   // Update suggested prayers based on Time, Day, and User Role
   useEffect(() => {
@@ -342,28 +395,56 @@ export const useAppState = () => {
     setUserRole(role);
   };
 
+  const sendTestNotification = async () => {
+    if (!('Notification' in window)) {
+      alert('Trình duyệt không hỗ trợ Web Notification.');
+      return;
+    }
+
+    let permission = Notification.permission;
+    if (permission !== 'granted') {
+      permission = await Notification.requestPermission();
+    }
+
+    if (permission === 'granted') {
+      dispatchNotification(
+        '✠ Sách Kinh Công Giáo PWA',
+        'Thông báo thử nghiệm thành công! Đã sẵn sàng nhắc nhở bạn dâng lời cầu nguyện mỗi ngày.'
+      );
+      setPushDebugStatus('Đã gửi thông báo thử nghiệm thành công! 🔔');
+    } else {
+      alert('Quyền hiển thị thông báo đã bị từ chối trong Cài đặt trình duyệt.');
+      setPushDebugStatus('Quyền bị từ chối ❌');
+    }
+  };
+
   const subscribeToWebPush = async () => {
     setPushDebugError('');
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      setPushDebugStatus('Trình duyệt không hỗ trợ Web Push ❌');
+    if (!('serviceWorker' in navigator)) {
+      setPushDebugStatus('Trình duyệt không hỗ trợ Service Worker ❌');
       return;
     }
 
     try {
       setPushDebugStatus('Đang nạp Service Worker...');
-      const registration = await navigator.serviceWorker.ready;
+      const registration = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), 1500))
+      ]);
       
-      setPushDebugStatus('Đang quét thông tin đăng ký cũ...');
+      const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || ''; 
+      
+      if (!registration || !('PushManager' in window) || !vapidPublicKey || vapidPublicKey === 'BEl62vPPTgEt2mYIGY43C4U8-y453J23') {
+        setPushDebugStatus('Đã kích hoạt Thông báo Cục bộ ✅');
+        setPushDebugError('Thông báo hẹn giờ trên thiết bị hoạt động 100%. (Để đồng bộ Push Server từ xa, cần cấu hình VITE_VAPID_PUBLIC_KEY trên Vercel).');
+        return;
+      }
+      
+      setPushDebugStatus('Đang quét thông tin đăng ký...');
       let subscription = await registration.pushManager.getSubscription();
       
       if (!subscription) {
-        setPushDebugStatus('Đang xin chứng chỉ VAPID từ Firebase...');
-        const vapidPublicKey = import.meta.env.VITE_VAPID_PUBLIC_KEY || ''; 
-        
-        if (!vapidPublicKey || vapidPublicKey === 'BEl62vPPTgEt2mYIGY43C4U8-y453J23') {
-          throw new Error('Chưa cấu hình VITE_VAPID_PUBLIC_KEY trên Vercel/Local.');
-        }
-        
+        setPushDebugStatus('Đang xin cấp Web Push Token từ Firebase...');
         const padding = '='.repeat((4 - vapidPublicKey.length % 4) % 4);
         const base64 = (vapidPublicKey + padding).replace(/\-/g, '+').replace(/_/g, '/');
         const rawData = window.atob(base64);
@@ -372,7 +453,6 @@ export const useAppState = () => {
           outputArray[i] = rawData.charCodeAt(i);
         }
         
-        setPushDebugStatus('Đang cấp token trình duyệt...');
         subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey: outputArray
@@ -380,10 +460,9 @@ export const useAppState = () => {
       }
       
       if (subscription) {
-        setPushDebugStatus('Đã có Token. Đang đồng bộ lên Vercel...');
         const tokenStr = JSON.stringify(subscription);
         setPushDebugToken(tokenStr);
-        console.log('Web Push Subscription thành công:', tokenStr);
+        setPushDebugStatus('Đang đồng bộ token lên server...');
         
         const response = await fetch('/api/subscribe-to-alerts', {
           method: 'POST',
@@ -393,20 +472,20 @@ export const useAppState = () => {
           body: JSON.stringify({ token: subscription }),
         });
         
-        if (response.ok) {
-          setPushDebugStatus('Đăng ký Reminders thành công! ✅');
-          console.log('Đăng ký nhận tin thành công trên server!');
+        const data = await response.json().catch(() => ({}));
+        if (response.ok && data.success) {
+          setPushDebugStatus(data.warning ? 'Đã bật thông báo thiết bị! ✅' : 'Đăng ký Push Server thành công! ✅');
+          if (data.warning) setPushDebugError(data.warning);
         } else {
-          const errData = await response.json().catch(() => ({}));
-          setPushDebugStatus('Đồng bộ lên Vercel thất bại ❌');
-          setPushDebugError(errData.error || `HTTP ${response.status} ${response.statusText || 'Internal Error'}`);
+          setPushDebugStatus('Đồng bộ Push Server thất bại ❌');
+          setPushDebugError(data.error || `HTTP ${response.status}`);
         }
       } else {
-        setPushDebugStatus('Không nhận được token ❌');
+        setPushDebugStatus('Không tạo được token Web Push ❌');
       }
     } catch (e: any) {
-      console.error('Không thể đăng ký Web Push:', e);
-      setPushDebugStatus('Lỗi thiết lập ❌');
+      console.error('Lỗi thiết lập Web Push:', e);
+      setPushDebugStatus('Đã bật Thông báo Cục bộ ✅');
       setPushDebugError(e.message || String(e));
     }
   };
@@ -542,6 +621,22 @@ export const useAppState = () => {
     setFixedEveningUid(uid);
   };
 
+  // Relative Patron Saints actions
+  const saveRelativePatron = (patronData: Omit<RelativePatron, 'id'> & { id?: string }) => {
+    const id = patronData.id || `patron-${Date.now()}`;
+    const newPatron: RelativePatron = {
+      ...patronData,
+      id
+    };
+    storage.saveRelativePatron(newPatron);
+    setRelativePatrons(storage.getRelativePatrons());
+  };
+
+  const deleteRelativePatron = (id: string) => {
+    storage.deleteRelativePatron(id);
+    setRelativePatrons(storage.getRelativePatrons());
+  };
+
   return {
     activeTab,
     setActiveTab,
@@ -577,6 +672,10 @@ export const useAppState = () => {
     pinPrayerAsEvening,
     pushDebugStatus,
     pushDebugToken,
-    pushDebugError
+    pushDebugError,
+    sendTestNotification,
+    relativePatrons,
+    saveRelativePatron,
+    deleteRelativePatron
   };
 };

@@ -9,6 +9,7 @@ const KEYS = {
   OFFLINE_ENABLED: 'catholic_prayer_offline_enabled',
   USER_ROLE: 'catholic_prayer_user_role',
   NOTIFICATIONS_ENABLED: 'catholic_prayer_notifications_enabled',
+  RELATIVE_PATRONS: 'catholic_prayer_relative_patrons',
 };
 
 // --- Custom Types ---
@@ -20,6 +21,16 @@ export interface CustomPrayer {
   category: string;
   content: string;
   isPrivate: boolean; // true = Private, false = Public
+}
+
+export interface RelativePatron {
+  id: string;
+  name: string; // e.g. "Ba", "Chú Tuấn", "Chị Mai"
+  saintId: string;
+  saintName: string; // e.g. "Thánh Giuse"
+  feastDate: string; // Format: "MM-DD" e.g. "03-19"
+  phone?: string;
+  note?: string;
 }
 
 export interface ActiveNovena {
@@ -231,5 +242,24 @@ export const storage = {
     } catch (e) {
       console.error('Error setting fixed evening prayer', e);
     }
+  },
+
+  // --- Relative Patron Saints Storage ---
+  getRelativePatrons: (): RelativePatron[] => getLocal<RelativePatron[]>(KEYS.RELATIVE_PATRONS, []),
+  setRelativePatrons: (patrons: RelativePatron[]) => setLocal(KEYS.RELATIVE_PATRONS, patrons),
+  saveRelativePatron: (patron: RelativePatron) => {
+    const list = storage.getRelativePatrons();
+    const idx = list.findIndex(p => p.id === patron.id);
+    if (idx > -1) {
+      list[idx] = patron;
+    } else {
+      list.push(patron);
+    }
+    storage.setRelativePatrons(list);
+  },
+  deleteRelativePatron: (id: string) => {
+    const list = storage.getRelativePatrons();
+    const filtered = list.filter(p => p.id !== id);
+    storage.setRelativePatrons(filtered);
   }
 };
