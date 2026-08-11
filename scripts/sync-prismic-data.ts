@@ -201,14 +201,30 @@ const prayerCustomTypeSchema = {
   json: {
     Main: {
       title: { type: 'Text', config: { label: 'Tiêu Đề Kinh Nguyện' } },
-      category: { type: 'Link', config: { label: 'Danh Mục', select: 'document', customtypes: ['category'] } },
+      category: { type: 'Link', config: { label: 'Danh Mục Chính (Single)', select: 'document', customtypes: ['category'] } },
+      categories: {
+        type: 'Group',
+        config: {
+          label: 'Danh Mục Liên Kết (N Categories)',
+          fields: {
+            category_link: { type: 'Link', config: { label: 'Danh Mục Liên Kết', select: 'document', customtypes: ['category'] } }
+          }
+        }
+      },
       content: { type: 'StructuredText', config: { label: 'Nội dung Lời Nguyện', multi: 'paragraph,preformatted,heading1,heading2,heading3,strong,em' } },
       is_novena: { type: 'Boolean', config: { label: 'Là Tuần Cửu Nhật' } }
     }
   }
 };
 fs.writeFileSync(path.join(outputDir, 'custom_type_prayer.json'), JSON.stringify(prayerCustomTypeSchema, null, 2), 'utf-8');
-console.log(`✅ [Prayers Export] Exported ${prayersList.length} Prayers with full RichText content to Export folder.`);
+
+const prayerSliceMachineDir = path.join(process.cwd(), 'customtypes', 'prayer');
+if (!fs.existsSync(prayerSliceMachineDir)) {
+  fs.mkdirSync(prayerSliceMachineDir, { recursive: true });
+}
+fs.writeFileSync(path.join(prayerSliceMachineDir, 'index.json'), JSON.stringify(prayerCustomTypeSchema, null, 2), 'utf-8');
+
+console.log(`✅ [Prayers Export] Exported ${prayersList.length} Prayers with N-category links & RichText schema to Slice Machine & Export folder.`);
 
 // ==========================================
 // 4. Remote Prismic API Push / Migration (if Tokens are configured)

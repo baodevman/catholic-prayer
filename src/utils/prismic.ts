@@ -5,7 +5,8 @@ import { storage } from './storage';
 export interface Prayer {
   uid: string;
   title: string;
-  category: string; // morning-work | morning-school | evening-weekday | evening-weekend | feast-holiday | novena
+  category: string; // Primary Category UID
+  categories?: string[]; // List of Category UIDs linked from Prismic (N links)
   content: string; // HTML formatted string
   isNovena?: boolean;
   novenaDays?: NovenaDay[];
@@ -90,10 +91,28 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
           })).sort((a: NovenaDay, b: NovenaDay) => a.day - b.day);
         }
 
+        // Collect all N category links from Prismic document
+        const categoryUids: string[] = [];
+        if (d.category && d.category.uid) {
+          categoryUids.push(d.category.uid);
+        } else if (typeof d.category === 'string' && d.category) {
+          categoryUids.push(d.category);
+        }
+
+        if (d.categories && Array.isArray(d.categories)) {
+          d.categories.forEach((item: any) => {
+            const linkUid = item.category_link?.uid || item.category?.uid || (typeof item === 'string' ? item : null);
+            if (linkUid && !categoryUids.includes(linkUid)) {
+              categoryUids.push(linkUid);
+            }
+          });
+        }
+
         return {
           uid: doc.uid || doc.id,
           title: d.title || 'Kinh không tên',
-          category: (d.category && d.category.uid) ? d.category.uid : (typeof d.category === 'string' ? d.category : ''),
+          category: categoryUids[0] || '',
+          categories: categoryUids,
           content: richTextToHtml(d.content),
           isNovena,
           ...(isNovena && { novenaDays }),

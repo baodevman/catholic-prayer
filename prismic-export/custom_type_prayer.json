@@ -14,11 +14,29 @@
       "category": {
         "type": "Link",
         "config": {
-          "label": "Danh Mục",
+          "label": "Danh Mục Chính (Single)",
           "select": "document",
           "customtypes": [
             "category"
           ]
+        }
+      },
+      "categories": {
+        "type": "Group",
+        "config": {
+          "label": "Danh Mục Liên Kết (N Categories)",
+          "fields": {
+            "category_link": {
+              "type": "Link",
+              "config": {
+                "label": "Danh Mục Liên Kết",
+                "select": "document",
+                "customtypes": [
+                  "category"
+                ]
+              }
+            }
+          }
         }
       },
       "content": {
