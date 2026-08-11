@@ -69,7 +69,18 @@ export default async function handler(req, res) {
     }
 
     const response = await admin.messaging().subscribeToTopic(registrationToken, 'prayer-alerts');
-    console.log('Successfully subscribed token to prayer-alerts:', response);
+    console.log('FCM subscribeToTopic response:', JSON.stringify(response, null, 2));
+
+    if (response.failureCount > 0) {
+      const firstErr = response.errors && response.errors[0] ? response.errors[0].error : null;
+      const errMsg = firstErr?.message || firstErr?.code || 'Token không hợp lệ hoặc đã hết hạn trên FCM.';
+      console.warn('FCM Topic Subscription Failed:', errMsg);
+
+      return res.status(400).json({
+        success: false,
+        error: `FCM từ chối Token: ${errMsg}. Hệ thống sẽ xin lại Token mới.`
+      });
+    }
 
     return res.status(200).json({ success: true, message: 'Đăng ký nhận thông báo đẩy thành công!' });
   } catch (error) {

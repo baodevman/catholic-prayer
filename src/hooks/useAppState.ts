@@ -442,9 +442,8 @@ export const useAppState = () => {
       
       setPushDebugStatus('Đang quét thông tin đăng ký...');
       let subscription = await registration.pushManager.getSubscription();
-      
-      if (!subscription) {
-        setPushDebugStatus('Đang xin cấp Web Push Token từ Firebase...');
+
+      const getApplicationServerKey = () => {
         const padding = '='.repeat((4 - vapidPublicKey.length % 4) % 4);
         const base64 = (vapidPublicKey + padding).replace(/\-/g, '+').replace(/_/g, '/');
         const rawData = window.atob(base64);
@@ -452,10 +451,14 @@ export const useAppState = () => {
         for (let i = 0; i < rawData.length; ++i) {
           outputArray[i] = rawData.charCodeAt(i);
         }
-        
+        return outputArray;
+      };
+      
+      if (!subscription) {
+        setPushDebugStatus('Đang xin cấp Web Push Token mới...');
         subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: outputArray
+          applicationServerKey: getApplicationServerKey()
         });
       }
       
@@ -464,7 +467,7 @@ export const useAppState = () => {
         setPushDebugToken(tokenStr);
         setPushDebugStatus('Đang đồng bộ token lên server...');
         
-        const response = await fetch('/api/subscribe-to-alerts', {
+        let response = await fetch('/api/subscribe-to-alerts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -472,10 +475,31 @@ export const useAppState = () => {
           body: JSON.stringify({ token: subscription }),
         });
         
-        const data = await response.json().catch(() => ({}));
+        let data = await response.json().catch(() => ({}));
+
+        // If FCM rejected stale token, auto-heal by unsubscribing and requesting a fresh token
+        if (!response.ok || !data.success) {
+          setPushDebugStatus('Token cũ bị từ chối, đang tự động làm mới...');
+          try {
+            await subscription.unsubscribe();
+          } catch {}
+          subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: getApplicationServerKey()
+          });
+          setPushDebugToken(JSON.stringify(subscription));
+          response = await fetch('/api/subscribe-to-alerts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: subscription }),
+          });
+          data = await response.json().catch(() => ({}));
+        }
+
         if (response.ok && data.success) {
           setPushDebugStatus(data.warning ? 'Đã bật thông báo thiết bị! ✅' : 'Đăng ký Push Server thành công! ✅');
           if (data.warning) setPushDebugError(data.warning);
+          else setPushDebugError('');
         } else {
           setPushDebugStatus('Đồng bộ Push Server thất bại ❌');
           setPushDebugError(data.error || `HTTP ${response.status}`);
