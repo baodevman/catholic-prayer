@@ -5,73 +5,51 @@
   "status": true,
   "json": {
     "Main": {
-      "uid": {
-        "type": "UID",
-        "config": {
-          "label": "UID"
-        }
-      },
       "title": {
         "type": "Text",
         "config": {
-          "label": "Title",
-          "placeholder": "Nhập tiêu đề kinh nguyện..."
+          "label": "Tiêu Đề Kinh Nguyện"
         }
       },
       "category": {
         "type": "Link",
         "config": {
-          "label": "Category Link",
+          "label": "Danh Mục Chính (Single)",
           "select": "document",
-          "customtypes": ["category"],
-          "placeholder": "Chọn danh mục liên kết..."
+          "customtypes": [
+            "category"
+          ]
+        }
+      },
+      "categories": {
+        "type": "Group",
+        "config": {
+          "label": "Danh Mục Liên Kết (N Categories)",
+          "fields": {
+            "category_link": {
+              "type": "Link",
+              "config": {
+                "label": "Danh Mục Liên Kết",
+                "select": "document",
+                "customtypes": [
+                  "category"
+                ]
+              }
+            }
+          }
         }
       },
       "content": {
         "type": "StructuredText",
         "config": {
-          "label": "Content",
-          "placeholder": "Nhập nội dung lời kinh...",
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink"
+          "label": "Nội dung Lời Nguyện",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,strong,em"
         }
       },
       "is_novena": {
         "type": "Boolean",
         "config": {
-          "label": "Is Novena?",
-          "placeholder_true": "Đúng (Là Tuần Cửu Nhật)",
-          "placeholder_false": "Không",
-          "default_value": false
-        }
-      },
-      "novena_days": {
-        "type": "Group",
-        "config": {
-          "label": "Novena Days (9 Days)",
-          "fields": {
-            "day": {
-              "type": "Number",
-              "config": {
-                "label": "Day Index (1-9)",
-                "placeholder": "Ví dụ: 1"
-              }
-            },
-            "day_title": {
-              "type": "Text",
-              "config": {
-                "label": "Day Title",
-                "placeholder": "Ví dụ: Ngày 1: Suy niệm về..."
-              }
-            },
-            "day_content": {
-              "type": "StructuredText",
-              "config": {
-                "label": "Day Content",
-                "placeholder": "Nhập nội dung kinh cho ngày này...",
-                "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink"
-              }
-            }
-          }
+          "label": "Là Tuần Cửu Nhật"
         }
       }
     }

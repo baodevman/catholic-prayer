@@ -909,8 +909,13 @@ export default function App() {
                     if (selectedHub === 'custom') return false;
                     return cat.parentUid === selectedHub || cat.uid === selectedHub;
                   })
+                  .filter(cat => {
+                    // Only show categories that have mapped content from Prismic
+                    const catPrayersCount = state.prayers.filter(p => (p.categories && p.categories.includes(cat.uid)) || p.category === cat.uid).length;
+                    return catPrayersCount > 0;
+                  })
                   .map((cat) => {
-                    const catPrayers = state.prayers.filter(p => p.category === cat.uid);
+                    const catPrayers = state.prayers.filter(p => (p.categories && p.categories.includes(cat.uid)) || p.category === cat.uid);
                     const parentCat = state.categories.find(c => c.uid === cat.parentUid);
                     const displayName = parentCat ? `${parentCat.name} ➔ ${cat.name}` : cat.name;
                     const isOpen = openCategoryUid === cat.uid;
