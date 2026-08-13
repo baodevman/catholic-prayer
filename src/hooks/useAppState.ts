@@ -6,6 +6,11 @@ import type { Prayer, PrismicCategory } from '../utils/prismic';
 
 // Helper to dispatch local & Service Worker notifications
 const dispatchNotification = async (title: string, body: string) => {
+  // Trigger Web App Badge (dot on app icon)
+  if ('setAppBadge' in navigator) {
+    (navigator as any).setAppBadge(1).catch(() => {});
+  }
+
   if (!('Notification' in window)) {
     console.log(`🔔 BÁO THỨC: ${title} - ${body}`);
     return;
@@ -24,8 +29,8 @@ const dispatchNotification = async (title: string, body: string) => {
       if (registration && registration.active) {
         await registration.showNotification(title, {
           body,
-          icon: '/favicon.svg',
-          badge: '/favicon.svg',
+          icon: '/icon.png',
+          badge: '/icon.png',
           vibrate: [200, 100, 200],
           tag: 'catholic-prayer-alert',
           renotify: true,
@@ -42,8 +47,8 @@ const dispatchNotification = async (title: string, body: string) => {
     try {
       new Notification(title, {
         body,
-        icon: '/favicon.svg',
-        badge: '/favicon.svg'
+        icon: '/icon.png',
+        badge: '/icon.png'
       });
     } catch (e) {
       console.warn('Direct Notification API failed', e);
@@ -83,6 +88,11 @@ export const useAppState = () => {
 
   // Load and refresh prayers
   const refreshPrayers = useCallback(async () => {
+    // Clear notification badge dot on app launch
+    if ('clearAppBadge' in navigator) {
+      (navigator as any).clearAppBadge().catch(() => {});
+    }
+
     setLoading(true);
     try {
       // 1. Fetch dynamic categories first
