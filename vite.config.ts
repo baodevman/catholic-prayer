@@ -15,21 +15,33 @@ export default defineConfig({
         enabled: true,
         type: 'module'
       },
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.svg', 'icon.png'],
       manifest: {
         name: 'Kinh Nguyện Công Giáo',
         short_name: 'Kinh Nguyện',
-        description: 'Ứng dụng Kinh Nguyện & Tuần Cửu Nhật cho người Công Giáo',
+        description: 'Ứng dụng Lời Nguyện & Tuần Cửu Nhật cho người Công Giáo',
         theme_color: '#FAF6EE',
         background_color: '#FAF6EE',
         display: 'standalone',
         orientation: 'portrait',
         icons: [
           {
+            src: 'icon.png',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable'
+          },
+          {
+            src: 'icon.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          },
+          {
             src: 'favicon.svg',
             sizes: '192x192 512x512',
             type: 'image/svg+xml',
-            purpose: 'any maskable'
+            purpose: 'any'
           }
         ]
       }

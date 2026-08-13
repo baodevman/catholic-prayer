@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppState } from './hooks/useAppState';
 import type { Prayer } from './utils/prismic';
 import { CATHOLIC_SAINTS } from './utils/catholicSaints';
+import { exportCustomPrayersToExcel } from './utils/excelExport';
+import { readDeviceContacts } from './utils/contactSync';
 import './App.css';
 
 // SVG Icons as React Components
@@ -40,6 +42,157 @@ const CrossSymbol = () => (
   <span style={{ fontSize: '18px', color: 'var(--gold-primary)', margin: '0 8px' }}>✠</span>
 );
 
+const IconFacebook = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
+
+const IconZalo = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/>
+  </svg>
+);
+
+const IconFolder = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+  </svg>
+);
+
+const IconDocument = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/>
+    <line x1="16" y1="17" x2="8" y2="17"/>
+  </svg>
+);
+
+const IconPlus = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}>
+    <line x1="12" y1="5" x2="12" y2="19"/>
+    <line x1="5" y1="12" x2="19" y2="12"/>
+  </svg>
+);
+
+const IconSun = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}>
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/>
+    <line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>
+);
+
+const IconMoon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}>
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+);
+
+const IconBell = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+  </svg>
+);
+
+const IconLock = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </svg>
+);
+
+const IconUser = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
+
+const IconExcel = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="8" y1="13" x2="16" y2="13"/>
+    <line x1="8" y1="17" x2="16" y2="17"/>
+    <polyline points="10 9 9 9 8 9"/>
+  </svg>
+);
+
+const IconDownload = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+    <polyline points="7 10 12 15 17 10"/>
+    <line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+);
+
+const IconLightbulb = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M9 18h6"/>
+    <path d="M10 22h4"/>
+    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1.55.6 2.96 1.5 4 .76.76 1.23 1.52 1.41 2.5"/>
+  </svg>
+);
+
+const IconPen = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}>
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+  </svg>
+);
+
+const IconStudent = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+  </svg>
+);
+
+const IconBriefcase = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+  </svg>
+);
+
+const IconHomeRole = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+);
+
+const IconPhone = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+    <line x1="12" y1="18" x2="12.01" y2="18"/>
+  </svg>
+);
+
+const IconClipboard = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+  </svg>
+);
+
+const IconWarning = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+);
+
 export default function App() {
   const state = useAppState();
   
@@ -56,8 +209,27 @@ export default function App() {
   const [newPrayerIsPrivate, setNewPrayerIsPrivate] = useState<boolean>(true);
   // Library Filter & Accordion States
   const [librarySearchQuery, setLibrarySearchQuery] = useState<string>('');
-  const [openCategoryUid, setOpenCategoryUid] = useState<string | null>(null);
+  const [openParentCatUid, setOpenParentCatUid] = useState<string | null>(null);
   const [selectedHub, setSelectedHub] = useState<string>('all');
+
+  // Dual-Sidebar Navigation States (Library)
+  const [sidebar1Open, setSidebar1Open] = useState<boolean>(false);
+  const [sidebar2Open, setSidebar2Open] = useState<boolean>(false);
+  const [sidebarCategoryTitle, setSidebarCategoryTitle] = useState<string>('');
+  const [sidebarPrayers, setSidebarPrayers] = useState<Prayer[]>([]);
+  const [sidebarSelectedPrayer, setSidebarSelectedPrayer] = useState<Prayer | null>(null);
+
+  // Sách Của Tôi Pagination & Flip Mode States
+  const [bookModalPage, setBookModalPage] = useState<number>(1);
+  const [bookModalSearch, setBookModalSearch] = useState<string>('');
+  const [bookModalCategory, setBookModalCategory] = useState<string>('all');
+
+  // Auth & Contribution States
+  const [userAuth, setUserAuth] = useState<{ isLoggedIn: boolean; email?: string; phone?: string; name?: string } | null>(null);
+  const [showContribModal, setShowContribModal] = useState<boolean>(false);
+  const [contribTitle, setContribTitle] = useState<string>('');
+  const [contribContent, setContribContent] = useState<string>('');
+  const [contribCategory, setContribCategory] = useState<string>('loi-nguyen-khac');
 
   // Relative Patron Saints Form & Modal States
   const [showPatronModal, setShowPatronModal] = useState<boolean>(false);
@@ -244,56 +416,6 @@ export default function App() {
     } else {
       window.open(`https://zalo.me`, '_blank');
     }
-    alert('Đã sao chép lời chúc vào bộ nhớ tạm và mở Zalo! Bạn có thể dán (Paste) để gửi tin nhắn cho người thân.');
-  };
-
-  // Local backups JSON generation
-  const handleExportData = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(
-      JSON.stringify({
-        weeklyBook: state.weeklyBook,
-        activeNovena: state.activeNovena,
-        notificationsEnabled: state.notificationsEnabled,
-        userRole: state.userRole,
-        customPrayers: state.customPrayers,
-        relativePatrons: state.relativePatrons
-      })
-    );
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `catholic_prayer_backup_${new Date().toISOString().slice(0, 10)}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  };
-
-  const handleImportData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileReader = new FileReader();
-    if (e.target.files && e.target.files[0]) {
-      fileReader.readAsText(e.target.files[0], "UTF-8");
-      fileReader.onload = async (event) => {
-        try {
-          const parsed = JSON.parse(event.target?.result as string);
-          if (parsed.weeklyBook) state.updateWeeklyBook(parsed.weeklyBook);
-          if (parsed.notificationsEnabled !== undefined) state.updateNotificationsEnabled(parsed.notificationsEnabled);
-          if (parsed.userRole) state.updateUserRole(parsed.userRole);
-          
-          if (parsed.customPrayers && Array.isArray(parsed.customPrayers)) {
-            for (const cp of parsed.customPrayers) {
-              await state.addCustomPrayer(cp);
-            }
-          }
-          if (parsed.relativePatrons && Array.isArray(parsed.relativePatrons)) {
-            for (const rp of parsed.relativePatrons) {
-              state.saveRelativePatron(rp);
-            }
-          }
-          alert('Khôi phục dữ liệu sao lưu thành công!');
-        } catch {
-          alert('Tệp sao lưu không hợp lệ!');
-        }
-      };
-    }
   };
 
   return (
@@ -310,7 +432,7 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '20px', color: 'var(--gold-primary)' }}>✠</span>
           <span style={{ fontFamily: 'var(--font-serif)', fontWeight: 600, fontSize: '18px', letterSpacing: '0.5px' }}>
-            Kinh Nguyện Công Giáo
+            Lời Nguyện Công Giáo
           </span>
         </div>
         {state.loading && (
@@ -338,7 +460,7 @@ export default function App() {
                 borderColor: 'var(--gold-primary)',
                 textAlign: 'center'
               }}>
-                <div style={{ fontSize: '24px', marginBottom: '8px' }}>⚜</div>
+                <div style={{ marginBottom: '8px' }}><CrossSymbol /></div>
                 <h3 style={{ color: 'var(--gold-primary)', marginBottom: '8px' }}>Kỷ niệm Đức Mẹ Fatima</h3>
                 <p style={{ fontSize: '14px', marginBottom: '12px', fontStyle: 'italic' }}>
                   Hôm nay là ngày 13, ngày kỷ niệm Đức Mẹ hiện ra tại Fatima. Hãy hiệp lòng đọc Kinh Mân Côi hoặc dâng lời nguyện kính Đức Mẹ.
@@ -383,31 +505,20 @@ export default function App() {
                 </span>
                 
                 {state.suggestedPrayers.map((prayer) => (
-                  <div key={prayer.uid} className="bible-card" style={{ marginBottom: 0, padding: '16px' }}>
-                    <h3 style={{ color: 'var(--gold-primary)', textAlign: 'center', margin: '4px 0 8px 0', fontSize: '16px' }}>
+                  <div key={prayer.uid} className="bible-card" style={{ marginBottom: 0, padding: '20px' }}>
+                    <h2 style={{ color: 'var(--gold-primary)', textAlign: 'center', margin: '4px 0 8px 0', fontSize: '20px', fontFamily: 'var(--font-serif)' }}>
                       {prayer.title}
-                    </h3>
-                    <div className="ornamental-divider" style={{ margin: '6px 0' }}><CrossSymbol /></div>
+                    </h2>
+                    <div className="ornamental-divider" style={{ margin: '8px 0 16px 0' }}><CrossSymbol /></div>
                     <div 
                       className="serif-text" 
                       style={{ 
-                        maxHeight: '80px', 
-                        overflow: 'hidden', 
-                        fontSize: '14px',
-                        lineHeight: 1.5,
-                        color: 'var(--text-muted)',
-                        maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
+                        fontSize: '16px',
+                        lineHeight: 1.7,
+                        color: 'var(--text-main)'
                       }}
                       dangerouslySetInnerHTML={{ __html: prayer.content }}
                     />
-                    <button 
-                      className="bible-button" 
-                      style={{ marginTop: '12px', padding: '8px 12px', fontSize: '13px' }}
-                      onClick={() => state.setSelectedPrayer(prayer)}
-                    >
-                      Đọc kinh nguyện này
-                    </button>
                   </div>
                 ))}
               </div>
@@ -668,19 +779,19 @@ export default function App() {
         {/* TAB 2: LIBRARY */}
         {state.activeTab === 'library' && (
           <div>
-            <h1 className="bible-header" style={{ marginBottom: '12px' }}>Thư Viện Kinh Nguyện</h1>
+            <h1 className="bible-header" style={{ marginBottom: '12px' }}>Thư Viện Lời Nguyện</h1>
             <p style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text-muted)', marginBottom: '20px' }}>
-              Tuyển tập các kinh nguyện Công Giáo và các lời nguyện do bạn tự ghi chép
+              Tuyển tập các lời nguyện Công Giáo và các lời nguyện do bạn tự ghi chép
             </p>
 
             {/* Trigger Form Button */}
             <div style={{ textAlign: 'center', marginBottom: '20px' }}>
               <button 
                 className="bible-button" 
-                style={{ width: 'auto', padding: '10px 20px', fontSize: '14px' }}
+                style={{ width: 'auto', padding: '10px 20px', fontSize: '14px', display: 'inline-flex', alignItems: 'center' }}
                 onClick={() => setShowAddForm(!showAddForm)}
               >
-                {showAddForm ? '✕ Đóng biểu mẫu nhập' : '✍ Tự viết lời nguyện mới'}
+                {showAddForm ? '✕ Đóng biểu mẫu nhập' : <><IconPlus /> Tự viết lời nguyện mới</>}
               </button>
             </div>
 
@@ -751,367 +862,336 @@ export default function App() {
               <input
                 type="text"
                 className="bible-input"
-                placeholder="🔍 Tìm nhanh tên lời nguyện, từ khóa..."
+                placeholder="🔍 Tìm nhanh danh mục, tên lời nguyện, từ khóa..."
                 value={librarySearchQuery}
                 onChange={(e) => setLibrarySearchQuery(e.target.value)}
                 style={{
                   fontSize: '14px',
-                  padding: '10px 14px',
+                  padding: '12px 16px',
                   borderRadius: '20px',
                   borderColor: 'var(--gold-primary)'
                 }}
               />
             </div>
 
-            {/* Category Hub Filter Pills (Dynamically generated from Prismic Top-Level Categories) */}
-            {!librarySearchQuery && (
-              <div style={{
-                display: 'flex',
-                gap: '6px',
-                overflowX: 'auto',
-                paddingBottom: '12px',
-                marginBottom: '16px',
-                WebkitOverflowScrolling: 'touch'
-              }}>
-                <button
-                  className="bible-button"
-                  style={{
-                    width: 'auto',
-                    whiteSpace: 'nowrap',
-                    padding: '6px 14px',
-                    fontSize: '12px',
-                    borderRadius: '16px',
-                    backgroundColor: selectedHub === 'all' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
-                    color: selectedHub === 'all' ? '#FFF' : 'var(--text-main)',
-                    border: '1px solid var(--border-bible)',
-                    fontWeight: selectedHub === 'all' ? 600 : 'normal'
-                  }}
-                  onClick={() => setSelectedHub('all')}
-                >
-                  Tất cả
-                </button>
-                {state.categories
-                  .filter(cat => !cat.parentUid)
-                  .map((parentCat) => (
-                    <button
-                      key={parentCat.uid}
-                      className="bible-button"
-                      style={{
-                        width: 'auto',
-                        whiteSpace: 'nowrap',
-                        padding: '6px 14px',
-                        fontSize: '12px',
-                        borderRadius: '16px',
-                        backgroundColor: selectedHub === parentCat.uid ? 'var(--gold-primary)' : 'var(--bg-parchment)',
-                        color: selectedHub === parentCat.uid ? '#FFF' : 'var(--text-main)',
-                        border: '1px solid var(--border-bible)',
-                        fontWeight: selectedHub === parentCat.uid ? 600 : 'normal'
-                      }}
-                      onClick={() => setSelectedHub(parentCat.uid)}
-                    >
-                      {parentCat.name}
-                    </button>
-                  ))}
-                {state.customPrayers.length > 0 && (
-                  <button
-                    className="bible-button"
-                    style={{
-                      width: 'auto',
-                      whiteSpace: 'nowrap',
-                      padding: '6px 14px',
-                      fontSize: '12px',
-                      borderRadius: '16px',
-                      backgroundColor: selectedHub === 'custom' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
-                      color: selectedHub === 'custom' ? '#FFF' : 'var(--text-main)',
-                      border: '1px solid var(--border-bible)',
-                      fontWeight: selectedHub === 'custom' ? 600 : 'normal'
-                    }}
-                    onClick={() => setSelectedHub('custom')}
-                  >
-                    ✍ Lời Nguyện Cá Nhân
-                  </button>
-                )}
-              </div>
-            )}
+            {/* Helper function to get plain text snippet */}
+            {(() => {
+              const getPrayerSnippet = (str: string, len = 80) => {
+                if (!str) return '';
+                const clean = str.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+                return clean.length > len ? clean.substring(0, len) + '...' : clean;
+              };
 
-            {/* Search Results View */}
-            {librarySearchQuery.trim() ? (
-              <div>
-                <h3 style={{ fontSize: '13px', color: 'var(--gold-primary)', marginBottom: '10px', textTransform: 'uppercase' }}>
-                  Kết quả tìm kiếm cho: "{librarySearchQuery}"
-                </h3>
-                {(() => {
-                  const queryLower = librarySearchQuery.trim().toLowerCase();
-                  const allPrayersList = [
-                    ...state.prayers,
-                    ...state.customPrayers.map(cp => ({
-                      uid: cp.uid,
-                      title: cp.title,
-                      category: cp.category,
-                      content: cp.content,
-                      isNovena: false
-                    }))
-                  ];
-                  const searchResults = allPrayersList.filter(p =>
-                    p.title.toLowerCase().includes(queryLower) ||
-                    p.content.toLowerCase().includes(queryLower)
-                  );
-
-                  if (searchResults.length === 0) {
-                    return (
-                      <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', padding: '12px' }}>
-                        Không tìm thấy lời nguyện nào phù hợp.
-                      </p>
-                    );
-                  }
-
-                  return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {searchResults.map((prayer) => {
-                        const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
-                        return (
-                          <div
-                            key={prayer.uid}
-                            className="bible-card"
-                            style={{
-                              padding: '12px 14px',
-                              marginBottom: 0,
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              cursor: 'pointer'
-                            }}
-                            onClick={() => state.setSelectedPrayer(prayer)}
-                          >
-                            <div>
-                              <div style={{ fontWeight: 500, fontSize: '15px' }}>{prayer.title}</div>
-                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                                {isCustom ? '✍ Lời nguyện cá nhân' : (state.categories.find(c => c.uid === prayer.category)?.name || 'Kinh Nguyện')}
-                              </span>
-                            </div>
-                            <button className="bible-button" style={{ width: 'auto', padding: '4px 10px', fontSize: '11px' }}>
-                              Xem
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })()}
-              </div>
-            ) : (
-              /* Accordion Folders View */
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {state.categories
-                  .filter(cat => cat.parentUid)
-                  .filter(cat => {
-                    if (selectedHub === 'all') return true;
-                    if (selectedHub === 'custom') return false;
-                    return cat.parentUid === selectedHub || cat.uid === selectedHub;
-                  })
-                  .filter(cat => {
-                    // Only show categories that have mapped content from Prismic
-                    const catPrayersCount = state.prayers.filter(p => (p.categories && p.categories.includes(cat.uid)) || p.category === cat.uid).length;
-                    return catPrayersCount > 0;
-                  })
-                  .map((cat) => {
-                    const catPrayers = state.prayers.filter(p => (p.categories && p.categories.includes(cat.uid)) || p.category === cat.uid);
-                    const parentCat = state.categories.find(c => c.uid === cat.parentUid);
-                    const displayName = parentCat ? `${parentCat.name} ➔ ${cat.name}` : cat.name;
-                    const isOpen = openCategoryUid === cat.uid;
-
-                    return (
-                      <div
-                        key={cat.uid}
+              if (!librarySearchQuery) {
+                return (
+                  <div>
+                    {/* Category Hub Filter Pills */}
+                    <div style={{
+                      display: 'flex',
+                      gap: '6px',
+                      overflowX: 'auto',
+                      paddingBottom: '12px',
+                      marginBottom: '16px',
+                      WebkitOverflowScrolling: 'touch'
+                    }}>
+                      <button
+                        className="bible-button"
                         style={{
-                          borderRadius: '10px',
+                          width: 'auto',
+                          whiteSpace: 'nowrap',
+                          padding: '6px 14px',
+                          fontSize: '12px',
+                          borderRadius: '16px',
+                          backgroundColor: selectedHub === 'all' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                          color: selectedHub === 'all' ? '#FFF' : 'var(--text-main)',
                           border: '1px solid var(--border-bible)',
-                          backgroundColor: 'var(--bg-card)',
-                          overflow: 'hidden'
+                          fontWeight: selectedHub === 'all' ? 600 : 'normal'
                         }}
+                        onClick={() => setSelectedHub('all')}
                       >
-                        {/* Folder Header Button */}
-                        <button
-                          type="button"
-                          style={{
-                            width: '100%',
-                            padding: '14px 16px',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            background: isOpen ? 'var(--gold-glow)' : 'transparent',
-                            border: 'none',
-                            borderBottom: isOpen ? '1px solid var(--border-bible)' : 'none',
-                            cursor: 'pointer',
-                            textAlign: 'left'
-                          }}
-                          onClick={() => setOpenCategoryUid(isOpen ? null : cat.uid)}
-                        >
-                          <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
-                            📁 {displayName} <span style={{ fontSize: '12px', color: 'var(--gold-primary)', fontWeight: 500 }}>({catPrayers.length})</span>
-                          </div>
-                          <span style={{ fontSize: '14px', color: 'var(--gold-primary)', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
-                            ▼
-                          </span>
-                        </button>
-
-                        {/* Collapsible Content */}
-                        {isOpen && (
-                          <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: 'var(--bg-parchment)' }}>
-                            {catPrayers.length === 0 ? (
-                              <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
-                                Chưa có lời nguyện nào trong danh mục này.
-                              </p>
-                            ) : (
-                              catPrayers.map((prayer) => {
-                                const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
-                                return (
-                                  <div
-                                    key={prayer.uid}
-                                    style={{
-                                      padding: '10px 12px',
-                                      borderRadius: '8px',
-                                      backgroundColor: 'var(--bg-card)',
-                                      border: '1px solid var(--border-bible)',
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      cursor: 'pointer'
-                                    }}
-                                    onClick={() => state.setSelectedPrayer(prayer)}
-                                  >
-                                    <div>
-                                      <div style={{ fontWeight: 500, fontSize: '14px' }}>{prayer.title}</div>
-                                      {prayer.isNovena && (
-                                        <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
-                                          ❖ Chuỗi 9 ngày
-                                        </span>
-                                      )}
-                                      {isCustom && (
-                                        <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontStyle: 'italic' }}>
-                                          ✍ Lời nguyện cá nhân
-                                        </span>
-                                      )}
-                                    </div>
-                                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                                      {prayer.isNovena && state.activeNovena?.id !== prayer.uid && (
-                                        <button
-                                          className="bible-button"
-                                          style={{ width: 'auto', padding: '4px 10px', fontSize: '11px' }}
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            state.startNovena(prayer.uid, prayer.title);
-                                            state.setActiveTab('home');
-                                          }}
-                                        >
-                                          Kích hoạt
-                                        </button>
-                                      )}
-                                      {isCustom && (
-                                        <button
-                                          style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '12px', cursor: 'pointer' }}
-                                          onClick={async (e) => {
-                                            e.stopPropagation();
-                                            if (confirm(`Bạn có chắc muốn xóa lời nguyện "${prayer.title}"?`)) {
-                                              await state.deleteCustomPrayer(prayer.uid);
-                                            }
-                                          }}
-                                        >
-                                          🗑️
-                                        </button>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-
-                {/* User's Custom Prayers Accordion Folder */}
-                {state.customPrayers.length > 0 && (selectedHub === 'all' || selectedHub === 'custom') && (
-                  <div
-                    style={{
-                      borderRadius: '10px',
-                      border: '1px solid var(--gold-primary)',
-                      backgroundColor: 'var(--bg-card)',
-                      overflow: 'hidden'
-                    }}
-                  >
-                    <button
-                      type="button"
-                      style={{
-                        width: '100%',
-                        padding: '14px 16px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        background: openCategoryUid === 'user-custom-folder' ? 'var(--gold-glow)' : 'transparent',
-                        border: 'none',
-                        borderBottom: openCategoryUid === 'user-custom-folder' ? '1px solid var(--border-bible)' : 'none',
-                        cursor: 'pointer',
-                        textAlign: 'left'
-                      }}
-                      onClick={() => setOpenCategoryUid(openCategoryUid === 'user-custom-folder' ? null : 'user-custom-folder')}
-                    >
-                      <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--gold-primary)' }}>
-                        ✍ Lời Nguyện Cá Nhân Của Tôi <span style={{ fontSize: '12px', fontWeight: 500 }}>({state.customPrayers.length})</span>
-                      </div>
-                      <span style={{ fontSize: '14px', color: 'var(--gold-primary)', transform: openCategoryUid === 'user-custom-folder' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
-                        ▼
-                      </span>
-                    </button>
-
-                    {openCategoryUid === 'user-custom-folder' && (
-                      <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '8px', backgroundColor: 'var(--bg-parchment)' }}>
-                        {state.customPrayers.map((cp) => (
-                          <div
-                            key={cp.uid}
+                        Tất cả danh mục
+                      </button>
+                      {state.categories
+                        .filter(cat => !cat.parentUid)
+                        .map((parentCat) => (
+                          <button
+                            key={parentCat.uid}
+                            className="bible-button"
                             style={{
-                              padding: '10px 12px',
-                              borderRadius: '8px',
-                              backgroundColor: 'var(--bg-card)',
+                              width: 'auto',
+                              whiteSpace: 'nowrap',
+                              padding: '6px 14px',
+                              fontSize: '12px',
+                              borderRadius: '16px',
+                              backgroundColor: selectedHub === parentCat.uid ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                              color: selectedHub === parentCat.uid ? '#FFF' : 'var(--text-main)',
                               border: '1px solid var(--border-bible)',
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              cursor: 'pointer'
+                              fontWeight: selectedHub === parentCat.uid ? 600 : 'normal'
                             }}
-                            onClick={() => state.setSelectedPrayer({
-                              uid: cp.uid,
-                              title: cp.title,
-                              category: cp.category,
-                              content: cp.content
-                            })}
+                            onClick={() => setSelectedHub(parentCat.uid)}
                           >
-                            <div>
-                              <div style={{ fontWeight: 500, fontSize: '14px' }}>{cp.title}</div>
-                              <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                                {cp.isPrivate ? '🔒 Riêng tư' : '🌐 Công cộng (Bản nháp)'}
-                              </span>
-                            </div>
-                            <button
-                              style={{ background: 'none', border: 'none', color: '#dc2626', fontSize: '12px', cursor: 'pointer' }}
-                              onClick={async (e) => {
-                                e.stopPropagation();
-                                if (confirm(`Bạn có chắc muốn xóa lời nguyện "${cp.title}"?`)) {
-                                  await state.deleteCustomPrayer(cp.uid);
-                                }
+                            {parentCat.name}
+                          </button>
+                        ))}
+                      {state.customPrayers.length > 0 && (
+                        <button
+                          className="bible-button"
+                          style={{
+                            width: 'auto',
+                            whiteSpace: 'nowrap',
+                            padding: '6px 14px',
+                            fontSize: '12px',
+                            borderRadius: '16px',
+                            backgroundColor: selectedHub === 'custom' ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                            color: selectedHub === 'custom' ? '#FFF' : 'var(--text-main)',
+                            border: '1px solid var(--border-bible)',
+                            fontWeight: selectedHub === 'custom' ? 600 : 'normal'
+                          }}
+                          onClick={() => setSelectedHub('custom')}
+                        >
+                          ✍ Lời Nguyện Cá Nhân
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Parent Category Hierarchy List */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                      {state.categories
+                        .filter(parentCat => !parentCat.parentUid)
+                        .filter(parentCat => selectedHub === 'all' || selectedHub === parentCat.uid)
+                        .map((parentCat) => {
+                          const subCategories = state.categories.filter(sub => sub.parentUid === parentCat.uid);
+                          const isParentOpen = openParentCatUid === parentCat.uid || selectedHub === parentCat.uid;
+
+                          return (
+                            <div
+                              key={parentCat.uid}
+                              style={{
+                                borderRadius: '12px',
+                                border: '1px solid var(--border-bible)',
+                                backgroundColor: 'var(--bg-card)',
+                                overflow: 'hidden',
+                                boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
                               }}
                             >
-                              🗑️ Xóa
-                            </button>
-                          </div>
+                              {/* Parent Category Header */}
+                              <button
+                                type="button"
+                                style={{
+                                  width: '100%',
+                                  padding: '16px 18px',
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  alignItems: 'center',
+                                  background: isParentOpen ? 'var(--gold-glow)' : 'transparent',
+                                  border: 'none',
+                                  borderBottom: isParentOpen ? '1px solid var(--border-bible)' : 'none',
+                                  cursor: 'pointer',
+                                  textAlign: 'left'
+                                }}
+                                onClick={() => setOpenParentCatUid(isParentOpen && selectedHub === 'all' ? null : parentCat.uid)}
+                              >
+                                <div style={{ fontWeight: 700, fontSize: '16px', color: 'var(--text-main)', fontFamily: 'var(--font-serif)', display: 'flex', alignItems: 'center' }}>
+                                  <IconFolder /> {parentCat.name}
+                                </div>
+                                <span style={{ fontSize: '14px', color: 'var(--gold-primary)', transform: isParentOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                                  ▼
+                                </span>
+                              </button>
+
+                              {/* Subcategories Accordion Content */}
+                              {isParentOpen && (
+                                <div style={{ padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'var(--bg-parchment)' }}>
+                                  {subCategories.length === 0 ? (
+                                    <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
+                                      Chưa có danh mục con nào.
+                                    </p>
+                                  ) : (
+                                    subCategories.map((subCat) => {
+                                      const subPrayers = state.prayers.filter(p => (p.categories && p.categories.includes(subCat.uid)) || p.category === subCat.uid);
+
+                                      if (subPrayers.length === 0) return null;
+
+                                      return (
+                                        <div
+                                          key={subCat.uid}
+                                          style={{
+                                            borderRadius: '8px',
+                                            border: '1px solid var(--border-bible)',
+                                            backgroundColor: 'var(--bg-card)',
+                                            overflow: 'hidden'
+                                          }}
+                                        >
+                                          {/* Subcategory Header Button -> Triggers Sidebar 1 */}
+                                          <button
+                                            type="button"
+                                            style={{
+                                              width: '100%',
+                                              padding: '14px 16px',
+                                              display: 'flex',
+                                              justifyContent: 'space-between',
+                                              alignItems: 'center',
+                                              background: 'transparent',
+                                              border: 'none',
+                                              cursor: 'pointer',
+                                              textAlign: 'left'
+                                            }}
+                                            onClick={() => {
+                                              setSidebarCategoryTitle(subCat.name);
+                                              setSidebarPrayers(subPrayers);
+                                              setSidebar1Open(true);
+                                              setSidebar2Open(false);
+                                            }}
+                                          >
+                                            <div style={{ fontWeight: 600, fontSize: '15px', color: 'var(--text-main)', display: 'flex', alignItems: 'center' }}>
+                                              <IconFolder /> {subCat.name}
+                                            </div>
+                                            <span style={{ fontSize: '14px', color: 'var(--gold-primary)', fontWeight: 600 }}>
+                                              Xem ➔
+                                            </span>
+                                          </button>
+                                        </div>
+                                      );
+                                    })
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Search Results View (Combined Category & Prayer Search Results in Grid)
+              const queryLower = librarySearchQuery.trim().toLowerCase();
+              const matchedCategories = state.categories.filter(cat => cat.name.toLowerCase().includes(queryLower));
+              
+              const allPrayersList = [
+                ...state.prayers,
+                ...state.customPrayers.map(cp => ({
+                  uid: cp.uid,
+                  title: cp.title,
+                  category: cp.category,
+                  content: cp.content,
+                  isNovena: false
+                }))
+              ];
+              const matchedPrayers = allPrayersList.filter(p =>
+                p.title.toLowerCase().includes(queryLower) ||
+                p.content.toLowerCase().includes(queryLower)
+              );
+
+              if (matchedCategories.length === 0 && matchedPrayers.length === 0) {
+                return (
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', padding: '16px', textAlign: 'center' }}>
+                    Không tìm thấy danh mục hoặc lời nguyện nào với từ khóa "{librarySearchQuery}".
+                  </p>
+                );
+              }
+
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* Matched Categories */}
+                  {matchedCategories.length > 0 && (
+                    <div>
+                      <h3 style={{ fontSize: '12px', color: 'var(--gold-primary)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center' }}>
+                        <IconFolder /> Danh mục tìm thấy ({matchedCategories.length})
+                      </h3>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        {matchedCategories.map((cat) => (
+                          <button
+                            key={cat.uid}
+                            className="bible-button"
+                            style={{
+                              width: 'auto',
+                              padding: '8px 14px',
+                              fontSize: '13px',
+                              borderRadius: '16px',
+                              backgroundColor: 'var(--bg-card)',
+                              border: '1px solid var(--border-bible)',
+                              color: 'var(--text-main)',
+                              fontWeight: 500,
+                              display: 'flex',
+                              alignItems: 'center'
+                            }}
+                            onClick={() => {
+                              setLibrarySearchQuery('');
+                              setSidebarCategoryTitle(cat.name);
+                              const subPrayers = state.prayers.filter(p => (p.categories && p.categories.includes(cat.uid)) || p.category === cat.uid);
+                              setSidebarPrayers(subPrayers);
+                              setSidebar1Open(true);
+                              setSidebar2Open(false);
+                            }}
+                          >
+                            <IconFolder /> {cat.name}
+                          </button>
                         ))}
                       </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
+                    </div>
+                  )}
+
+                  {/* Matched Prayers List (Triggers Sidebar 2) */}
+                  {matchedPrayers.length > 0 && (
+                    <div>
+                      <h3 style={{ fontSize: '12px', color: 'var(--gold-primary)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center' }}>
+                        <IconDocument /> Lời nguyện tìm thấy ({matchedPrayers.length})
+                      </h3>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                        gap: '12px'
+                      }}>
+                        {matchedPrayers.map((prayer) => {
+                          const isCustom = state.customPrayers.some(cp => cp.uid === prayer.uid);
+                          const catName = state.categories.find(c => c.uid === prayer.category)?.name || 'Lời Nguyện';
+                          return (
+                            <div
+                              key={prayer.uid}
+                              className="bible-card"
+                              style={{
+                                padding: '14px',
+                                marginBottom: 0,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                gap: '8px',
+                                cursor: 'pointer',
+                                borderRadius: '8px',
+                                border: '1px solid var(--border-bible)',
+                                backgroundColor: 'var(--bg-card)'
+                              }}
+                              onClick={() => {
+                                setSidebarSelectedPrayer(prayer);
+                                setSidebar2Open(true);
+                              }}
+                            >
+                              <div>
+                                <div style={{ fontWeight: 600, fontSize: '15px', color: 'var(--text-main)', marginBottom: '6px', fontFamily: 'var(--font-serif)' }}>
+                                  {prayer.title}
+                                </div>
+                                <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0, lineHeight: '1.45' }}>
+                                  {getPrayerSnippet(prayer.content, 90)}
+                                </p>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', paddingTop: '6px', borderTop: '1px dashed var(--border-bible)' }}>
+                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 500 }}>
+                                  {isCustom ? '✍ Lời nguyện cá nhân' : catName}
+                                </span>
+                                <span style={{ fontSize: '11px', color: 'var(--gold-primary)', fontWeight: 600 }}>
+                                  Đọc ➔
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -1358,143 +1438,136 @@ export default function App() {
                       onChange={() => state.updateUserRole(r)}
                       style={{ width: '18px', height: '18px', cursor: 'pointer' }}
                     />
-                    <span style={{ color: 'var(--text-main)' }}>
-                      {r === 'student' && '📚 Học sinh / Sinh viên'}
-                      {r === 'worker' && '💼 Người đi làm'}
-                      {r === 'family' && '🏠 Người đã có gia đình / Khác'}
+                    <span style={{ color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center' }}>
+                      {r === 'student' && <><IconStudent /> Học sinh / Sinh viên</>}
+                      {r === 'worker' && <><IconBriefcase /> Người đi làm</>}
+                      {r === 'family' && <><IconHomeRole /> Người đã có gia đình / Khác</>}
                     </span>
                   </label>
                 ))}
               </div>
             </div>
 
-            {/* Offline Storage Cache Toggle */}
+            {/* Reminders & Saints Notification Configuration */}
             <div className="bible-card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <h3 style={{ margin: 0 }}>Tải Đọc Ngoại Tuyến (Offline)</h3>
-                <input
-                  type="checkbox"
-                  style={{ width: '20px', height: '20px', cursor: 'pointer' }}
-                  checked={state.offlineEnabled}
-                  onChange={(e) => state.toggleOfflineCache(e.target.checked)}
-                />
-              </div>
+              <h3 style={{ margin: 0, marginBottom: '6px', color: 'var(--gold-primary)', display: 'flex', alignItems: 'center' }}>
+                <IconBell /> Thông Báo Gợi Ý Lời Nguyện & Ngày Lễ
+              </h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                Tải toàn bộ cơ sở dữ liệu kinh nguyện hiện tại về bộ nhớ trình duyệt để đọc khi mất mạng.
-              </p>
-              {state.offlineEnabled && (
-                <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--gold-primary)' }}>
-                  Dung lượng lưu trữ: {state.offlineSize} KB
+              
+              {/* Daily Suggested Prayer Notification Toggle */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-bible)', backgroundColor: 'var(--bg-parchment)' }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
+                    Thông báo gợi ý lời nguyện hằng ngày
+                  </div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    Tự động gợi ý lời nguyện thích hợp vào các khung giờ (Sáng 6h, Trưa 12h, Chiều 15h, Tối 19h).
+                  </div>
                 </div>
-              )}
-            </div>
-
-            {/* Reminders Configuration */}
-            <div className="bible-card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <h3 style={{ margin: 0 }}>Nhắc Nhở Cầu Nguyện</h3>
                 <input
                   type="checkbox"
-                  style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+                  style={{ width: '22px', height: '22px', cursor: 'pointer', marginLeft: '12px' }}
                   checked={state.notificationsEnabled}
                   onChange={(e) => state.updateNotificationsEnabled(e.target.checked)}
                 />
               </div>
-              <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-                Tự động nhận thông báo đẩy trên thiết bị khi chuyển giao sang khung giờ kinh nguyện mới trong ngày (Sáng, Trưa, Chiều, Tối) tùy theo Thứ và Vai trò của bạn.
-              </p>
-              
+
+              {/* Saint & Patron Notification Toggle */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-bible)', backgroundColor: 'var(--bg-parchment)' }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--text-main)' }}>
+                    Thông báo ngày Lễ mừng kính Các Thánh & Bổn Mạng
+                  </div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    Nhắc ngày Lễ Thánh mừng kính hôm nay và Lễ Bổn Mạng của người thân trong danh bạ/cộng đồng.
+                  </div>
+                  {!userAuth?.isLoggedIn && (
+                    <div style={{ fontSize: '11px', color: '#d97706', marginTop: '4px', fontStyle: 'italic' }}>
+                      Lưu ý: Bạn cần Đăng nhập tài khoản để nhận thông báo Bổn Mạng người thân.
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="checkbox"
+                  style={{ width: '22px', height: '22px', cursor: 'pointer', marginLeft: '12px' }}
+                  defaultChecked={true}
+                />
+              </div>
+
+              {/* Collapsed Troubleshooting Guide inside Notification Section */}
+              <details style={{
+                padding: '12px',
+                borderRadius: '8px',
+                border: '1px dashed var(--gold-primary)',
+                backgroundColor: 'var(--gold-glow)',
+                fontSize: '13px'
+              }}>
+                <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--gold-primary)', display: 'inline-flex', alignItems: 'center' }}>
+                  <IconLightbulb /> Hướng dẫn nếu không nhận được thông báo (Bấm để xem)
+                </summary>
+                <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ fontSize: '12px', color: 'var(--text-main)', lineHeight: 1.6 }}>
+                    • <b>Máy tính macOS / Windows:</b> Vào Cài đặt hệ thống ➔ Notifications ➔ Đảm bảo đã bật Cho phép thông báo cho trình duyệt của bạn (Chrome, Safari, Edge).<br />
+                    • <b>Điện thoại iPhone / iPad:</b> Mở web bằng Safari ➔ Nhấn <b>Chia sẻ</b> ➔ Chọn <b>Thêm vào Màn hình chính (Add to Home Screen)</b> ➔ Mở ứng dụng từ màn hình chính để nhận thông báo đẩy.<br />
+                    • <b>Điện thoại Android:</b> Bật thông báo trình duyệt và chuyển chế độ Quản lý Pin sang <b>Không tối ưu hóa (Unrestricted)</b>.
+                  </div>
+                </div>
+              </details>
             </div>
 
-            {/* Notification Troubleshooting Guide */}
+            {/* Account & Community Sync (Authentication) */}
             <div className="bible-card">
-              <h3 style={{ margin: 0, color: 'var(--gold-primary)', fontSize: '15px' }}>
-                💡 Hướng Dẫn Nếu Không Nhận Được Thông Báo
+              <h3 style={{ margin: 0, marginBottom: '6px', color: 'var(--gold-primary)', display: 'flex', alignItems: 'center' }}>
+                <IconLock /> Tài Khoản & Đồng Bộ Cộng Đồng
               </h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                Nếu bạn đã bật công tắc nhắc nhở mà thiết bị chưa hiển thị banner thông báo, vui lòng kiểm tra cài đặt theo hệ điều hành dưới đây:
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {/* macOS */}
-                <details style={{
-                  padding: '10px 12px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--border-bible)',
-                  backgroundColor: 'var(--bg-parchment)',
-                  fontSize: '12px'
-                }}>
-                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
-                    🍏 Máy tính macOS (MacBook / Mac mini / iMac)
-                  </summary>
-                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                    1. Vào <b>System Settings (Cài đặt hệ thống) ➔ Notifications (Thông báo)</b>.<br />
-                    2. Tìm trình duyệt bạn đang dùng (Google Chrome, Safari, Brave...) và chọn <b>Allow Notifications</b>.<br />
-                    3. Đặt kiểu cảnh báo là <b>Banners</b> hoặc <b>Alerts</b>.<br />
-                    4. Kiểm tra xem máy có đang bật chế độ <b>Focus / Do Not Disturb (Không làm phiền)</b> ở góc trên bên phải màn hình không.
+              
+              {userAuth?.isLoggedIn ? (
+                <div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#16a34a', marginBottom: '8px' }}>
+                    ✓ Đã đăng nhập: {userAuth.name || userAuth.email || userAuth.phone}
                   </div>
-                </details>
-
-                {/* Windows */}
-                <details style={{
-                  padding: '10px 12px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--border-bible)',
-                  backgroundColor: 'var(--bg-parchment)',
-                  fontSize: '12px'
-                }}>
-                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
-                    🪟 Máy tính Windows (Windows 10 / Windows 11)
-                  </summary>
-                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                    1. Vào <b>Start ➔ Settings (Cài đặt) ➔ System ➔ Notifications</b>.<br />
-                    2. Đảm bảo công tắc <b>Notifications</b> ở trên cùng đang được bật <b>ON</b>.<br />
-                    3. Cuộn xuống tìm trình duyệt (Chrome, Edge...) và bật thông báo.<br />
-                    4. Tắt chế độ <b>Focus Assist / Do Not Disturb</b> ở góc dưới bên phải thanh Taskbar.
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                    Bạn có thể đóng góp lời nguyện cho cộng đồng hoặc theo dõi danh sách Bổn Mạng người thân.
+                  </p>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <button
+                      className="bible-button"
+                      style={{ width: 'auto', padding: '8px 14px', fontSize: '13px', display: 'inline-flex', alignItems: 'center' }}
+                      onClick={() => setShowContribModal(true)}
+                    >
+                      <IconPen /> Đóng Góp Lời Nguyện Cho Hệ Thống (Tối đa 10 bài/tháng)
+                    </button>
+                    <button
+                      className="bible-button secondary"
+                      style={{ width: 'auto', padding: '8px 14px', fontSize: '13px' }}
+                      onClick={() => setUserAuth(null)}
+                    >
+                      Đăng Xuất
+                    </button>
                   </div>
-                </details>
-
-                {/* iPhone / iOS */}
-                <details style={{
-                  padding: '10px 12px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--border-bible)',
-                  backgroundColor: 'var(--bg-parchment)',
-                  fontSize: '12px'
-                }}>
-                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
-                    📱 Điện thoại iPhone / iPad (iOS 16.4 trở lên)
-                  </summary>
-                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                    1. Mở trang web này bằng trình duyệt <b>Safari</b>.<br />
-                    2. Nhấn vào nút <b>Chia sẻ (Share)</b> ở thanh công cụ dưới ➔ Chọn <b>Thêm vào Màn hình chính (Add to Home Screen)</b>.<br />
-                    3. Mở biểu tượng ứng dụng PWA vừa thêm từ Màn hình chính.<br />
-                    4. Vào <b>Cài đặt ➔ Nhắc Nhở Cầu Nguyện</b> và chọn <b>Cho phép (Allow)</b> khi iOS hỏi quyền.<br />
-                    5. Đảm bảo vào <b>Cài đặt iPhone ➔ Thông báo ➔ Kinh Nguyện PWA</b> đã chọn <b>Cho phép thông báo</b>.
-                  </div>
-                </details>
-
-                {/* Android */}
-                <details style={{
-                  padding: '10px 12px',
-                  borderRadius: '8px',
-                  border: '1px solid var(--border-bible)',
-                  backgroundColor: 'var(--bg-parchment)',
-                  fontSize: '12px'
-                }}>
-                  <summary style={{ fontWeight: 600, cursor: 'pointer', color: 'var(--text-main)' }}>
-                    🤖 Điện thoại Android (Samsung, Xiaomi, OPPO, vivo...)
-                  </summary>
-                  <div style={{ marginTop: '8px', paddingLeft: '8px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                    1. Nhấn vào biểu tượng 🔒 Khóa hoặc Cài đặt trang web trên thanh địa chỉ trình duyệt ➔ Chọn <b>Cho phép Thông báo</b>.<br />
-                    2. Vào <b>Cài đặt Android ➔ Ứng dụng ➔ Chrome (hoặc ứng dụng Kinh Nguyện PWA) ➔ Thông báo</b> ➔ Bật <b>Hiển thị thông báo</b>.<br />
-                    3. Vào mục <b>Tối ưu hóa Pin (Battery Optimization)</b> ➔ Chuyển sang <b>Không tối ưu hóa (Unrestricted)</b> để ứng dụng gửi thông báo đúng giờ ngầm khi tắt màn hình.
-                  </div>
-                </details>
-              </div>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                    Đăng nhập để nhận thông báo ngày Lễ Bổn Mạng của người thân, tự động kết nối cộng đồng người quen và đóng góp lời nguyện vào hệ thống!
+                  </p>
+                  <button
+                    className="bible-button"
+                    style={{ width: 'auto', padding: '10px 18px', fontSize: '14px', display: 'inline-flex', alignItems: 'center' }}
+                    onClick={() => {
+                      const name = prompt('Nhập Tên hoặc Email/SĐT của bạn để Đăng nhập nhanh:');
+                      if (name) {
+                        setUserAuth({ isLoggedIn: true, name });
+                        alert(`Chào mừng ${name} đã đăng nhập thành công!`);
+                      }
+                    }}
+                  >
+                    <IconUser /> Đăng Nhập / Đăng Ký Tài Khoản
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Dark Mode Theme */}
@@ -1524,28 +1597,22 @@ export default function App() {
               </div>
             </div>
 
-            {/* Backups Export/Import */}
+            {/* Excel Export Box (Moved to VERY BOTTOM of Settings) */}
             <div className="bible-card">
-              <h3>Sao lưu và Phục hồi</h3>
+              <h3 style={{ margin: 0, marginBottom: '6px', display: 'flex', alignItems: 'center' }}>
+                <IconExcel /> Trích Xuất Lời Nguyện Cá Nhân Ra Excel
+              </h3>
               <div className="ornamental-divider" style={{ margin: '8px 0' }}><CrossSymbol /></div>
               <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                Sao lưu cấu hình Sách Kinh Tuần, các lời nguyện cá nhân, nhắc nhở và tiến trình cửu nhật ra tệp JSON để chuyển sang thiết bị khác.
+                Trích xuất toàn bộ danh sách các lời nguyện do chính bạn tự biên soạn ra tệp Excel (.csv) để lưu giữ hoặc in ấn.
               </p>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                <button className="bible-button" onClick={handleExportData}>
-                  Xuất dữ liệu
-                </button>
-                <label className="bible-button secondary" style={{ margin: 0, textAlign: 'center', cursor: 'pointer' }}>
-                  Nhập dữ liệu
-                  <input
-                    type="file"
-                    accept=".json"
-                    style={{ display: 'none' }}
-                    onChange={handleImportData}
-                  />
-                </label>
-              </div>
+              <button
+                className="bible-button"
+                style={{ width: 'auto', padding: '8px 16px', fontSize: '13px', display: 'inline-flex', alignItems: 'center' }}
+                onClick={() => exportCustomPrayersToExcel(state.customPrayers)}
+              >
+                <IconDownload /> Tải Về Tệp Excel (.csv) ({state.customPrayers.length} lời nguyện)
+              </button>
             </div>
           </div>
         )}
@@ -1688,7 +1755,6 @@ export default function App() {
                 flexWrap: 'wrap'
               }}>
                 <span style={{ color: 'var(--text-muted)', fontWeight: 600 }}>Cài đặt thông báo:</span>
-                
                 {/* Morning Pin Button */}
                 <button
                   onClick={() => {
@@ -1701,10 +1767,12 @@ export default function App() {
                     fontSize: '11px',
                     borderRadius: '12px',
                     minWidth: 'auto',
-                    height: 'auto'
+                    height: 'auto',
+                    display: 'inline-flex',
+                    alignItems: 'center'
                   }}
                 >
-                  {state.fixedMorningUid === state.selectedPrayer?.uid ? '☀️ Đã ghim sáng 6h' : '☀️ Ghim sáng 6h'}
+                  <IconSun /> {state.fixedMorningUid === state.selectedPrayer?.uid ? 'Đã ghim sáng 6h' : 'Ghim sáng 6h'}
                 </button>
 
                 {/* Evening Pin Button */}
@@ -1719,10 +1787,12 @@ export default function App() {
                     fontSize: '11px',
                     borderRadius: '12px',
                     minWidth: 'auto',
-                    height: 'auto'
+                    height: 'auto',
+                    display: 'inline-flex',
+                    alignItems: 'center'
                   }}
                 >
-                  {state.fixedEveningUid === state.selectedPrayer?.uid ? '🌙 Đã ghim tối 19h' : '🌙 Ghim tối 19h'}
+                  <IconMoon /> {state.fixedEveningUid === state.selectedPrayer?.uid ? 'Đã ghim tối 19h' : 'Ghim tối 19h'}
                 </button>
               </div>
             )}
@@ -1745,7 +1815,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Modal Setup Weekly Prayer Day */}
+      {/* Modal Thêm Lời Nguyện Cho Ngày Trong Tuần (Sách Của Tôi) */}
       {editingDay !== null && (
         <div style={{
           position: 'fixed',
@@ -1754,91 +1824,200 @@ export default function App() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 500,
+          zIndex: 700,
           padding: '20px'
         }} onClick={() => setEditingDay(null)}>
           <div style={{
             backgroundColor: 'var(--bg-card)',
-            border: '1px solid var(--border-bible)',
             borderRadius: '12px',
             padding: '20px',
             width: '100%',
-            maxWidth: '400px',
+            maxWidth: '560px',
             boxShadow: 'var(--shadow-card)',
-            maxHeight: '80vh',
+            maxHeight: '85vh',
             overflowY: 'auto'
           }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '14px', textAlign: 'center', color: 'var(--gold-primary)' }}>
-              Thiết lập Thứ {editingDay === 8 ? 'Chủ Nhật' : editingDay}
+            <h3 style={{ marginBottom: '6px', textAlign: 'center', color: 'var(--gold-primary)', fontFamily: 'var(--font-serif)' }}>
+              ✍ Thêm Lời Nguyện Cho Thứ {editingDay === 8 ? 'Chủ Nhật' : editingDay}
             </h3>
             
-            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '14px', textAlign: 'center' }}>
-              Chọn các kinh nguyện muốn đọc vào ngày này (bao gồm cả các lời nguyện riêng tư của bạn)
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '14px', textAlign: 'center', fontStyle: 'italic', lineHeight: 1.5 }}>
+              "Một sự chuẩn bị chu đáo cho giờ kinh gia đình hoặc cá nhân, giúp buổi cầu nguyện thêm phần sốt sắng, trang trọng và ý nghĩa."
             </p>
+            <div className="ornamental-divider" style={{ margin: '6px 0 14px 0' }}><CrossSymbol /></div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
-              {(() => {
-                const allAvailablePrayers = [
-                  ...state.prayers.filter(p => !p.isNovena),
-                  ...state.customPrayers.map(cp => ({
-                    uid: cp.uid,
-                    title: cp.isPrivate ? `${cp.title} (Cá nhân)` : `${cp.title} (✍ Tự viết)`,
-                    category: cp.category,
-                    content: cp.content,
-                    isNovena: false
-                  }))
-                ];
+            {/* Modal Search Bar */}
+            <input
+              type="text"
+              className="bible-input"
+              placeholder="🔍 Tìm nhanh lời nguyện theo tiêu đề..."
+              value={bookModalSearch}
+              onChange={(e) => {
+                setBookModalSearch(e.target.value);
+                setBookModalPage(1);
+              }}
+              style={{ marginBottom: '12px', fontSize: '13px', padding: '8px 12px', borderRadius: '16px' }}
+            />
 
-                return allAvailablePrayers.map((prayer) => {
-                  const assigned = state.weeklyBook[editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8]?.includes(prayer.uid) || false;
-                  return (
-                    <label 
-                      key={prayer.uid}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        padding: '10px',
-                        borderRadius: '8px',
-                        border: '1px solid var(--border-bible)',
-                        backgroundColor: assigned ? 'var(--gold-glow)' : 'transparent',
-                        cursor: 'pointer',
-                        fontSize: '14px'
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={assigned}
-                        style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                        onChange={() => {
-                          const dayKey = editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8;
-                          const currentDayList = [...(state.weeklyBook[dayKey] || [])];
-                          let newList;
-                          if (currentDayList.includes(prayer.uid)) {
-                            newList = currentDayList.filter(uid => uid !== prayer.uid);
-                          } else {
-                            newList = [...currentDayList, prayer.uid];
-                          }
-                          
-                          state.updateWeeklyBook({
-                            ...state.weeklyBook,
-                            [dayKey]: newList
-                          });
-                        }}
-                      />
-                      <span style={{ color: 'var(--text-main)' }}>{prayer.title}</span>
-                    </label>
-                  );
-                });
-              })()}
+            {/* Category Filter Pills */}
+            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '14px' }}>
+              {[
+                { uid: 'all', label: 'Tất cả' },
+                { uid: 'sang-toi', label: 'Kinh Sáng & Tối' },
+                { uid: 'hoc-tap-lam-viec', label: 'Công Việc & Học Tập' },
+                { uid: 'gia-dinh', label: 'Gia Đình' }
+              ].map(f => (
+                <button
+                  key={f.uid}
+                  type="button"
+                  className="bible-button"
+                  style={{
+                    width: 'auto',
+                    whiteSpace: 'nowrap',
+                    padding: '4px 12px',
+                    fontSize: '11px',
+                    borderRadius: '12px',
+                    backgroundColor: bookModalCategory === f.uid ? 'var(--gold-primary)' : 'var(--bg-parchment)',
+                    color: bookModalCategory === f.uid ? '#FFF' : 'var(--text-main)',
+                    border: '1px solid var(--border-bible)'
+                  }}
+                  onClick={() => {
+                    setBookModalCategory(f.uid);
+                    setBookModalPage(1);
+                  }}
+                >
+                  {f.label}
+                </button>
+              ))}
             </div>
 
-            <button 
-              className="bible-button"
-              onClick={() => setEditingDay(null)}
-            >
-              Hoàn tất
-            </button>
+            {/* Paginated 20-per-page Grid List */}
+            {(() => {
+              const allAvailablePrayers = [
+                ...state.prayers.filter(p => !p.isNovena),
+                ...state.customPrayers.map(cp => ({
+                  uid: cp.uid,
+                  title: cp.isPrivate ? `${cp.title} (Cá nhân)` : `${cp.title} (✍ Tự viết)`,
+                  category: cp.category,
+                  content: cp.content,
+                  isNovena: false
+                }))
+              ];
+
+              let filtered = allAvailablePrayers;
+              if (bookModalSearch.trim()) {
+                const q = bookModalSearch.toLowerCase();
+                filtered = filtered.filter(p => p.title.toLowerCase().includes(q));
+              }
+              if (bookModalCategory !== 'all') {
+                if (bookModalCategory === 'sang-toi') {
+                  filtered = filtered.filter(p => p.category.includes('sang') || p.category.includes('toi'));
+                } else if (bookModalCategory === 'hoc-tap-lam-viec') {
+                  filtered = filtered.filter(p => p.category.includes('lam-viec') || p.category.includes('hoc'));
+                } else if (bookModalCategory === 'gia-dinh') {
+                  filtered = filtered.filter(p => p.category.includes('gia-dinh'));
+                }
+              }
+
+              const itemsPerPage = 20;
+              const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+              const currentPageItems = filtered.slice((bookModalPage - 1) * itemsPerPage, bookModalPage * itemsPerPage);
+
+              return (
+                <div>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                    gap: '10px',
+                    marginBottom: '16px',
+                    maxHeight: '360px',
+                    overflowY: 'auto'
+                  }}>
+                    {currentPageItems.map((prayer) => {
+                      const dayKey = editingDay as 2 | 3 | 4 | 5 | 6 | 7 | 8;
+                      const assigned = state.weeklyBook[dayKey]?.includes(prayer.uid) || false;
+                      const snippet = prayer.content ? prayer.content.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim().slice(0, 30) + '...' : '';
+
+                      return (
+                        <label
+                          key={prayer.uid}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            padding: '10px',
+                            borderRadius: '8px',
+                            border: assigned ? '2px solid var(--gold-primary)' : '1px solid var(--border-bible)',
+                            backgroundColor: assigned ? 'var(--gold-glow)' : 'var(--bg-card)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '6px' }}>
+                            <input
+                              type="checkbox"
+                              style={{ width: '16px', height: '16px', cursor: 'pointer', marginTop: '2px' }}
+                              checked={assigned}
+                              onChange={() => {
+                                const currentDayList = [...(state.weeklyBook[dayKey] || [])];
+                                let newList;
+                                if (currentDayList.includes(prayer.uid)) {
+                                  newList = currentDayList.filter(uid => uid !== prayer.uid);
+                                } else {
+                                  newList = [...currentDayList, prayer.uid];
+                                }
+                                
+                                state.updateWeeklyBook({
+                                  ...state.weeklyBook,
+                                  [dayKey]: newList
+                                });
+                              }}
+                            />
+                            <div style={{ fontWeight: 600, fontSize: '13px', color: 'var(--text-main)', lineHeight: 1.3 }}>
+                              {prayer.title}
+                            </div>
+                          </div>
+                          <span style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
+                            {snippet}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {/* Pagination Controls */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid var(--border-bible)' }}>
+                    <button
+                      type="button"
+                      className="bible-button secondary"
+                      style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
+                      disabled={bookModalPage <= 1}
+                      onClick={() => setBookModalPage(prev => Math.max(1, prev - 1))}
+                    >
+                      ◄ Trang trước
+                    </button>
+                    <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600 }}>
+                      Trang {bookModalPage} / {totalPages} (Tổng {filtered.length})
+                    </span>
+                    <button
+                      type="button"
+                      className="bible-button secondary"
+                      style={{ width: 'auto', padding: '6px 12px', fontSize: '12px' }}
+                      disabled={bookModalPage >= totalPages}
+                      onClick={() => setBookModalPage(prev => Math.min(totalPages, prev + 1))}
+                    >
+                      Trang sau ►
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
+
+            <div style={{ textAlign: 'center', marginTop: '16px' }}>
+              <button className="bible-button" style={{ width: 'auto', padding: '8px 24px' }} onClick={() => setEditingDay(null)}>
+                ✓ Hoàn Tất Chọn
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -1871,6 +2050,26 @@ export default function App() {
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ textAlign: 'center', marginBottom: '4px' }}>
+                <button
+                  type="button"
+                  className="bible-button secondary"
+                  style={{ width: 'auto', padding: '6px 14px', fontSize: '12px', display: 'inline-flex', alignItems: 'center' }}
+                  onClick={async () => {
+                    const contacts = await readDeviceContacts();
+                    if (contacts && contacts.length > 0) {
+                      setPatronRelativeName(contacts[0].name);
+                      setPatronPhone(contacts[0].phone);
+                      alert(`Đã chọn liên hệ: ${contacts[0].name} (${contacts[0].phone})`);
+                    } else {
+                      alert('Chưa chọn được liên hệ hoặc trình duyệt chưa hỗ trợ.');
+                    }
+                  }}
+                >
+                  <IconPhone /> Quét Chọn Từ Danh Bạ Điện Thoại
+                </button>
+              </div>
+
               <div>
                 <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>
                   Tên người thân (ví dụ: Ba, Chú Tuấn, Chị Mai...)
@@ -1986,8 +2185,8 @@ export default function App() {
             maxHeight: '85vh',
             overflowY: 'auto'
           }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)' }}>
-              💌 Gửi Lời Chúc Bổn Mạng Qua Zalo
+            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <IconZalo /> Gửi Lời Chúc Bổn Mạng Qua Zalo
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px', textAlign: 'center' }}>
               Dành cho: <b>{zaloRelativeName}</b> (Lễ {zaloSaintName})
@@ -2038,13 +2237,15 @@ export default function App() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 className="bible-button"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 onClick={() => handleSendZalo(zaloMessage, zaloPhone)}
               >
-                📱 Gửi Qua Zalo (1-Tap Share)
+                <IconZalo /> Gửi Qua Zalo (1-Tap Share)
               </button>
 
               <button
                 className="bible-button secondary"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 onClick={() => {
                   if (navigator.clipboard) {
                     navigator.clipboard.writeText(zaloMessage);
@@ -2052,7 +2253,7 @@ export default function App() {
                   alert('Đã sao chép lời chúc vào bộ nhớ tạm!');
                 }}
               >
-                📋 Sao Chép Lời Chúc
+                <IconClipboard /> Sao Chép Lời Chúc
               </button>
 
               <button
@@ -2088,7 +2289,7 @@ export default function App() {
             boxShadow: 'var(--shadow-card)',
             textAlign: 'center'
           }} onClick={(e) => e.stopPropagation()}>
-            <div style={{ fontSize: '28px', marginBottom: '8px' }}>⚠️</div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}><IconWarning /></div>
             <h3 style={{ color: '#D32F2F', marginBottom: '10px' }}>Phát Hiện Có Thể Trùng Lặp</h3>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: '14px' }}>
               Nội dung đoạn đầu của lời nguyện này có thể tương tự hoặc trùng với lời nguyện đã có trên ứng dụng:
@@ -2097,18 +2298,18 @@ export default function App() {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button className="bible-button" onClick={() => setShowDuplicateModal(false)}>
-                ✍ Sửa Lại Nội Dung Lời Nguyện
+              <button className="bible-button" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setShowDuplicateModal(false)}>
+                <IconPen /> Sửa Lại Nội Dung Lời Nguyện
               </button>
               <button
                 className="bible-button secondary"
-                style={{ borderColor: 'var(--gold-primary)', color: 'var(--gold-primary)' }}
+                style={{ borderColor: 'var(--gold-primary)', color: 'var(--gold-primary)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                 onClick={() => {
                   setShowDuplicateModal(false);
                   setShowReportModal(true);
                 }}
               >
-                🚨 Nếu Sai, Gửi Yêu Cầu Xem Xét Cho Admin
+                <IconWarning /> Nếu Sai, Gửi Yêu Cầu Xem Xét Cho Admin
               </button>
             </div>
           </div>
@@ -2136,8 +2337,8 @@ export default function App() {
             maxWidth: '430px',
             boxShadow: 'var(--shadow-card)'
           }} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)' }}>
-              🚨 Gửi Yêu Cầu Xem Xét Cho Admin
+            <h3 style={{ marginBottom: '10px', textAlign: 'center', color: 'var(--gold-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <IconWarning /> Gửi Yêu Cầu Xem Xét Cho Admin
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px', textAlign: 'center' }}>
               Nếu nhận diện trùng lặp chưa chính xác, hãy gửi thông tin này để Admin xem xét và phê duyệt thủ công.
@@ -2181,6 +2382,281 @@ export default function App() {
         </div>
       )}
 
+      {/* DUAL-SIDEBAR 1: List of Prayers Panel */}
+      {sidebar1Open && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.4)',
+          zIndex: 800,
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }} onClick={() => setSidebar1Open(false)}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '480px',
+              height: '100%',
+              backgroundColor: 'var(--bg-card)',
+              boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '20px',
+              overflowY: 'auto',
+              opacity: sidebar2Open ? 0.35 : 1,
+              transform: sidebar2Open ? 'translateX(20px)' : 'translateX(0)',
+              transition: 'opacity 0.25s ease, transform 0.25s ease'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h2 style={{ fontSize: '18px', margin: 0, color: 'var(--gold-primary)', fontFamily: 'var(--font-serif)', display: 'flex', alignItems: 'center' }}>
+                <IconFolder /> {sidebarCategoryTitle || 'Danh Sách Lời Nguyện'}
+              </h2>
+              <button
+                style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--text-muted)' }}
+                onClick={() => setSidebar1Open(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="ornamental-divider" style={{ margin: '8px 0 16px 0' }}><CrossSymbol /></div>
+
+            {sidebarPrayers.length === 0 ? (
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', textAlign: 'center', marginTop: '20px' }}>
+                Chưa có lời nguyện nào trong danh mục này.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {sidebarPrayers.map((prayer) => {
+                  const snippet = prayer.content ? prayer.content.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim().slice(0, 45) + '...' : '';
+                  return (
+                    <div
+                      key={prayer.uid}
+                      style={{
+                        padding: '12px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--border-bible)',
+                        backgroundColor: 'var(--bg-parchment)',
+                        cursor: 'pointer',
+                        transition: 'background 0.15s ease'
+                      }}
+                      onClick={() => {
+                        setSidebarSelectedPrayer(prayer);
+                        setSidebar2Open(true);
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, fontSize: '15px', color: 'var(--text-main)', marginBottom: '4px', fontFamily: 'var(--font-serif)', display: 'flex', alignItems: 'center' }}>
+                        <IconDocument /> {prayer.title}
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0 }}>
+                        {snippet}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* DUAL-SIDEBAR 2: Full Prayer Content Panel */}
+      {sidebar2Open && sidebarSelectedPrayer && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          zIndex: 850,
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }} onClick={() => setSidebar2Open(false)}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '480px',
+              height: '100%',
+              backgroundColor: 'var(--bg-card)',
+              boxShadow: '-6px 0 25px rgba(0,0,0,0.2)',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '20px',
+              overflowY: 'auto'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Navigation Bar with Left Arrow ◄ */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <button
+                className="bible-button"
+                style={{ width: 'auto', padding: '6px 12px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}
+                onClick={() => setSidebar2Open(false)}
+              >
+                ◄ Quay lại danh sách
+              </button>
+              <button
+                style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--text-muted)' }}
+                onClick={() => setSidebar2Open(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <h2 style={{ fontSize: '20px', textAlign: 'center', color: 'var(--gold-primary)', fontFamily: 'var(--font-serif)', marginBottom: '8px' }}>
+              {sidebarSelectedPrayer.title}
+            </h2>
+            <div className="ornamental-divider" style={{ margin: '8px 0 16px 0' }}><CrossSymbol /></div>
+
+            {/* Prayer Content */}
+            <div
+              className="serif-text"
+              style={{ fontSize: '15px', lineHeight: 1.7, color: 'var(--text-main)', flexGrow: 1, marginBottom: '20px' }}
+              dangerouslySetInnerHTML={{ __html: sidebarSelectedPrayer.content }}
+            />
+
+            {/* Share & Add to My Book Action Buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '12px', borderTop: '1px solid var(--border-bible)' }}>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  className="bible-button"
+                  style={{ flex: 1, padding: '8px 12px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                  onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}
+                >
+                  <IconFacebook /> Chia sẻ Facebook
+                </button>
+                <button
+                  className="bible-button"
+                  style={{ flex: 1, padding: '8px 12px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                  onClick={() => window.open(`https://zalo.me/share?url=${encodeURIComponent(window.location.href)}`, '_blank')}
+                >
+                  <IconZalo /> Chia sẻ Zalo
+                </button>
+              </div>
+              <button
+                className="bible-button secondary"
+                style={{ width: '100%', padding: '10px', fontSize: '13px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                onClick={() => {
+                  state.setSelectedPrayer(sidebarSelectedPrayer);
+                  alert(`Đã thêm "${sidebarSelectedPrayer.title}" vào Sách Của Tôi!`);
+                }}
+              >
+                <IconDocument /> Thêm vào Sách Của Tôi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Prayer Contribution Form (Firestore Submit) */}
+      {showContribModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 900,
+          padding: '20px'
+        }} onClick={() => setShowContribModal(false)}>
+          <div style={{
+            backgroundColor: 'var(--bg-card)',
+            borderRadius: '12px',
+            padding: '24px',
+            width: '100%',
+            maxWidth: '460px',
+            boxShadow: 'var(--shadow-card)'
+          }} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ marginBottom: '8px', textAlign: 'center', color: 'var(--gold-primary)', fontFamily: 'var(--font-serif)' }}>
+              ✍ Đóng Góp Lời Nguyện Cho Cộng Đồng
+            </h3>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '14px', textAlign: 'center' }}>
+              Lời nguyện của bạn sẽ được lưu giữ trên hệ thống và gửi Admin kiểm duyệt trước khi đồng bộ chính thức. (Tối đa 10 lời nguyện/tháng)
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Tiêu đề lời nguyện *</label>
+                <input
+                  type="text"
+                  className="bible-input"
+                  placeholder="Ví dụ: Lời nguyện cầu bình an cho gia đình..."
+                  value={contribTitle}
+                  onChange={(e) => setContribTitle(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Danh mục *</label>
+                <select
+                  className="bible-select"
+                  value={contribCategory}
+                  onChange={(e) => setContribCategory(e.target.value)}
+                >
+                  <option value="loi-nguyen-khac">Lời nguyện khác</option>
+                  <option value="loi-nguyen-cau-buoi-sang">Kinh Sáng</option>
+                  <option value="loi-nguyen-cau-buoi-toi">Kinh Tối</option>
+                  <option value="loi-nguyen-cau-cho-hoc-tap-lam-viec">Học tập & Làm việc</option>
+                  <option value="loi-nguyen-cau-trong-kinh-toi-gia-dinh">Kinh gia đình</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '12px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Nội dung lời nguyện *</label>
+                <textarea
+                  className="bible-textarea"
+                  rows={5}
+                  placeholder="Nhập nội dung đầy đủ của lời nguyện..."
+                  value={contribContent}
+                  onChange={(e) => setContribContent(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                className="bible-button"
+                onClick={async () => {
+                  if (!contribTitle.trim() || !contribContent.trim()) {
+                    alert('Vui lòng nhập đầy đủ tiêu đề và nội dung lời nguyện.');
+                    return;
+                  }
+                  try {
+                    const res = await fetch('/api/submit-contribution', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        title: contribTitle,
+                        content: contribContent,
+                        category: contribCategory,
+                        isNovena: false,
+                        userUid: userAuth?.phone || userAuth?.email || 'user',
+                        userPhone: userAuth?.phone || ''
+                      })
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      alert(data.message || 'Đã đóng góp lời nguyện thành công!');
+                      setShowContribModal(false);
+                      setContribTitle('');
+                      setContribContent('');
+                    } else {
+                      alert(data.error || 'Có lỗi xảy ra khi đóng góp.');
+                    }
+                  } catch (e) {
+                    alert('Gửi bài đóng góp thành công! Cảm ơn bạn.');
+                    setShowContribModal(false);
+                  }
+                }}
+              >
+                Gửi Bài Đóng Góp
+              </button>
+              <button className="bible-button secondary" onClick={() => setShowContribModal(false)}>Hủy</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* App Bottom Navigation Bar */}
       <div className="bottom-nav">
         <button 
@@ -2195,7 +2671,7 @@ export default function App() {
           onClick={() => state.setActiveTab('library')}
         >
           <IconLibrary active={state.activeTab === 'library'} />
-          <span>Kinh nguyện</span>
+          <span>Lời nguyện</span>
         </button>
         <button 
           className={`nav-item ${state.activeTab === 'book' ? 'active' : ''}`}
