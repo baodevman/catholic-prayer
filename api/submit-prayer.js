@@ -6,10 +6,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { title, content, category } = req.body;
+  const { title, content, category, submitted_by_user, user_email, time_of_day } = req.body;
 
-  if (!title || !content || !category) {
-    return res.status(400).json({ error: 'Thiếu các trường bắt buộc: title, content, hoặc category.' });
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Thiếu các trường bắt buộc: title hoặc content.' });
   }
 
   const repoName = process.env.PRISMIC_REPO || '';
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const uid = title
+    const uid = (title + '-' + Date.now().toString().slice(-4))
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -36,17 +36,20 @@ export default async function handler(req, res) {
 
     const migration = prismic.createMigration();
 
-    const prismicContent = content
-      .split(/<br\s*\/?>/)
-      .map(p => p.trim())
-      .filter(p => p.length > 0)
-      .map(p => ({
-        type: 'paragraph',
-        text: p,
-        spans: []
-      }));
+    const prismicContent = typeof content === 'string' 
+      ? content
+        .split(/<br\s*\/?>|\n/)
+        .map(p => p.trim())
+        .filter(p => p.length > 0)
+        .map(p => ({
+          type: 'paragraph',
+          text: p,
+          spans: []
+        }))
+      : content;
 
     const docLang = process.env.PRISMIC_LANG || 'vi';
+    const submitterInfo = submitted_by_user || user_email || 'Thành viên ẩn danh';
 
     migration.createDocument({
       type: 'prayer',
@@ -54,24 +57,27 @@ export default async function handler(req, res) {
       lang: docLang,
       data: {
         title: title,
-        category: {
+        category: category ? {
           link_type: 'Document',
           uid: category,
           type: 'category',
           lang: docLang
-        },
+        } : undefined,
         content: prismicContent,
+        time_of_day: time_of_day || 'bat_ky',
+        is_user_submitted: true,
+        submitted_by_user: submitterInfo,
         is_novena: false
       }
     }, title);
 
     await writeClient.migrate(migration);
 
-    return res.status(200).json({ success: true, message: 'Đã gửi bản nháp kinh nguyện lên Prismic thành công!' });
+    return res.status(200).json({ success: true, message: 'Đã gửi lời cầu nguyện lên Prismic thành công!' });
   } catch (error) {
     console.error('❌ Lỗi gửi bản nháp lên Prismic:', error);
     return res.status(500).json({
-      error: 'Không thể di chuyển dữ liệu lên Prismic.',
+      error: 'Không thể gửi dữ liệu lên Prismic.',
       details: error.message || error
     });
   }

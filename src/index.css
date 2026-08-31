@@ -1,61 +1,28 @@
 :root {
-  /* Bible Parchment Palette - Light Mode */
-  --bg-parchment: #FAF6EE;
+  /* Bible Parchment Palette - Single Light Theme (Tân Ước / Cựu Ước Warm Paper) */
+  --bg-parchment: #FBF8EE;
   --bg-card: #FFFFFF;
-  --text-main: #2C2520;
-  --text-muted: #70635C;
-  --gold-primary: #9E7E40;
-  --gold-light: #C5A880;
-  --gold-dark: #7A5F2C;
-  --gold-glow: rgba(197, 168, 128, 0.15);
-  --border-bible: #E6DFD5;
-  --border-focus: #C5A880;
-  --shadow-subtle: rgba(44, 37, 32, 0.04) 0 4px 12px;
-  --shadow-card: rgba(44, 37, 32, 0.08) 0 10px 25px -5px, rgba(44, 37, 32, 0.03) 0 8px 10px -6px;
+  --text-main: #221C16;
+  --text-muted: #6B5E52;
+  --gold-primary: #8C6B2D;
+  --gold-light: #CBA458;
+  --gold-dark: #634B1D;
+  --gold-glow: rgba(203, 164, 88, 0.18);
+  --border-bible: #E8E0D2;
+  --border-focus: #8C6B2D;
+  --shadow-subtle: rgba(34, 28, 22, 0.05) 0 4px 12px;
+  --shadow-card: rgba(34, 28, 22, 0.08) 0 10px 28px -5px, rgba(34, 28, 22, 0.04) 0 6px 12px -4px;
 
-  /* Typography */
-  --font-serif: 'EB Garamond', 'Lora', 'Georgia', serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Premium Vietnamese Typography */
+  --font-serif: 'Merriweather', 'Georgia', serif;
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
 
   /* General settings */
-  font-family: var(--font-serif);
-  color-scheme: light dark;
+  font-family: var(--font-sans);
+  color-scheme: light;
   color: var(--text-main);
   background-color: var(--bg-parchment);
   -webkit-tap-highlight-color: transparent;
-}
-
-/* Dark Mode - Class-based & Media-query fallback */
-:root.dark {
-  --bg-parchment: #12100E;
-  --bg-card: #1C1917;
-  --text-main: #FAF6EE;
-  --text-muted: #A3978E;
-  --gold-primary: #C5A880;
-  --gold-light: #E5D5C0;
-  --gold-dark: #9E7E40;
-  --gold-glow: rgba(197, 168, 128, 0.1);
-  --border-bible: #2E2722;
-  --border-focus: #FAF6EE;
-  --shadow-subtle: rgba(0, 0, 0, 0.2) 0 4px 12px;
-  --shadow-card: rgba(0, 0, 0, 0.4) 0 10px 25px -5px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --bg-parchment: #12100E;
-    --bg-card: #1C1917;
-    --text-main: #FAF6EE;
-    --text-muted: #A3978E;
-    --gold-primary: #C5A880;
-    --gold-light: #E5D5C0;
-    --gold-dark: #9E7E40;
-    --gold-glow: rgba(197, 168, 128, 0.1);
-    --border-bible: #2E2722;
-    --border-focus: #FAF6EE;
-    --shadow-subtle: rgba(0, 0, 0, 0.2) 0 4px 12px;
-    --shadow-card: rgba(0, 0, 0, 0.4) 0 10px 25px -5px;
-  }
 }
 
 /* Resets */
@@ -65,129 +32,757 @@
   padding: 0;
 }
 
-body, button, input, select, textarea {
+body,
+button,
+input,
+select,
+textarea {
   margin: 0;
   background-color: var(--bg-parchment);
   color: var(--text-main);
   font-family: var(--font-serif);
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 16px;
 }
 
-/* Scrollbar Customization */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-parchment);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--gold-light);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-primary);
-}
 
-/* Main Layout Shell */
-#root {
+/* App Shell */
+.app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
-  max-width: 640px; /* Mobile App Shell width */
+  max-width: 600px;
   margin: 0 auto;
   background-color: var(--bg-parchment);
   position: relative;
   border-left: 1px solid var(--border-bible);
   border-right: 1px solid var(--border-bible);
-  box-shadow: rgba(0, 0, 0, 0.05) 0 0 40px;
+  box-shadow: rgba(34, 28, 22, 0.06) 0 0 35px;
 }
 
-/* Content Container */
+/* Header */
+.app-header {
+  padding: 16px 20px;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-bible);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: var(--shadow-subtle);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  letter-spacing: 0.3px;
+}
+
+.time-badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-dark);
+  background: var(--gold-glow);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-bible);
+}
+
+/* Main Content */
 .app-content {
   flex-grow: 1;
-  padding: 24px 20px 96px 20px; /* bottom padding for Nav Bar */
+  padding: 20px 16px 88px 16px;
   overflow-y: auto;
 }
 
-/* Typography styles */
-.serif-text {
-  font-family: var(--font-serif);
+/* Featured Prayer Card (Homepage) */
+.featured-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.bible-header {
-  font-family: var(--font-serif);
+.card-badge-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge-time,
+.badge-role {
+  font-size: 12px;
   font-weight: 600;
-  color: var(--gold-primary);
-  text-align: center;
-  margin-bottom: 24px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  color: var(--gold-dark);
 }
 
-/* Headings */
-h1 {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.25;
+.prayer-main-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-h2 {
+.prayer-card-title {
   font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 600;
-  color: var(--gold-primary);
-  line-height: 1.3;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.35;
+  text-align: center;
 }
 
-h3 {
+.prayer-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.prayer-card-content.bible-text.full-view {
   font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.85;
   color: var(--text-main);
 }
 
-/* Bible Ornamental Divider */
-.ornamental-divider {
+.prayer-card-content.bible-text p {
+  margin-bottom: 14px;
+}
+
+.prayer-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* Buttons */
+.btn-action {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 110px;
+}
+
+.btn-action.primary {
+  background-color: var(--gold-primary);
+  color: #FFFFFF;
+}
+
+.btn-action.primary:hover {
+  background-color: var(--gold-dark);
+}
+
+.btn-action.secondary {
+  background-color: var(--bg-parchment);
+  color: var(--text-main);
+  border-color: var(--border-bible);
+}
+
+.btn-action.secondary:hover {
+  border-color: var(--gold-light);
+}
+
+.btn-action.outline {
+  background: transparent;
+  border-color: var(--border-bible);
+  color: var(--text-muted);
+}
+
+.btn-action.outline:hover {
+  color: var(--text-main);
+  border-color: var(--gold-primary);
+}
+
+.btn-action.small {
+  font-size: 13px;
+  padding: 7px 12px;
+  min-width: auto;
+}
+
+/* Widgets */
+.widget-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  border-radius: 14px;
+  padding: 18px 16px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+
+.widget-title-icon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.saint-name,
+.novena-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.saint-desc,
+.novena-empty-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.novena-active-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.novena-days-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.novena-day-btn {
+  aspect-ratio: 1;
+  border: 1px solid var(--border-bible);
+  border-radius: 6px;
+  background: var(--bg-parchment);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 0;
-  color: var(--gold-light);
-}
-.ornamental-divider::before,
-.ornamental-divider::after {
-  content: "";
-  flex-grow: 1;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold-light), transparent);
-  margin: 0 16px;
-}
-.ornamental-divider .icon {
-  font-size: 16px;
-  line-height: 1;
+  gap: 2px;
 }
 
-/* Elegant Cards */
-.bible-card {
+.novena-day-btn.done {
+  background-color: var(--gold-primary);
+  color: #FFF;
+  border-color: var(--gold-dark);
+}
+
+/* Suggest Tab */
+.section-title-box {
+  margin-bottom: 16px;
+}
+
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.suggest-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.textarea-wrapper {
+  position: relative;
+}
+
+.suggest-textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-bible);
+  background-color: var(--bg-card);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-main);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.suggest-textarea:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.word-counter {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.btn-submit-search {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 10px;
+  background-color: var(--gold-primary);
+  color: #FFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.btn-submit-search:hover:not(:disabled) {
+  background-color: var(--gold-dark);
+}
+
+.btn-submit-search:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Search Results */
+.results-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-bible);
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 16px;
+  padding: 16px;
   box-shadow: var(--shadow-subtle);
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.bible-card:hover {
-  border-color: var(--gold-light);
+.result-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-number {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  background: var(--gold-glow);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.result-card-title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.result-snippet {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.result-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Settings Tab & Auth Box */
+.settings-group {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  border-radius: 14px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.auth-box-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background-color: var(--bg-parchment);
+  border-radius: 10px;
+  border: 1px solid var(--border-bible);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-name-display {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.user-email-display {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.code-display-box {
+  font-size: 12px;
+  color: var(--gold-dark);
+  margin-top: 4px;
+}
+
+.group-title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.group-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  line-height: 1.45;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.role-card {
+  background-color: var(--bg-parchment);
+  border: 1px solid var(--border-bible);
+  border-radius: 10px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.role-card.active {
+  border-color: var(--gold-primary);
+  background-color: var(--gold-glow);
+  box-shadow: 0 0 0 1px var(--gold-primary);
+}
+
+.role-icon-box {
+  margin-bottom: 4px;
+  color: var(--gold-primary);
+}
+
+.role-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.role-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Connection input box */
+.connection-input-box {
+  display: flex;
+  gap: 8px;
+}
+
+.patrons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.patron-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--bg-parchment);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.patron-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.connection-status-badge {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.connection-status-badge.connected {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.connection-status-badge.pending {
+  color: var(--text-muted);
+}
+
+/* Forms in Settings */
+.add-prayer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.form-input,
+.form-textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-bible);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background-color: var(--bg-card);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+}
+
+.form-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.form-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-small-danger {
+  background: none;
+  border: none;
+  color: #8B0000;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-info-box {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 24px;
+  padding: 12px;
+}
+
+.app-info-box .sub {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Novena selection list */
+.novena-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.novena-select-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-bible);
+  background-color: var(--bg-parchment);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.novena-select-item:hover {
+  border-color: var(--gold-primary);
+  background-color: var(--bg-card);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 28, 22, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-bible);
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
   box-shadow: var(--shadow-card);
 }
 
-/* App Bottom Navigation Bar */
-.bottom-nav {
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-bible);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-primary);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  line-height: 1.8;
+  font-family: var(--font-serif);
+  font-size: 16px;
+}
+
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-bible);
+  display: flex;
+  gap: 8px;
+}
+
+/* Bottom Navigation Bar */
+.app-nav {
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -200,9 +795,8 @@ h3 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  z-index: 1000;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
-  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 900;
+  box-shadow: 0 -4px 12px rgba(34, 28, 22, 0.05);
 }
 
 .nav-item {
@@ -215,261 +809,49 @@ h3 {
   color: var(--text-muted);
   font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s;
   flex: 1;
   height: 100%;
+  gap: 2px;
+  transition: color 0.15s;
 }
 
 .nav-item.active {
   color: var(--gold-primary);
 }
 
-.nav-item svg {
-  margin-bottom: 4px;
-  transition: transform 0.2s;
-}
-
-.nav-item.active svg {
-  transform: translateY(-2px);
-}
-
-/* Flipbook Component Styling */
-.flipbook-container {
-  perspective: 1200px;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  margin: 20px 0;
-  position: relative;
-}
-
-.book {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.5s;
-}
-
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
-  cursor: pointer;
-  box-shadow: inset 3px 0 10px rgba(0,0,0,0.05);
-}
-
-.page-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  padding: 24px;
-  border: 1px solid var(--border-bible);
-  border-radius: 0 12px 12px 0;
-  background-color: var(--bg-card);
-  overflow-y: auto;
-  box-shadow: var(--shadow-card);
-}
-
-/* Book page background texture */
-.page-face::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid var(--border-bible);
-  border-radius: 8px;
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.page-face.back {
-  transform: rotateY(180deg);
-  border-radius: 12px 0 0 12px;
-  box-shadow: -5px 5px 15px rgba(0,0,0,0.1);
-}
-
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-/* Dog-ear folded corner for book pages */
-.dog-ear {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, transparent 50%, rgba(197, 168, 128, 0.25) 50%);
-  z-index: 25;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 0 0 12px 0;
-}
-
-.dog-ear::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 16px 16px 0 0;
-  border-color: var(--gold-primary) transparent transparent transparent;
-  transform: rotate(-90deg);
-  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.dog-ear:hover {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, transparent 50%, rgba(197, 168, 128, 0.4) 50%);
-}
-
-.dog-ear:hover::after {
-  border-width: 21px 21px 0 0;
-}
-
-/* Back page dog-ear (bottom-left corner) */
-.page-face.back .dog-ear {
-  right: auto;
-  left: 0;
-  background: linear-gradient(225deg, transparent 50%, rgba(197, 168, 128, 0.25) 50%);
-  border-radius: 0 0 0 12px;
-}
-
-.page-face.back .dog-ear::after {
-  right: auto;
-  left: 0;
-  border-width: 0 16px 16px 0;
-  border-color: transparent var(--gold-primary) transparent transparent;
-  transform: rotate(90deg);
-  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.page-face.back .dog-ear:hover {
-  background: linear-gradient(225deg, transparent 50%, rgba(197, 168, 128, 0.4) 50%);
-}
-
-.page-face.back .dog-ear:hover::after {
-  border-width: 0 21px 21px 0;
-}
-
-/* Page spine effect */
-.page-spine {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 15px;
-  height: 100%;
-  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.page.flipped .page-spine {
-  left: auto;
-  right: 0;
-  background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
-}
-
-/* Form inputs & interactive styles */
-.bible-input, .bible-select, .bible-textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--border-bible);
-  background-color: var(--bg-card);
-  color: var(--text-main);
-  border-radius: 8px;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  margin-bottom: 16px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.bible-input:focus, .bible-select:focus, .bible-textarea:focus {
-  border-color: var(--gold-primary);
-  box-shadow: 0 0 0 3px var(--gold-glow);
-}
-
-.bible-button {
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  background-color: var(--gold-primary);
-  color: #FAF6EE;
-  font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-  display: inline-flex;
+/* Loading & Empty states */
+.loading-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  padding: 60px 20px;
+  gap: 12px;
+  color: var(--text-muted);
 }
 
-.bible-button:hover {
-  background-color: var(--gold-dark);
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-bible);
+  border-top-color: var(--gold-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-.bible-button:active {
-  transform: scale(0.98);
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.bible-button.secondary {
-  background-color: transparent;
-  border: 1px solid var(--gold-primary);
-  color: var(--gold-primary);
-}
-
-.bible-button.secondary:hover {
-  background-color: var(--gold-glow);
-}
-
-/* Badge/Tag styling */
-.category-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  background-color: var(--gold-glow);
+.btn-small-link {
+  background: none;
+  border: none;
   color: var(--gold-primary);
   font-size: 12px;
   font-weight: 600;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Dashboard Morning suggest widget */
-.dashboard-suggest {
-  text-align: center;
-  background: radial-gradient(circle at top, var(--gold-glow), transparent);
-  padding: 32px 20px;
-  border-radius: 16px;
-  border: 1px solid var(--border-bible);
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-subtle);
-}
-
-.dashboard-suggest .time-meta {
-  color: var(--gold-primary);
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.dashboard-suggest .prayer-title {
-  margin: 12px 0;
-  font-size: 24px;
+  cursor: pointer;
 }

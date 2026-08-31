@@ -104,7 +104,7 @@ async function executeMigration() {
   console.log('📖 Đang đọc dữ liệu các danh mục...');
   const categories: InputCategory[] = JSON.parse(fs.readFileSync(categoriesFilePath, 'utf8'));
 
-  console.log('📖 Đang đọc dữ liệu các kinh nguyện...');
+  console.log('📖 Đang đọc dữ liệu các lời cầu nguyện...');
   const prayers: InputPrayer[] = JSON.parse(fs.readFileSync(prayersFilePath, 'utf8'));
 
   console.log(`🚀 Đang kết nối tới Prismic repo "${repoName}"...`);
@@ -159,7 +159,7 @@ async function executeMigration() {
     }
 
     // 5. Queue Prayers and Link Categories
-    console.log('🙏 Đang xếp hàng các bài kinh nguyện...');
+    console.log('🙏 Đang xếp hàng các bài cầu nguyện...');
     for (const prayer of prayers) {
       const uid = prayer.title
         .toLowerCase()
@@ -170,10 +170,10 @@ async function executeMigration() {
 
       const catRef = categoryRefs[prayer.category];
       if (!catRef) {
-        console.warn(`⚠️ Cảnh báo: Không tìm thấy danh mục "${prayer.category}" cho bài kinh "${prayer.title}".`);
+        console.warn(`⚠️ Cảnh báo: Không tìm thấy danh mục "${prayer.category}" cho bài cầu nguyện "${prayer.title}".`);
       }
 
-      console.log(` - Kinh nguyện: ${prayer.title} (danh mục: ${prayer.category})`);
+      console.log(` - Lời cầu nguyện: ${prayer.title} (danh mục: ${prayer.category})`);
 
       const docData: any = {
         title: prayer.title,
@@ -202,7 +202,7 @@ async function executeMigration() {
     console.log('📤 Đang đồng bộ cấu trúc & tài liệu lên Prismic Migration Release (1 request/giây)...');
     await writeClient.migrate(migration);
 
-    console.log('✅ Hoàn thành đồng bộ dữ liệu danh mục & 75 kinh nguyện lên Prismic thành công!');
+    console.log('✅ Hoàn thành đồng bộ dữ liệu danh mục & 75 lời cầu nguyện lên Prismic thành công!');
     console.log('Hãy vào Prismic Dashboard -> Releases của bạn để xem và nhấn PUBLISH.');
 
   } catch (error: any) {
