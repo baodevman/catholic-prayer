@@ -17,11 +17,11 @@ export default defineConfig({
       },
       includeAssets: ['favicon.svg', 'icon.png'],
       manifest: {
-        name: 'Kinh Nguyện Công Giáo',
-        short_name: 'Kinh Nguyện',
-        description: 'Ứng dụng Lời Nguyện & Tuần Cửu Nhật cho người Công Giáo',
-        theme_color: '#FAF6EE',
-        background_color: '#FAF6EE',
+        name: 'Lời Cầu Nguyện Công Giáo',
+        short_name: 'Lời Cầu Nguyện',
+        description: 'Ứng dụng Lời Cầu Nguyện & Tuần Cửu Nhật Công Giáo',
+        theme_color: '#FBF8EE',
+        background_color: '#FBF8EE',
         display: 'standalone',
         orientation: 'portrait',
         icons: [

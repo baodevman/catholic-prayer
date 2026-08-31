@@ -1,19 +1,26 @@
-import { get, set, del } from 'idb-keyval';
+import { get, set } from 'idb-keyval';
 
 // --- LocalStorage Keys ---
 const KEYS = {
-  THEME: 'catholic_prayer_theme',
+  USER_PROFILE: 'catholic_prayer_user_profile',
+  USER_ROLE: 'catholic_prayer_user_role',
   NOVENA_ACTIVE: 'catholic_prayer_novena_active',
   NOVENA_HISTORY: 'catholic_prayer_novena_history',
-  WEEKLY_BOOK: 'catholic_prayer_weekly_book',
-  OFFLINE_ENABLED: 'catholic_prayer_offline_enabled',
-  USER_ROLE: 'catholic_prayer_user_role',
-  NOTIFICATIONS_ENABLED: 'catholic_prayer_notifications_enabled',
+  PRAYER_VIEW_HISTORY: 'catholic_prayer_view_history',
   RELATIVE_PATRONS: 'catholic_prayer_relative_patrons',
+  CONNECTED_USERS: 'catholic_prayer_connected_users',
 };
 
 // --- Custom Types ---
-export type UserRole = 'student' | 'worker' | 'family';
+export type UserRole = 'student' | 'worker' | 'family' | 'monk' | 'sick' | 'single';
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  connectionCode: string; // Unique code to connect 2 users
+  createdAt: string;
+}
 
 export interface CustomPrayer {
   uid: string;
@@ -29,8 +36,8 @@ export interface RelativePatron {
   saintId: string;
   saintName: string; // e.g. "Thánh Giuse"
   feastDate: string; // Format: "MM-DD" e.g. "03-19"
-  phone?: string;
-  note?: string;
+  linkedUserCode?: string; // Connection code of linked user (if connected)
+  isConnected?: boolean;
 }
 
 export interface ActiveNovena {
@@ -48,26 +55,8 @@ export interface NovenaHistory {
   completed: boolean;
 }
 
-export interface WeeklyBook {
-  2: string[]; // Mon: list of prayer UIDs
-  3: string[]; // Tue
-  4: string[]; // Wed
-  5: string[]; // Thu
-  6: string[]; // Fri
-  7: string[]; // Sat
-  8: string[]; // Sun (Use 8 for Sunday)
-}
-
-// --- Default Values ---
-export const DEFAULT_WEEKLY_BOOK: WeeklyBook = {
-  2: [],
-  3: [],
-  4: [],
-  5: [],
-  6: [],
-  7: [],
-  8: [],
-};
+// Map of prayer UID -> timestamp when last viewed on home card
+export type PrayerHistoryMap = Record<string, number>;
 
 // --- LocalStorage Helpers ---
 export const getLocal = <T>(key: string, defaultValue: T): T => {
@@ -87,19 +76,46 @@ export const setLocal = <T>(key: string, value: T): void => {
   }
 };
 
+// Generate random unique connection code
+export const generateConnectionCode = (): string => {
+  return 'CP-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+};
+
 // --- Storage API Exports ---
 export const storage = {
-  // Theme settings
-  getTheme: () => getLocal<'light' | 'dark' | 'system'>(KEYS.THEME, 'system'),
-  setTheme: (theme: 'light' | 'dark' | 'system') => setLocal(KEYS.THEME, theme),
+  // User Profile Auth
+  getUserProfile: (): UserProfile | null => getLocal<UserProfile | null>(KEYS.USER_PROFILE, null),
+  setUserProfile: (profile: UserProfile | null) => setLocal(KEYS.USER_PROFILE, profile),
 
   // User Role settings
   getUserRole: (): UserRole => getLocal<UserRole>(KEYS.USER_ROLE, 'worker'),
   setUserRole: (role: UserRole) => setLocal(KEYS.USER_ROLE, role),
 
-  // Notifications enabled
-  isNotificationsEnabled: (): boolean => getLocal<boolean>(KEYS.NOTIFICATIONS_ENABLED, false),
-  setNotificationsEnabled: (enabled: boolean) => setLocal(KEYS.NOTIFICATIONS_ENABLED, enabled),
+  // Connected Users (List of connected User codes)
+  getConnectedUsers: (): string[] => getLocal<string[]>(KEYS.CONNECTED_USERS, []),
+  addConnectedUser: (code: string) => {
+    const list = storage.getConnectedUsers();
+    const clean = code.trim().toUpperCase();
+    if (clean && !list.includes(clean)) {
+      list.push(clean);
+      setLocal(KEYS.CONNECTED_USERS, list);
+    }
+  },
+
+  // Check if 2 users are mutually connected
+  checkUsersConnected: (targetCode?: string): boolean => {
+    if (!targetCode) return false;
+    const connectedList = storage.getConnectedUsers();
+    return connectedList.includes(targetCode.trim().toUpperCase());
+  },
+
+  // Prayer View History (to avoid repeating featured prayers within 7-14 days)
+  getPrayerHistory: (): PrayerHistoryMap => getLocal<PrayerHistoryMap>(KEYS.PRAYER_VIEW_HISTORY, {}),
+  recordPrayerShown: (uid: string) => {
+    const history = storage.getPrayerHistory();
+    history[uid] = Date.now();
+    setLocal(KEYS.PRAYER_VIEW_HISTORY, history);
+  },
 
   // Active Novena
   getActiveNovena: (): ActiveNovena | null => getLocal<ActiveNovena | null>(KEYS.NOVENA_ACTIVE, null),
@@ -111,42 +127,6 @@ export const storage = {
     const list = getLocal<NovenaHistory[]>(KEYS.NOVENA_HISTORY, []);
     list.unshift(historyItem);
     setLocal(KEYS.NOVENA_HISTORY, list);
-  },
-
-  // Weekly Prayer Book Map (Mon-Sun -> Prayer IDs)
-  getWeeklyBook: (): WeeklyBook => getLocal<WeeklyBook>(KEYS.WEEKLY_BOOK, DEFAULT_WEEKLY_BOOK),
-  setWeeklyBook: (book: WeeklyBook) => setLocal(KEYS.WEEKLY_BOOK, book),
-
-  // Offline caching status
-  isOfflineEnabled: (): boolean => getLocal<boolean>(KEYS.OFFLINE_ENABLED, false),
-  setOfflineEnabled: (enabled: boolean) => setLocal(KEYS.OFFLINE_ENABLED, enabled),
-
-  // --- IndexedDB Caching for Public Prayers (Fetched from Prismic) ---
-  getCachedPrayers: async (): Promise<any[] | null> => {
-    try {
-      const prayers = await get('prismic_prayers_cache');
-      return prayers || null;
-    } catch {
-      return null;
-    }
-  },
-
-  setCachedPrayers: async (prayers: any[]): Promise<void> => {
-    try {
-      await set('prismic_prayers_cache', prayers);
-      await set('prismic_prayers_cache_time', Date.now());
-    } catch (e) {
-      console.error('Error saving prayers to IndexedDB', e);
-    }
-  },
-
-  clearCachedPrayers: async (): Promise<void> => {
-    try {
-      await del('prismic_prayers_cache');
-      await del('prismic_prayers_cache_time');
-    } catch (e) {
-      console.error('Error clearing IndexedDB cache', e);
-    }
   },
 
   // --- IndexedDB for Custom User Prayers (Private / Public) ---
@@ -188,60 +168,9 @@ export const storage = {
   requestPersistentStorage: async (): Promise<boolean> => {
     if (navigator.storage && navigator.storage.persist) {
       const isPersisted = await navigator.storage.persist();
-      console.log(`Persistent storage granted: ${isPersisted}`);
       return isPersisted;
     }
     return false;
-  },
-
-  isStoragePersisted: async (): Promise<boolean> => {
-    if (navigator.storage && navigator.storage.persisted) {
-      return await navigator.storage.persisted();
-    }
-    return false;
-  },
-
-  // --- Fixed Prayers for Web Push Customizations ---
-  getFixedMorningPrayer: async (): Promise<string | null> => {
-    try {
-      const val = await get('fixed_morning_prayer');
-      return val || null;
-    } catch {
-      return null;
-    }
-  },
-
-  setFixedMorningPrayer: async (uid: string | null): Promise<void> => {
-    try {
-      if (uid) {
-        await set('fixed_morning_prayer', uid);
-      } else {
-        await del('fixed_morning_prayer');
-      }
-    } catch (e) {
-      console.error('Error setting fixed morning prayer', e);
-    }
-  },
-
-  getFixedEveningPrayer: async (): Promise<string | null> => {
-    try {
-      const val = await get('fixed_evening_prayer');
-      return val || null;
-    } catch {
-      return null;
-    }
-  },
-
-  setFixedEveningPrayer: async (uid: string | null): Promise<void> => {
-    try {
-      if (uid) {
-        await set('fixed_evening_prayer', uid);
-      } else {
-        await del('fixed_evening_prayer');
-      }
-    } catch (e) {
-      console.error('Error setting fixed evening prayer', e);
-    }
   },
 
   // --- Relative Patron Saints Storage ---

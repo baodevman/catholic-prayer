@@ -188,6 +188,9 @@ const prayersExport = prayersList.map(prayer => ({
     title: prayer.title,
     category: { link_type: 'Document', uid: prayer.category },
     content: htmlToRichText(prayer.content),
+    time_of_day: prayer.timeOfDay || 'bat_ky',
+    is_user_submitted: Boolean(prayer.isUserSubmitted),
+    submitted_by_user: prayer.submittedByUser || '',
     is_novena: Boolean(prayer.isNovena)
   }
 }));
@@ -200,7 +203,7 @@ const prayerCustomTypeSchema = {
   status: true,
   json: {
     Main: {
-      title: { type: 'Text', config: { label: 'Tiêu Đề Kinh Nguyện' } },
+      title: { type: 'Text', config: { label: 'Tiêu Đề Lời Cầu Nguyện' } },
       category: { type: 'Link', config: { label: 'Danh Mục Chính (Single)', select: 'document', customtypes: ['category'] } },
       categories: {
         type: 'Group',
@@ -212,17 +215,43 @@ const prayerCustomTypeSchema = {
         }
       },
       content: { type: 'StructuredText', config: { label: 'Nội dung Lời Nguyện', multi: 'paragraph,preformatted,heading1,heading2,heading3,strong,em' } },
+      time_of_day: { type: 'Select', config: { label: 'Khung Giờ Cầu Nguyện', options: ['sang', 'trua', 'chieu', 'toi', 'bat_ky'] } },
+      is_user_submitted: { type: 'Boolean', config: { label: 'Do Người Dùng Đóng Góp' } },
+      submitted_by_user: { type: 'Text', config: { label: 'Thông Tin Người Đóng Góp' } },
       is_novena: { type: 'Boolean', config: { label: 'Là Tuần Cửu Nhật' } }
     }
   }
 };
 fs.writeFileSync(path.join(outputDir, 'custom_type_prayer.json'), JSON.stringify(prayerCustomTypeSchema, null, 2), 'utf-8');
 
+const userSearchIntentSchema = {
+  id: 'user_search_intent',
+  label: 'User Search Intent',
+  repeatable: true,
+  status: true,
+  json: {
+    Main: {
+      keyword: { type: 'Text', config: { label: 'Nội Dung Hoàn Cảnh / Từ Khóa Tìm Kiếm' } },
+      time_of_day: { type: 'Text', config: { label: 'Thời Gian Tìm Kiếm (Buổi)' } },
+      matched_prayers: { type: 'Text', config: { label: 'Kết Quả Lời Cầu Nguyện Đã Gợi Ý' } },
+      user_role: { type: 'Text', config: { label: 'Vai Trò Người Dùng' } },
+      timestamp: { type: 'Text', config: { label: 'Thời Gian (ISO String)' } }
+    }
+  }
+};
+fs.writeFileSync(path.join(outputDir, 'custom_type_user_search_intent.json'), JSON.stringify(userSearchIntentSchema, null, 2), 'utf-8');
+
 const prayerSliceMachineDir = path.join(process.cwd(), 'customtypes', 'prayer');
 if (!fs.existsSync(prayerSliceMachineDir)) {
   fs.mkdirSync(prayerSliceMachineDir, { recursive: true });
 }
 fs.writeFileSync(path.join(prayerSliceMachineDir, 'index.json'), JSON.stringify(prayerCustomTypeSchema, null, 2), 'utf-8');
+
+const intentSliceMachineDir = path.join(process.cwd(), 'customtypes', 'user_search_intent');
+if (!fs.existsSync(intentSliceMachineDir)) {
+  fs.mkdirSync(intentSliceMachineDir, { recursive: true });
+}
+fs.writeFileSync(path.join(intentSliceMachineDir, 'index.json'), JSON.stringify(userSearchIntentSchema, null, 2), 'utf-8');
 
 console.log(`✅ [Prayers Export] Exported ${prayersList.length} Prayers with N-category links & RichText schema to Slice Machine & Export folder.`);
 

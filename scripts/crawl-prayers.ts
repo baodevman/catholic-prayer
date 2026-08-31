@@ -82,7 +82,7 @@ const newlyCrawledPrayers: InputPrayer[] = [
 
   // --- Lời nguyện cầu cho sự thánh thiện ---
   {
-    title: "Kinh nguyện xin ơn trở nên muối và ánh sáng cho đời",
+    title: "Lời nguyện xin ơn trở nên muối và ánh sáng cho đời",
     category: "loi-nguyen-cau-cho-su-thanh-thien",
     content: "<p>Lạy Chúa Giêsu, Ngài gọi chúng con là muối cho đời và ánh sáng cho thế gian. Xin thánh hóa cuộc sống hằng ngày của con.</p><p>Xin cho lời nói của con mang lại niềm hy vọng, hành động của con tỏa lan sự bác ái, và lối sống của con làm chứng cho tình yêu cứu độ của Chúa giữa môi trường lao động và học tập. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>"
   },

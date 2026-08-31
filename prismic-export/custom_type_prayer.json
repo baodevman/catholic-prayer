@@ -8,7 +8,7 @@
       "title": {
         "type": "Text",
         "config": {
-          "label": "Tiêu Đề Kinh Nguyện"
+          "label": "Tiêu Đề Lời Cầu Nguyện"
         }
       },
       "category": {
@@ -44,6 +44,31 @@
         "config": {
           "label": "Nội dung Lời Nguyện",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,strong,em"
+        }
+      },
+      "time_of_day": {
+        "type": "Select",
+        "config": {
+          "label": "Khung Giờ Cầu Nguyện",
+          "options": [
+            "sang",
+            "trua",
+            "chieu",
+            "toi",
+            "bat_ky"
+          ]
+        }
+      },
+      "is_user_submitted": {
+        "type": "Boolean",
+        "config": {
+          "label": "Do Người Dùng Đóng Góp"
+        }
+      },
+      "submitted_by_user": {
+        "type": "Text",
+        "config": {
+          "label": "Thông Tin Người Đóng Góp"
         }
       },
       "is_novena": {

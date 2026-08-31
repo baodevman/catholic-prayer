@@ -1,5 +1,4 @@
 import { createClient } from '@prismicio/client';
-import { storage } from './storage';
 
 // --- Custom Types ---
 export interface Prayer {
@@ -8,6 +7,9 @@ export interface Prayer {
   category: string; // Primary Category UID
   categories?: string[]; // List of Category UIDs linked from Prismic (N links)
   content: string; // HTML formatted string
+  timeOfDay?: 'sang' | 'trua' | 'chieu' | 'toi' | 'bat_ky';
+  isUserSubmitted?: boolean;
+  submittedByUser?: string;
   isNovena?: boolean;
   novenaDays?: NovenaDay[];
 }
@@ -110,34 +112,22 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
 
         return {
           uid: doc.uid || doc.id,
-          title: d.title || 'Kinh không tên',
+          title: d.title || 'Lời cầu nguyện',
           category: categoryUids[0] || '',
           categories: categoryUids,
           content: richTextToHtml(d.content),
+          timeOfDay: d.time_of_day || 'bat_ky',
+          isUserSubmitted: Boolean(d.is_user_submitted),
+          submittedByUser: d.submitted_by_user || '',
           isNovena,
           ...(isNovena && { novenaDays }),
         };
       });
 
-      // If user enabled offline caching, update IndexedDB cache
-      if (storage.isOfflineEnabled()) {
-        await storage.setCachedPrayers(prayers);
-      }
-
       return prayers;
     } catch (error) {
-      console.warn('Prismic fetch failed, trying IndexedDB cache...', error);
+      console.warn('Prismic fetch failed, falling back to local prayers.json...', error);
     }
-  }
-
-  // 2. Fallback to IndexedDB cache
-  try {
-    const cached = await storage.getCachedPrayers();
-    if (cached && cached.length > 0) {
-      return cached;
-    }
-  } catch (e) {
-    console.error('IndexedDB read failed', e);
   }
 
   // 3. Ultimate Fallback to local prayers.json
