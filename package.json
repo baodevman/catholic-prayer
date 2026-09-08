@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "prayers:import": "tsx scripts/import-prayers.ts",
     "prayers:crawl": "tsx scripts/crawl-prayers.ts",
+    "cron:crawl-and-sync": "tsx scripts/cron-crawl-and-sync-prismic.ts",
     "sync:prismic": "tsx scripts/sync-prismic-data.ts",
     "slicemachine": "start-slicemachine"
   },

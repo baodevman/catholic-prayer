@@ -8,6 +8,7 @@ export interface Prayer {
   categories?: string[]; // List of Category UIDs linked from Prismic (N links)
   content: string; // HTML formatted string
   timeOfDay?: 'sang' | 'trua' | 'chieu' | 'toi' | 'bat_ky';
+  roles?: string[]; // List of target roles (student, worker, family, single, elderly, sick, bat_ky)
   isUserSubmitted?: boolean;
   submittedByUser?: string;
   isNovena?: boolean;
@@ -110,6 +111,27 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
           });
         }
 
+        // Collect roles from Prismic roles group or tags
+        const rolesList: string[] = [];
+        if (d.roles && Array.isArray(d.roles)) {
+          d.roles.forEach((item: any) => {
+            const r = item.role || item;
+            if (r && typeof r === 'string' && !rolesList.includes(r)) {
+              rolesList.push(r);
+            }
+          });
+        }
+        if (doc.tags && Array.isArray(doc.tags)) {
+          doc.tags.forEach((tag: string) => {
+            const cleanTag = tag.replace(/^role:/i, '').toLowerCase();
+            if (['student', 'worker', 'family', 'single', 'elderly', 'sick', 'bat_ky'].includes(cleanTag)) {
+              if (!rolesList.includes(cleanTag)) {
+                rolesList.push(cleanTag);
+              }
+            }
+          });
+        }
+
         return {
           uid: doc.uid || doc.id,
           title: d.title || 'Lời cầu nguyện',
@@ -117,6 +139,7 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
           categories: categoryUids,
           content: richTextToHtml(d.content),
           timeOfDay: d.time_of_day || 'bat_ky',
+          roles: rolesList.length > 0 ? rolesList : (d.roles || ['bat_ky']),
           isUserSubmitted: Boolean(d.is_user_submitted),
           submittedByUser: d.submitted_by_user || '',
           isNovena,

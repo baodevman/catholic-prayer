@@ -855,3 +855,166 @@ textarea {
   font-weight: 600;
   cursor: pointer;
 }
+
+/* Check badge for active multi-roles */
+.role-icon-box {
+  position: relative;
+}
+
+.check-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--gold-primary);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Onboarding Modal Styling */
+.onboarding-backdrop {
+  z-index: 1100;
+}
+
+.onboarding-modal-content {
+  max-width: 480px;
+  border-radius: 18px;
+}
+
+.onboarding-header {
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.step-indicator {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.onboarding-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.onboarding-hero-icon {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.onboarding-text {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.onboarding-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.onboarding-features-list li {
+  display: flex;
+  gap: 12px;
+  background: var(--bg-parchment);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-bible);
+}
+
+.feature-icon {
+  color: var(--gold-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.onboarding-features-list strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-main);
+  margin-bottom: 2px;
+}
+
+.onboarding-features-list p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.commitment-card {
+  background: #f1f8e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.commitment-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #2e7d32;
+  margin-bottom: 6px;
+}
+
+.commitment-desc {
+  font-size: 13px;
+  color: #1b5e20;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.feedback-card {
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-bible);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.feedback-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 6px 0;
+}
+
+.feedback-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.email-box {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.email-link {
+  color: var(--gold-primary);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.onboarding-footer {
+  display: flex;
+  justify-content: space-between;
+}

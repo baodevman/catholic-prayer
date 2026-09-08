@@ -3,6 +3,7 @@ import { useAppState, getTimeOfDayLabel, getCurrentTimeOfDayKey } from './hooks/
 import type { Prayer } from './utils/prismic';
 import type { UserRole } from './utils/storage';
 import { CATHOLIC_SAINTS } from './utils/catholicSaints';
+import { OnboardingModal } from './components/OnboardingModal';
 import {
   IconWheat,
   IconHome,
@@ -22,7 +23,6 @@ import {
   IconBriefcase,
   IconGraduationCap,
   IconHomeHeart,
-  IconPrayingHands,
   IconStethoscope,
   IconCompass,
   IconLogIn,
@@ -185,14 +185,16 @@ export default function App() {
               <div className="featured-card-wrapper">
                 <div className="card-badge-row">
                   <span className="badge-time">{timeLabel}</span>
-                  <span className="badge-role">
-                    {state.userRole === 'student' ? 'Học sinh / Sinh viên'
-                      : state.userRole === 'worker' ? 'Người đi làm'
-                        : state.userRole === 'family' ? 'Gia đình'
-                          : state.userRole === 'monk' ? 'Tu sĩ / Linh mục'
-                            : state.userRole === 'sick' ? 'Người bệnh / Cao tuổi'
-                              : 'Người độc thân'}
-                  </span>
+                  {state.userRoles.map(r => (
+                    <span key={r} className="badge-role">
+                      {r === 'student' ? 'Học tập'
+                        : r === 'worker' ? 'Công việc'
+                          : r === 'family' ? 'Gia đình'
+                            : r === 'single' ? 'Độc thân'
+                              : r === 'elderly' ? 'Cao tuổi'
+                                : 'Sức khỏe'}
+                    </span>
+                  ))}
                 </div>
 
                 {/* Main Prayer Card showing 100% FULL Content */}
@@ -223,7 +225,7 @@ export default function App() {
                       title="Đổi lời cầu nguyện khác phù hợp buổi này"
                     >
                       <IconRefresh size={18} />
-                      <span>Đổi bài khác</span>
+                      <span>Đổi lời nguyện khác</span>
                     </button>
                   </div>
                 </div>
@@ -414,32 +416,38 @@ export default function App() {
               )}
             </div>
 
-            {/* 2. Select User Role */}
+            {/* 2. Select User Roles (Multi-select) */}
             <div className="settings-group">
-              <h3 className="group-title">Vai Trò Của Bạn</h3>
+              <h3 className="group-title">Vai Trò Của Bạn (Có thể chọn nhiều)</h3>
               <p className="group-desc">
-                Ưu tiên đề xuất bài cầu nguyện phù hợp với vai trò của bạn trên Trang Chủ.
+                Ưu tiên đề xuất lời cầu nguyện phù hợp với các vai trò bạn đã tick trên Trang Chủ.
               </p>
 
               <div className="roles-grid">
                 {[
-                  { id: 'worker', label: 'Người đi làm', icon: <IconBriefcase size={20} />, desc: 'Công việc & hanh thông' },
-                  { id: 'student', label: 'Học sinh / Sinh viên', icon: <IconGraduationCap size={20} />, desc: 'Học tập & trí tuệ' },
-                  { id: 'family', label: 'Gia đình', icon: <IconHomeHeart size={20} />, desc: 'Yêu thương & hòa thuận' },
-                  { id: 'monk', label: 'Tu sĩ / Linh mục', icon: <IconPrayingHands size={20} />, desc: 'Tận hiến & phục vụ' },
-                  { id: 'sick', label: 'Người bệnh / Cao tuổi', icon: <IconStethoscope size={20} />, desc: 'Sức khỏe & bình an' },
-                  { id: 'single', label: 'Người độc thân', icon: <IconCompass size={20} />, desc: 'Ơn gọi & tương lai' },
-                ].map(r => (
-                  <button
-                    key={r.id}
-                    className={`role-card ${state.userRole === r.id ? 'active' : ''}`}
-                    onClick={() => state.updateUserRole(r.id as UserRole)}
-                  >
-                    <span className="role-icon-box">{r.icon}</span>
-                    <span className="role-name">{r.label}</span>
-                    <span className="role-desc">{r.desc}</span>
-                  </button>
-                ))}
+                  { id: 'worker', label: 'Công việc', icon: <IconBriefcase size={20} />, desc: 'Lao động & hanh thông' },
+                  { id: 'student', label: 'Học tập', icon: <IconGraduationCap size={20} />, desc: 'Thi cử & trí tuệ' },
+                  { id: 'family', label: 'Gia đình', icon: <IconHomeHeart size={20} />, desc: 'Vợ chồng, con cái & hòa thuận' },
+                  { id: 'single', label: 'Độc thân', icon: <IconCompass size={20} />, desc: 'Một mình / Ơn gọi & tương lai' },
+                  { id: 'elderly', label: 'Cao tuổi', icon: <IconBookOpen size={20} />, desc: 'Bình an tuổi già & con cháu' },
+                  { id: 'sick', label: 'Sức khỏe / Đau bệnh', icon: <IconStethoscope size={20} />, desc: 'Phục hồi & chữa lành' },
+                ].map(r => {
+                  const isSelected = state.userRoles.includes(r.id as UserRole);
+                  return (
+                    <button
+                      key={r.id}
+                      className={`role-card ${isSelected ? 'active' : ''}`}
+                      onClick={() => state.toggleUserRole(r.id as UserRole)}
+                    >
+                      <span className="role-icon-box">
+                        {r.icon}
+                        {isSelected && <span className="check-badge"><IconCheck size={12} color="#fff" /></span>}
+                      </span>
+                      <span className="role-name">{r.label}</span>
+                      <span className="role-desc">{r.desc}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -581,10 +589,22 @@ export default function App() {
               )}
             </div>
 
+            {/* 5. App User Guide & Onboarding */}
+            <div className="settings-group">
+              <h3 className="group-title">Giới Thiệu & Hướng Dẫn Sử Dụng</h3>
+              <p className="group-desc">
+                Xem lại thông tin ứng dụng, các tính năng nổi bật và cam kết miễn phí 100% của chúng tôi.
+              </p>
+              <button className="btn-action secondary" onClick={state.openOnboardingModal}>
+                <IconBookOpen size={18} />
+                <span>Xem Giới Thiệu & Hướng Dẫn App</span>
+              </button>
+            </div>
+
             {/* App Info */}
             <div className="app-info-box">
               <p>Ứng Dụng Lời Cầu Nguyện Công Giáo PWA</p>
-              <p className="sub">Phiên bản 2.1.0 — Thiết kế chuẩn phẳng tinh gọn</p>
+              <p className="sub">Phiên bản 2.2.0 — Thiết kế chuẩn phẳng tinh gọn</p>
             </div>
           </div>
         )}
@@ -758,6 +778,13 @@ export default function App() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* ==================================================== */}
+      {/* FIRST TIME ONBOARDING MODAL */}
+      {/* ==================================================== */}
+      {state.showOnboardingModal && (
+        <OnboardingModal onClose={state.completeOnboarding} />
       )}
 
       {/* Bottom Navigation Bar with Vector Flat Icons */}

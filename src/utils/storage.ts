@@ -4,15 +4,17 @@ import { get, set } from 'idb-keyval';
 const KEYS = {
   USER_PROFILE: 'catholic_prayer_user_profile',
   USER_ROLE: 'catholic_prayer_user_role',
+  USER_ROLES: 'catholic_prayer_user_roles',
   NOVENA_ACTIVE: 'catholic_prayer_novena_active',
   NOVENA_HISTORY: 'catholic_prayer_novena_history',
   PRAYER_VIEW_HISTORY: 'catholic_prayer_view_history',
   RELATIVE_PATRONS: 'catholic_prayer_relative_patrons',
   CONNECTED_USERS: 'catholic_prayer_connected_users',
+  HAS_SEEN_ONBOARDING: 'catholic_prayer_has_seen_onboarding',
 };
 
 // --- Custom Types ---
-export type UserRole = 'student' | 'worker' | 'family' | 'monk' | 'sick' | 'single';
+export type UserRole = 'student' | 'worker' | 'family' | 'single' | 'elderly' | 'sick';
 
 export interface UserProfile {
   id: string;
@@ -87,9 +89,24 @@ export const storage = {
   getUserProfile: (): UserProfile | null => getLocal<UserProfile | null>(KEYS.USER_PROFILE, null),
   setUserProfile: (profile: UserProfile | null) => setLocal(KEYS.USER_PROFILE, profile),
 
-  // User Role settings
-  getUserRole: (): UserRole => getLocal<UserRole>(KEYS.USER_ROLE, 'worker'),
-  setUserRole: (role: UserRole) => setLocal(KEYS.USER_ROLE, role),
+  // User Roles settings (Multi-select)
+  getUserRoles: (): UserRole[] => {
+    const list = getLocal<UserRole[] | null>(KEYS.USER_ROLES, null);
+    if (Array.isArray(list) && list.length > 0) {
+      return list.filter(r => r !== ('monk' as any));
+    }
+    // Backward compatibility for single role
+    const legacyRole = getLocal<string | null>(KEYS.USER_ROLE, null);
+    if (legacyRole && legacyRole !== 'monk') {
+      return [legacyRole as UserRole];
+    }
+    return ['worker', 'family'];
+  },
+  setUserRoles: (roles: UserRole[]) => setLocal(KEYS.USER_ROLES, roles.filter(r => r !== ('monk' as any))),
+
+  // Onboarding popup check
+  hasSeenOnboarding: (): boolean => getLocal<boolean>(KEYS.HAS_SEEN_ONBOARDING, false),
+  setHasSeenOnboarding: (val: boolean) => setLocal(KEYS.HAS_SEEN_ONBOARDING, val),
 
   // Connected Users (List of connected User codes)
   getConnectedUsers: (): string[] => getLocal<string[]>(KEYS.CONNECTED_USERS, []),

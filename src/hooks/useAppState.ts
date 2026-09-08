@@ -36,10 +36,12 @@ export const useAppState = () => {
   const [featuredPrayer, setFeaturedPrayer] = useState<Prayer | null>(null);
 
   // App Settings States
-  const [userRole, setUserRole] = useState<UserRole>(storage.getUserRole());
+  const [userRoles, setUserRolesState] = useState<UserRole[]>(storage.getUserRoles());
   const [activeNovena, setActiveNovena] = useState<ActiveNovena | null>(storage.getActiveNovena());
   const [isFatimaDay, setIsFatimaDay] = useState<boolean>(false);
   const [relativePatrons, setRelativePatrons] = useState<RelativePatron[]>(storage.getRelativePatrons());
+  const [hasSeenOnboarding, setHasSeenOnboardingState] = useState<boolean>(storage.hasSeenOnboarding());
+  const [showOnboardingModal, setShowOnboardingModal] = useState<boolean>(!storage.hasSeenOnboarding());
 
   // Situation / Search Results
   const [searchResults, setSearchResults] = useState<Prayer[]>([]);
@@ -124,8 +126,36 @@ export const useAppState = () => {
     return storage.checkUsersConnected(linkedCode);
   };
 
-  // Compute Single Featured Prayer for Homepage based on Time of Day, User Role, and Non-Repeat Algorithm
-  const selectFeaturedPrayer = useCallback((availablePrayers: Prayer[], role: UserRole) => {
+  // Toggle user role in multi-role array
+  const toggleUserRole = useCallback((roleToToggle: UserRole) => {
+    setUserRolesState(prev => {
+      let updated: UserRole[];
+      if (prev.includes(roleToToggle)) {
+        updated = prev.filter(r => r !== roleToToggle);
+        // Ensure at least 1 role remains selected
+        if (updated.length === 0) {
+          updated = ['family'];
+        }
+      } else {
+        updated = [...prev, roleToToggle];
+      }
+      storage.setUserRoles(updated);
+      return updated;
+    });
+  }, []);
+
+  const completeOnboarding = useCallback(() => {
+    storage.setHasSeenOnboarding(true);
+    setHasSeenOnboardingState(true);
+    setShowOnboardingModal(false);
+  }, []);
+
+  const openOnboardingModal = useCallback(() => {
+    setShowOnboardingModal(true);
+  }, []);
+
+  // Compute Single Featured Prayer for Homepage based on Time of Day, User Roles, and Non-Repeat Algorithm
+  const selectFeaturedPrayer = useCallback((availablePrayers: Prayer[], activeRoles: UserRole[]) => {
     if (!availablePrayers || availablePrayers.length === 0) return null;
 
     const timeKey = getCurrentTimeOfDayKey();
@@ -134,40 +164,37 @@ export const useAppState = () => {
     const now = Date.now();
 
     // 1. Filter candidates matching time of day or 'bat_ky'
-    let candidates = availablePrayers.filter(p => p.timeOfDay === timeKey || !p.timeOfDay || p.timeOfDay === 'bat_ky');
+    let timeCandidates = availablePrayers.filter(p => p.timeOfDay === timeKey || !p.timeOfDay || p.timeOfDay === 'bat_ky');
 
-    if (candidates.length === 0) {
-      candidates = [...availablePrayers];
+    if (timeCandidates.length === 0) {
+      timeCandidates = [...availablePrayers];
     }
 
     // 2. Filter candidates matching role preferences if available
-    let roleMatched = candidates.filter(p => {
+    let roleMatched = timeCandidates.filter(p => {
+      // Check explicit p.roles array if present
+      if (p.roles && Array.isArray(p.roles) && p.roles.length > 0) {
+        if (p.roles.includes('bat_ky')) return true;
+        return activeRoles.some(r => p.roles!.includes(r));
+      }
+
+      // Category & Title fallback matching
       const cat = p.category.toLowerCase();
       const title = p.title.toLowerCase();
 
-      if (role === 'student') {
-        return cat.includes('hoc') || cat.includes('truong') || title.includes('học') || title.includes('trí');
-      }
-      if (role === 'worker') {
-        return cat.includes('lam') || cat.includes('cong') || title.includes('làm') || title.includes('công việc');
-      }
-      if (role === 'family') {
-        return cat.includes('gia-dinh') || cat.includes('yeu-thuong') || title.includes('gia đình') || title.includes('con cái');
-      }
-      if (role === 'monk') {
-        return cat.includes('thanh-hien') || cat.includes('phuc-vu') || title.includes('tận hiến') || title.includes('phục vụ');
-      }
-      if (role === 'sick') {
-        return cat.includes('suc-khoe') || cat.includes('binh-an') || title.includes('sức khỏe') || title.includes('bệnh');
-      }
-      if (role === 'single') {
-        return cat.includes('ban-duong') || cat.includes('dinh-huong') || title.includes('ơn gọi') || title.includes('tương lai');
-      }
-      return true;
+      return activeRoles.some(role => {
+        if (role === 'student') return cat.includes('hoc') || cat.includes('truong') || title.includes('học') || title.includes('trí');
+        if (role === 'worker') return cat.includes('lam') || cat.includes('cong') || title.includes('làm') || title.includes('công việc');
+        if (role === 'family') return cat.includes('gia-dinh') || cat.includes('yeu-thuong') || title.includes('gia đình') || title.includes('con cái');
+        if (role === 'sick') return cat.includes('suc-khoe') || cat.includes('binh-an') || title.includes('sức khỏe') || title.includes('bệnh');
+        if (role === 'single') return cat.includes('ban-duong') || cat.includes('dinh-huong') || title.includes('ơn gọi') || title.includes('tương lai');
+        if (role === 'elderly') return cat.includes('lon-tuoi') || cat.includes('tuoi-gia') || title.includes('lớn tuổi') || title.includes('tuổi già');
+        return true;
+      });
     });
 
     if (roleMatched.length === 0) {
-      roleMatched = candidates;
+      roleMatched = timeCandidates;
     }
 
     // 3. Apply non-repeat filter (exclude prayers shown in past 7 days)
@@ -191,18 +218,18 @@ export const useAppState = () => {
     return chosen;
   }, []);
 
-  // Update featured prayer whenever prayers or userRole change
+  // Update featured prayer whenever prayers or userRoles change
   useEffect(() => {
     if (prayers.length > 0) {
-      const chosen = selectFeaturedPrayer(prayers, userRole);
+      const chosen = selectFeaturedPrayer(prayers, userRoles);
       setFeaturedPrayer(chosen);
     }
-  }, [prayers, userRole, selectFeaturedPrayer]);
+  }, [prayers, userRoles, selectFeaturedPrayer]);
 
   // Shuffle / Refresh Homepage Featured Prayer manually
   const shuffleFeaturedPrayer = () => {
     if (prayers.length > 0) {
-      const chosen = selectFeaturedPrayer(prayers, userRole);
+      const chosen = selectFeaturedPrayer(prayers, userRoles);
       setFeaturedPrayer(chosen);
     }
   };
@@ -264,7 +291,7 @@ export const useAppState = () => {
           keyword: trimmedQuery,
           timeOfDay: timeKey,
           matchedPrayers: finalResults.map(r => r.title),
-          userRole
+          userRole: userRoles.join(',')
         })
       }).catch(err => console.warn('Silent log intent suppressed:', err));
     } catch { }
@@ -316,11 +343,7 @@ export const useAppState = () => {
     }
   }, [activeNovena]);
 
-  // Settings Updaters
-  const updateUserRole = (role: UserRole) => {
-    storage.setUserRole(role);
-    setUserRole(role);
-  };
+  // Sync / calculate real-time Novena Day progress
 
   // Novena Control
   const startNovena = (novenaId: string, name: string) => {
@@ -413,8 +436,13 @@ export const useAppState = () => {
     userProfile,
     loginUser,
     logoutUser,
-    userRole,
-    updateUserRole,
+    userRoles,
+    toggleUserRole,
+    hasSeenOnboarding,
+    completeOnboarding,
+    openOnboardingModal,
+    showOnboardingModal,
+    setShowOnboardingModal,
     activeNovena,
     startNovena,
     toggleNovenaDay,

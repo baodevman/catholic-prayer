@@ -59,6 +59,29 @@
           ]
         }
       },
+      "roles": {
+        "type": "Group",
+        "config": {
+          "label": "Vai Trò Phù Hợp",
+          "fields": {
+            "role": {
+              "type": "Select",
+              "config": {
+                "label": "Vai Trò",
+                "options": [
+                  "student",
+                  "worker",
+                  "family",
+                  "single",
+                  "elderly",
+                  "sick",
+                  "bat_ky"
+                ]
+              }
+            }
+          }
+        }
+      },
       "is_user_submitted": {
         "type": "Boolean",
         "config": {

@@ -1,40 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <!-- Background Warm Parchment Paper -->
-  <rect width="512" height="512" rx="128" fill="#FBF8EE" />
-  
-  <!-- Outer Gold Border -->
-  <rect x="16" y="16" width="480" height="480" rx="112" fill="none" stroke="#CBA458" stroke-width="8" stroke-dasharray="16, 8" opacity="0.6" />
-  <rect x="28" y="28" width="456" height="456" rx="100" fill="none" stroke="#8C6B2D" stroke-width="3" />
-
-  <!-- Elegant Halo Ring -->
-  <circle cx="256" cy="240" r="140" fill="none" stroke="#CBA458" stroke-width="6" stroke-opacity="0.35" />
-  
-  <!-- Golden Wheat Ear / Wheat Stalk Icon -->
-  <g stroke="#8C6B2D" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- Main Central Stem -->
-    <path d="M 256 90 L 256 420" />
-
-    <!-- Left Grains -->
-    <path d="M 256 360 C 180 340 150 290 150 250 C 210 250 256 280 256 360 Z" fill="#8C6B2D" fill-opacity="0.25" />
-    <path d="M 256 280 C 170 260 140 210 140 170 C 200 170 256 200 256 280 Z" fill="#8C6B2D" fill-opacity="0.25" />
-    <path d="M 256 200 C 170 180 140 130 140 90 C 200 90 256 120 256 200 Z" fill="#8C6B2D" fill-opacity="0.25" />
-
-    <!-- Right Grains -->
-    <path d="M 256 360 C 332 340 362 290 362 250 C 302 250 256 280 256 360 Z" fill="#8C6B2D" fill-opacity="0.25" />
-    <path d="M 256 280 C 342 260 372 210 372 170 C 312 170 256 200 256 280 Z" fill="#8C6B2D" fill-opacity="0.25" />
-    <path d="M 256 200 C 342 180 372 130 372 90 C 312 90 256 120 256 200 Z" fill="#8C6B2D" fill-opacity="0.25" />
-
-    <!-- Top Awn Spikes -->
-    <path d="M 256 110 L 220 50" />
-    <path d="M 256 110 L 256 40" />
-    <path d="M 256 110 L 292 50" />
-  </g>
-
-  <!-- Ornaments in Corners -->
-  <g fill="#8C6B2D" opacity="0.6">
-    <path d="M 64 84 L 84 64 M 64 64 L 74 64 L 64 74 Z" stroke="#8C6B2D" stroke-width="4" />
-    <path d="M 448 84 L 428 64 M 448 64 L 438 64 L 448 74 Z" stroke="#8C6B2D" stroke-width="4" />
-    <path d="M 64 428 L 84 448 M 64 448 L 74 448 L 64 438 Z" stroke="#8C6B2D" stroke-width="4" />
-    <path d="M 448 428 L 428 448 M 448 448 L 438 448 L 448 438 Z" stroke="#8C6B2D" stroke-width="4" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#2A2218" />
+      <stop offset="100%" stop-color="#14110D" />
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE494" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <g transform="translate(256 256) scale(15)">
+    <!-- Wheat Stalk Stem -->
+    <path d="M0 -12 V12" stroke="url(#goldGrad)" stroke-width="1.2" stroke-linecap="round" />
+    <!-- Center Grains -->
+    <path d="M0 -11 C-2.5 -9 -2.5 -6 0 -4 C2.5 -6 2.5 -9 0 -11 Z" fill="url(#goldGrad)" />
+    <path d="M0 -7 C-3 -5 -3 -2 0 0 C3 -2 3 -5 0 -7 Z" fill="url(#goldGrad)" />
+    <path d="M0 -3 C-3.2 -1 -3.2 2 0 4 C3.2 2 3.2 -1 0 -3 Z" fill="url(#goldGrad)" />
+    <path d="M0 1 C-3.2 3 -3.2 6 0 8 C3.2 6 3.2 3 0 1 Z" fill="url(#goldGrad)" />
+    <!-- Left Leaves/Grains -->
+    <path d="M-0.6 -5.5 C-4 -6 -6 -3.5 -3.5 -1.5 C-1.5 -1.5 -0.6 -3.5 -0.6 -5.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <path d="M-0.6 -1.5 C-4.5 -2 -6.5 0.5 -4 2.5 C-2 2.5 -0.6 0.5 -0.6 -1.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <path d="M-0.6 2.5 C-5 2 -7 4.5 -4.5 6.5 C-2.5 6.5 -0.6 4.5 -0.6 2.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <!-- Right Leaves/Grains -->
+    <path d="M0.6 -5.5 C4 -6 6 -3.5 3.5 -1.5 C1.5 -1.5 0.6 -3.5 0.6 -5.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <path d="M0.6 -1.5 C4.5 -2 6.5 0.5 4 2.5 C2 2.5 0.6 0.5 0.6 -1.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <path d="M0.6 2.5 C5 2 7 4.5 4.5 6.5 C2.5 6.5 0.6 4.5 0.6 2.5 Z" fill="url(#goldGrad)" opacity="0.9" />
+    <!-- Bottom Flourishing Leaves -->
+    <path d="M0 6 C-6 5 -9 10 -6 13 C-3 12 0 9 0 6 Z" fill="url(#goldGrad)" />
+    <path d="M0 6 C6 5 9 10 6 13 C3 12 0 9 0 6 Z" fill="url(#goldGrad)" />
   </g>
 </svg>
