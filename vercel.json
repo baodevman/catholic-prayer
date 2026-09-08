@@ -12,6 +12,10 @@
     {
       "source": "/api/send-scheduled-prayer",
       "destination": "/api/send-scheduled-prayer.js"
+    },
+    {
+      "source": "/api/cron-crawl-and-sync",
+      "destination": "/api/cron-crawl-and-sync.js"
     }
   ],
   "crons": [
@@ -22,6 +26,10 @@
     {
       "path": "/api/send-scheduled-prayer?period=evening",
       "schedule": "0 12 * * *"
+    },
+    {
+      "path": "/api/cron-crawl-and-sync",
+      "schedule": "0 0 * * 0"
     }
   ]
 }
