@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { storage, generateConnectionCode } from '../utils/storage';
 import type { ActiveNovena, UserRole, CustomPrayer, RelativePatron, UserProfile } from '../utils/storage';
 import { fetchAllPrayers, fetchAllCategories } from '../utils/prismic';
 import type { Prayer, PrismicCategory } from '../utils/prismic';
+import { getFirestoreFavorites, toggleFirestoreFavorite, saveFirestoreUser } from '../utils/firestore';
 
 export const getCurrentTimeOfDayKey = (): 'sang' | 'trua' | 'chieu' | 'toi' => {
   const hour = new Date().getHours();
@@ -47,6 +48,91 @@ export const useAppState = () => {
   const [searchResults, setSearchResults] = useState<Prayer[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  // Font Size for prayer reading (default 17px, range 14px - 26px)
+  const [fontSize, setFontSizeState] = useState<number>(() => storage.getPrayerFontSize());
+
+  const updateFontSize = useCallback((newSize: number) => {
+    const clamped = Math.min(Math.max(newSize, 14), 26);
+    setFontSizeState(clamped);
+    storage.setPrayerFontSize(clamped);
+    document.documentElement.style.setProperty('--prayer-font-size', `${clamped}px`);
+  }, []);
+
+  const increaseFontSize = useCallback(() => {
+    updateFontSize(fontSize + 1);
+  }, [fontSize, updateFontSize]);
+
+  const decreaseFontSize = useCallback(() => {
+    updateFontSize(fontSize - 1);
+  }, [fontSize, updateFontSize]);
+
+  // Sync initial CSS var on mount
+  useEffect(() => {
+    document.documentElement.style.setProperty('--prayer-font-size', `${fontSize}px`);
+  }, [fontSize]);
+
+  // Favorite Prayers (Local + Firestore Sync)
+  const [favorites, setFavoritesState] = useState<string[]>(() => storage.getFavorites());
+
+  useEffect(() => {
+    if (userProfile?.email) {
+      getFirestoreFavorites(userProfile.email).then(cloudFavs => {
+        if (cloudFavs && Array.isArray(cloudFavs) && cloudFavs.length > 0) {
+          const merged = Array.from(new Set([...storage.getFavorites(), ...cloudFavs]));
+          setFavoritesState(merged);
+          storage.setFavorites(merged);
+        }
+      });
+    }
+  }, [userProfile?.email]);
+
+  const toggleFavorite = useCallback(async (prayerUid: string) => {
+    setFavoritesState(prev => {
+      const isFav = prev.includes(prayerUid);
+      const updated = isFav ? prev.filter(id => id !== prayerUid) : [...prev, prayerUid];
+      storage.setFavorites(updated);
+
+      if (userProfile?.email) {
+        toggleFirestoreFavorite(userProfile.email, prayerUid, prev);
+      }
+      return updated;
+    });
+  }, [userProfile?.email]);
+
+  const isFavorite = useCallback((prayerUid: string) => {
+    return favorites.includes(prayerUid);
+  }, [favorites]);
+
+  // Available tags extracted dynamically
+  const availableTags = useMemo(() => {
+    const tagSet = new Set<string>();
+    prayers.forEach(p => {
+      if (p.tags && Array.isArray(p.tags)) {
+        p.tags.forEach(t => tagSet.add(t));
+      }
+    });
+    return Array.from(tagSet);
+  }, [prayers]);
+
+  const filterByTag = useCallback((tag: string | null) => {
+    setSelectedTag(prev => (prev === tag ? null : tag));
+  }, []);
+
+  // Prayer Edit Request Modal State
+  const [editPrayerTarget, setEditPrayerTarget] = useState<Prayer | null>(null);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+  const openEditModal = useCallback((prayer: Prayer) => {
+    setEditPrayerTarget(prayer);
+    setShowEditModal(true);
+  }, []);
+
+  const closeEditModal = useCallback(() => {
+    setEditPrayerTarget(null);
+    setShowEditModal(false);
+  }, []);
 
   // Load and refresh prayers dataset
   const refreshPrayers = useCallback(async () => {
@@ -100,15 +186,33 @@ export const useAppState = () => {
 
   // Auth Functions
   const loginUser = (name: string, email: string) => {
+    const cleanEmail = email.trim().toLowerCase();
     const profile: UserProfile = {
       id: `usr-${Date.now()}`,
       name: name.trim() || 'Người dùng Công Giáo',
-      email: email.trim(),
+      email: cleanEmail,
       connectionCode: generateConnectionCode(),
       createdAt: new Date().toISOString()
     };
     storage.setUserProfile(profile);
     setUserProfile(profile);
+
+    // Save profile to Firestore
+    saveFirestoreUser(cleanEmail, {
+      name: profile.name,
+      email: cleanEmail,
+      connectionCode: profile.connectionCode,
+      roles: userRoles
+    });
+
+    // Fetch and merge cloud favorites
+    getFirestoreFavorites(cleanEmail).then(cloudFavs => {
+      if (cloudFavs && Array.isArray(cloudFavs) && cloudFavs.length > 0) {
+        const merged = Array.from(new Set([...storage.getFavorites(), ...cloudFavs]));
+        setFavoritesState(merged);
+        storage.setFavorites(merged);
+      }
+    });
   };
 
   const logoutUser = () => {
@@ -458,6 +562,29 @@ export const useAppState = () => {
     saveRelativePatron,
     deleteRelativePatron,
     addConnectedUser,
-    isUserConnected
+    isUserConnected,
+
+    // Font size controls
+    fontSize,
+    updateFontSize,
+    increaseFontSize,
+    decreaseFontSize,
+
+    // Favorites & Firestore
+    favorites,
+    toggleFavorite,
+    isFavorite,
+
+    // Tags
+    selectedTag,
+    setSelectedTag,
+    availableTags,
+    filterByTag,
+
+    // Edit modal
+    editPrayerTarget,
+    showEditModal,
+    openEditModal,
+    closeEditModal
   };
 };

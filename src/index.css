@@ -16,6 +16,7 @@
   /* Premium Vietnamese Typography */
   --font-serif: 'Merriweather', 'Georgia', serif;
   --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  --prayer-font-size: 17px;
 
   /* General settings */
   font-family: var(--font-sans);
@@ -177,9 +178,10 @@ textarea {
 
 .prayer-card-content.bible-text.full-view {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: var(--prayer-font-size, 17px);
   line-height: 1.85;
   color: var(--text-main);
+  transition: font-size 0.15s ease;
 }
 
 .prayer-card-content.bible-text p {
@@ -769,9 +771,10 @@ textarea {
 .modal-body {
   padding: 20px;
   overflow-y: auto;
-  line-height: 1.8;
+  line-height: 1.85;
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: var(--prayer-font-size, 17px);
+  transition: font-size 0.15s ease;
 }
 
 .modal-footer {
@@ -1017,4 +1020,255 @@ textarea {
 .onboarding-footer {
   display: flex;
   justify-content: space-between;
+}
+
+/* ===================================================
+   PHASE 3 ENHANCEMENTS: Font Controls, Favorites, Tags
+   =================================================== */
+
+/* Prayer Meta Bar (Top bar inside card with tag, font zoom, heart, edit) */
+.prayer-card-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.prayer-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.prayer-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Font Size Zoom Pill Control */
+.font-size-control-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-bible);
+  border-radius: 20px;
+  padding: 2px 4px;
+  gap: 2px;
+}
+
+.font-zoom-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  transition: all 0.15s ease;
+}
+
+.font-zoom-btn:hover:not(:disabled) {
+  background: rgba(140, 107, 45, 0.15);
+  color: var(--gold-primary);
+}
+
+.font-zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.font-zoom-indicator {
+  font-size: 11px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 28px;
+  text-align: center;
+}
+
+/* Favorite Heart Button */
+.btn-fav {
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-bible);
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0;
+}
+
+.btn-fav:hover {
+  transform: scale(1.1);
+  border-color: #FDA4AF;
+  color: #E11D48;
+}
+
+.btn-fav.active {
+  background: #FFF1F2;
+  border-color: #FECDD3;
+  color: #E11D48;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.2);
+}
+
+/* Report / Edit Button */
+.btn-edit-report {
+  background: transparent;
+  border: 1px solid var(--border-bible);
+  color: var(--text-muted);
+  border-radius: 20px;
+  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-edit-report:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-primary);
+  background: rgba(140, 107, 45, 0.08);
+}
+
+/* Quick Tags Filter Carousel */
+.tag-filter-container {
+  margin-bottom: 14px;
+}
+
+.tag-filter-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 8px 2px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tag-filter-list::-webkit-scrollbar {
+  display: none;
+}
+
+.tag-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  background: #FFFFFF;
+  border: 1px solid var(--border-bible);
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.tag-pill:hover {
+  border-color: var(--gold-light);
+  color: var(--text-main);
+  background: var(--bg-parchment);
+}
+
+.tag-pill.active {
+  background: var(--gold-primary);
+  color: #FFFFFF;
+  border-color: var(--gold-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(140, 107, 45, 0.25);
+}
+
+/* Prayer Tag Badge on cards */
+.prayer-tags-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-bible);
+}
+
+.prayer-tag-badge {
+  font-size: 11px;
+  font-family: var(--font-sans);
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(140, 107, 45, 0.08);
+  color: var(--gold-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.prayer-tag-badge:hover {
+  background: var(--gold-primary);
+  color: #FFFFFF;
+}
+
+/* Favorites Shelf Component */
+.favorites-shelf {
+  background: #FFFFFF;
+  border: 1px solid var(--border-bible);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-subtle);
+}
+
+.favorites-shelf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.favorites-shelf-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.favorite-card-item {
+  background: var(--bg-parchment);
+  border: 1px solid var(--border-bible);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.favorite-card-item:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-subtle);
 }

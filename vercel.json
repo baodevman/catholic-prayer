@@ -16,6 +16,10 @@
     {
       "source": "/api/cron-crawl-and-sync",
       "destination": "/api/cron-crawl-and-sync.js"
+    },
+    {
+      "source": "/api/request-edit",
+      "destination": "/api/request-edit.js"
     }
   ],
   "crons": [

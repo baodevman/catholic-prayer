@@ -26,8 +26,11 @@ import {
   IconStethoscope,
   IconCompass,
   IconLogIn,
-  IconLogOut
+  IconLogOut,
+  IconHeart,
+  IconEdit
 } from './components/FlatIcons';
+import { EditPrayerModal } from './components/EditPrayerModal';
 import './App.css';
 
 export default function App() {
@@ -199,6 +202,64 @@ export default function App() {
 
                 {/* Main Prayer Card showing 100% FULL Content */}
                 <div className="prayer-main-card">
+                  {/* Toolbar: Font Controls, Favorite, Edit */}
+                  <div className="prayer-card-toolbar">
+                    <div className="prayer-toolbar-left">
+                      {/* Font Size Zoom Pill */}
+                      <div className="font-size-control-group" title="Tăng giảm cỡ chữ đọc lời nguyện">
+                        <button
+                          type="button"
+                          className="font-zoom-btn"
+                          onClick={state.decreaseFontSize}
+                          disabled={state.fontSize <= 14}
+                          title="Giảm cỡ chữ (A-)"
+                          aria-label="Giảm cỡ chữ"
+                        >
+                          A-
+                        </button>
+                        <span className="font-zoom-indicator">{state.fontSize}px</span>
+                        <button
+                          type="button"
+                          className="font-zoom-btn"
+                          onClick={state.increaseFontSize}
+                          disabled={state.fontSize >= 26}
+                          title="Tăng cỡ chữ (A+)"
+                          aria-label="Tăng cỡ chữ"
+                        >
+                          A+
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="prayer-toolbar-right">
+                      {/* Favorite Button */}
+                      <button
+                        type="button"
+                        className={`btn-fav ${state.isFavorite(state.featuredPrayer.uid) ? 'active' : ''}`}
+                        onClick={() => state.toggleFavorite(state.featuredPrayer!.uid)}
+                        title={state.isFavorite(state.featuredPrayer.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
+                        aria-label="Yêu thích"
+                      >
+                        <IconHeart
+                          size={18}
+                          filled={state.isFavorite(state.featuredPrayer.uid)}
+                          color={state.isFavorite(state.featuredPrayer.uid) ? '#E11D48' : 'var(--text-muted)'}
+                        />
+                      </button>
+
+                      {/* Request Edit Button */}
+                      <button
+                        type="button"
+                        className="btn-edit-report"
+                        onClick={() => state.openEditModal(state.featuredPrayer!)}
+                        title="Báo sai sót hoặc yêu cầu chỉnh sửa lời nguyện"
+                      >
+                        <IconEdit size={14} />
+                        <span>Góp ý</span>
+                      </button>
+                    </div>
+                  </div>
+
                   <h2 className="prayer-card-title">{state.featuredPrayer.title}</h2>
                   <div className="prayer-divider">
                     <IconWheat size={18} color="var(--gold-light)" />
@@ -209,6 +270,25 @@ export default function App() {
                     className="prayer-card-content bible-text full-view"
                     dangerouslySetInnerHTML={{ __html: state.featuredPrayer.content }}
                   />
+
+                  {/* Inline Tags display if available */}
+                  {state.featuredPrayer.tags && state.featuredPrayer.tags.length > 0 && (
+                    <div className="prayer-tags-inline">
+                      {state.featuredPrayer.tags.map(t => (
+                        <span
+                          key={t}
+                          className="prayer-tag-badge"
+                          onClick={() => {
+                            state.filterByTag(t);
+                            state.setActiveTab('suggest');
+                          }}
+                          title={`Tìm các lời nguyện có thẻ "${t}"`}
+                        >
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Actions Bar (Share & Refresh/Shuffle only) */}
                   <div className="prayer-card-actions">
@@ -289,7 +369,69 @@ export default function App() {
                 </p>
               )}
             </div>
-          </div>
+
+            {/* FAVORITE PRAYERS SECTION (Synced to Firestore) */}
+            <div className="favorites-shelf">
+                <div className="favorites-shelf-header">
+                  <div className="favorites-shelf-title">
+                    <IconHeart size={18} filled={true} color="#E11D48" />
+                    <span>Lời Cầu Nguyện Yêu Thích ({state.favorites.length})</span>
+                  </div>
+                  {state.userProfile ? (
+                    <span style={{ fontSize: '12px', color: '#16a34a', fontWeight: 600 }}>
+                      ● Đã đồng bộ Firestore
+                    </span>
+                  ) : (
+                    <button
+                      className="btn-small-link"
+                      onClick={() => setShowAuthModal(true)}
+                      title="Đăng nhập để đồng bộ danh sách yêu thích lên Cloud Firestore"
+                    >
+                      Đăng nhập để sync
+                    </button>
+                  )}
+                </div>
+
+                {state.favorites.length > 0 ? (
+                  <div className="favorites-grid">
+                    {state.prayers
+                      .filter(p => state.favorites.includes(p.uid))
+                      .map(favPrayer => (
+                        <div
+                          key={favPrayer.uid}
+                          className="favorite-card-item"
+                          onClick={() => setSelectedPrayerModal(favPrayer)}
+                        >
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <h4 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 4px 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {favPrayer.title}
+                            </h4>
+                            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                              {favPrayer.tags?.[0] ? `#${favPrayer.tags[0]}` : 'Lời cầu nguyện'}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className="btn-fav active"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              state.toggleFavorite(favPrayer.uid);
+                            }}
+                            title="Bỏ khỏi yêu thích"
+                            style={{ width: '30px', height: '30px' }}
+                          >
+                            <IconHeart size={15} filled={true} color="#E11D48" />
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                ) : (
+                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
+                    Bạn chưa lưu lời cầu nguyện yêu thích nào. Hãy bấm biểu tượng ❤️ ở bất kỳ lời cầu nguyện nào để lưu vào đây.
+                  </p>
+                )}
+              </div>
+            </div>
         )}
 
         {/* ==================================================== */}
@@ -300,16 +442,120 @@ export default function App() {
             <div className="section-title-box">
               <h2 className="section-heading">Gợi Ý Lời Cầu Nguyện</h2>
               <p className="section-desc">
-                Nhập hoàn cảnh khó khăn hoặc tâm tư bạn đang trải qua (công việc, gia đình, sức khỏe... tối đa 50 từ) để ứng dụng gợi ý lời cầu nguyện phù hợp nhất.
+                Chọn chủ đề bên dưới hoặc nhập tâm tư, hoàn cảnh bạn đang trải qua (công việc, gia đình, sức khỏe... tối đa 50 từ) để ứng dụng gợi ý lời cầu nguyện phù hợp nhất.
               </p>
             </div>
+
+            {/* Quick Topic Filter Carousel */}
+            <div className="tag-filter-container">
+              <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '8px' }}>
+                Khám phá nhanh theo chủ đề:
+              </div>
+              <div className="tag-filter-list">
+                <button
+                  type="button"
+                  className={`tag-pill ${!state.selectedTag ? 'active' : ''}`}
+                  onClick={() => state.setSelectedTag(null)}
+                >
+                  Tất cả
+                </button>
+                {state.availableTags.map(tag => (
+                  <button
+                    key={tag}
+                    type="button"
+                    className={`tag-pill ${state.selectedTag === tag ? 'active' : ''}`}
+                    onClick={() => state.filterByTag(tag)}
+                  >
+                    #{tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tag Filter Results (if a tag is selected) */}
+            {state.selectedTag && (
+              <div className="search-results-section" style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <h3 className="results-title" style={{ margin: 0 }}>
+                    Lời cầu nguyện chủ đề #{state.selectedTag}:
+                  </h3>
+                  <button
+                    type="button"
+                    className="btn-small-link"
+                    onClick={() => state.setSelectedTag(null)}
+                  >
+                    Đóng bộ lọc
+                  </button>
+                </div>
+                <div className="results-list">
+                  {state.prayers
+                    .filter(p => p.tags?.includes(state.selectedTag!))
+                    .map((prayer) => (
+                      <div key={prayer.uid} className="result-card">
+                        <div className="result-card-header">
+                          <h4
+                            className="result-card-title"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => setSelectedPrayerModal(prayer)}
+                          >
+                            {prayer.title}
+                          </h4>
+                          <button
+                            type="button"
+                            className={`btn-fav ${state.isFavorite(prayer.uid) ? 'active' : ''}`}
+                            onClick={() => state.toggleFavorite(prayer.uid)}
+                            title={state.isFavorite(prayer.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
+                            style={{ width: '32px', height: '32px', flexShrink: 0 }}
+                          >
+                            <IconHeart
+                              size={16}
+                              filled={state.isFavorite(prayer.uid)}
+                              color={state.isFavorite(prayer.uid) ? '#E11D48' : 'var(--text-muted)'}
+                            />
+                          </button>
+                        </div>
+                        <div
+                          className="result-snippet"
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => setSelectedPrayerModal(prayer)}
+                          dangerouslySetInnerHTML={{ __html: prayer.content }}
+                        />
+                        <div className="result-card-actions">
+                          <button
+                            className="btn-action primary small"
+                            onClick={() => setSelectedPrayerModal(prayer)}
+                          >
+                            <IconBookOpen size={15} />
+                            <span>Đọc trọn bài</span>
+                          </button>
+                          <button
+                            className="btn-action secondary small"
+                            onClick={() => handleShare(prayer)}
+                          >
+                            <IconShare size={15} />
+                            <span>Chia sẻ</span>
+                          </button>
+                          <button
+                            className="btn-action outline small"
+                            onClick={() => state.openEditModal(prayer)}
+                            title="Góp ý chỉnh sửa"
+                          >
+                            <IconEdit size={14} />
+                            <span>Góp ý</span>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
 
             <form onSubmit={handleSearchSubmit} className="suggest-form">
               <div className="textarea-wrapper">
                 <textarea
                   className="suggest-textarea"
                   rows={4}
-                  placeholder="Ví dụ: Tôi đang chịu áp lực lớn trong công việc, mâu thuẫn gia đình..."
+                  placeholder="Hoặc nhập hoàn cảnh cụ thể: Tôi đang chịu áp lực lớn trong công việc, mâu thuẫn gia đình..."
                   value={contextInput}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -346,19 +592,55 @@ export default function App() {
                       <div key={prayer.uid} className="result-card">
                         <div className="result-card-header">
                           <span className="result-number">#{idx + 1}</span>
-                          <h4 className="result-card-title">{prayer.title}</h4>
+                          <h4
+                            className="result-card-title"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => setSelectedPrayerModal(prayer)}
+                          >
+                            {prayer.title}
+                          </h4>
+                          <button
+                            type="button"
+                            className={`btn-fav ${state.isFavorite(prayer.uid) ? 'active' : ''}`}
+                            onClick={() => state.toggleFavorite(prayer.uid)}
+                            title={state.isFavorite(prayer.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
+                            style={{ width: '32px', height: '32px', flexShrink: 0 }}
+                          >
+                            <IconHeart
+                              size={16}
+                              filled={state.isFavorite(prayer.uid)}
+                              color={state.isFavorite(prayer.uid) ? '#E11D48' : 'var(--text-muted)'}
+                            />
+                          </button>
                         </div>
                         <div
                           className="result-snippet"
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => setSelectedPrayerModal(prayer)}
                           dangerouslySetInnerHTML={{ __html: prayer.content }}
                         />
                         <div className="result-card-actions">
                           <button
+                            className="btn-action primary small"
+                            onClick={() => setSelectedPrayerModal(prayer)}
+                          >
+                            <IconBookOpen size={15} />
+                            <span>Đọc trọn bài</span>
+                          </button>
+                          <button
                             className="btn-action secondary small"
                             onClick={() => handleShare(prayer)}
                           >
-                            <IconShare size={16} />
+                            <IconShare size={15} />
                             <span>Chia sẻ</span>
+                          </button>
+                          <button
+                            className="btn-action outline small"
+                            onClick={() => state.openEditModal(prayer)}
+                            title="Góp ý chỉnh sửa"
+                          >
+                            <IconEdit size={14} />
+                            <span>Góp ý</span>
                           </button>
                         </div>
                       </div>
@@ -758,14 +1040,84 @@ export default function App() {
         </div>
       )}
 
-      {/* PRAYER VIEW MODAL (FOR SEARCH RESULTS) */}
+      {/* PRAYER VIEW MODAL (FOR SEARCH RESULTS / FAVORITES / NOVENA) */}
       {selectedPrayerModal && (
         <div className="modal-backdrop" onClick={() => setSelectedPrayerModal(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3 className="modal-title">{selectedPrayerModal.title}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, minWidth: 0 }}>
+                <IconWheat size={20} color="var(--gold-primary)" />
+                <h3 className="modal-title" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {selectedPrayerModal.title}
+                </h3>
+              </div>
               <button className="btn-close" onClick={() => setSelectedPrayerModal(null)}>✕</button>
             </div>
+
+            {/* Modal Reading Toolbar: Font Zoom, Favorite, Edit */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '10px 20px',
+              borderBottom: '1px solid var(--border-bible)',
+              background: 'var(--bg-parchment)'
+            }}>
+              {/* Font Size Zoom Pill */}
+              <div className="font-size-control-group" title="Tăng giảm cỡ chữ đọc lời nguyện">
+                <button
+                  type="button"
+                  className="font-zoom-btn"
+                  onClick={state.decreaseFontSize}
+                  disabled={state.fontSize <= 14}
+                  title="Giảm cỡ chữ (A-)"
+                  aria-label="Giảm cỡ chữ"
+                >
+                  A-
+                </button>
+                <span className="font-zoom-indicator">{state.fontSize}px</span>
+                <button
+                  type="button"
+                  className="font-zoom-btn"
+                  onClick={state.increaseFontSize}
+                  disabled={state.fontSize >= 26}
+                  title="Tăng cỡ chữ (A+)"
+                  aria-label="Tăng cỡ chữ"
+                >
+                  A+
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                {/* Favorite Heart Button */}
+                <button
+                  type="button"
+                  className={`btn-fav ${state.isFavorite(selectedPrayerModal.uid) ? 'active' : ''}`}
+                  onClick={() => state.toggleFavorite(selectedPrayerModal.uid)}
+                  title={state.isFavorite(selectedPrayerModal.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
+                  aria-label="Yêu thích"
+                  style={{ width: '32px', height: '32px' }}
+                >
+                  <IconHeart
+                    size={16}
+                    filled={state.isFavorite(selectedPrayerModal.uid)}
+                    color={state.isFavorite(selectedPrayerModal.uid) ? '#E11D48' : 'var(--text-muted)'}
+                  />
+                </button>
+
+                {/* Edit Request Button */}
+                <button
+                  type="button"
+                  className="btn-edit-report"
+                  onClick={() => state.openEditModal(selectedPrayerModal)}
+                  title="Báo sai sót hoặc yêu cầu chỉnh sửa"
+                >
+                  <IconEdit size={14} />
+                  <span>Góp ý</span>
+                </button>
+              </div>
+            </div>
+
             <div className="modal-body bible-text" dangerouslySetInnerHTML={{ __html: selectedPrayerModal.content }} />
             <div className="modal-footer">
               <button
@@ -778,6 +1130,15 @@ export default function App() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* EDIT PRAYER REPORT MODAL */}
+      {state.showEditModal && state.editPrayerTarget && (
+        <EditPrayerModal
+          prayer={state.editPrayerTarget}
+          onClose={state.closeEditModal}
+          currentUser={state.userProfile}
+        />
       )}
 
       {/* ==================================================== */}

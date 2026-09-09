@@ -11,6 +11,8 @@ const KEYS = {
   RELATIVE_PATRONS: 'catholic_prayer_relative_patrons',
   CONNECTED_USERS: 'catholic_prayer_connected_users',
   HAS_SEEN_ONBOARDING: 'catholic_prayer_has_seen_onboarding',
+  PRAYER_FONT_SIZE: 'catholic_prayer_font_size',
+  FAVORITES: 'catholic_prayer_favorites',
 };
 
 // --- Custom Types ---
@@ -207,5 +209,13 @@ export const storage = {
     const list = storage.getRelativePatrons();
     const filtered = list.filter(p => p.id !== id);
     storage.setRelativePatrons(filtered);
-  }
+  },
+
+  // --- Prayer Font Size (Zoom Reading) ---
+  getPrayerFontSize: (): number => getLocal<number>(KEYS.PRAYER_FONT_SIZE, 17),
+  setPrayerFontSize: (size: number): void => setLocal(KEYS.PRAYER_FONT_SIZE, size),
+
+  // --- Favorite Prayers (Local fallback cache) ---
+  getFavorites: (): string[] => getLocal<string[]>(KEYS.FAVORITES, []),
+  setFavorites: (favs: string[]): void => setLocal(KEYS.FAVORITES, favs)
 };

@@ -9,6 +9,7 @@ export interface Prayer {
   content: string; // HTML formatted string
   timeOfDay?: 'sang' | 'trua' | 'chieu' | 'toi' | 'bat_ky';
   roles?: string[]; // List of target roles (student, worker, family, single, elderly, sick, bat_ky)
+  tags?: string[]; // Tag list for fast searching & filtering
   isUserSubmitted?: boolean;
   submittedByUser?: string;
   isNovena?: boolean;
@@ -66,6 +67,35 @@ const richTextToHtml = (richTextField: any): string => {
       return text;
     })
     .join('');
+};
+
+// Helper to automatically extract relevant tags for quick search
+export const extractTagsFromPrayer = (prayer: {
+  title: string;
+  content: string;
+  timeOfDay?: string;
+  roles?: string[];
+  tags?: string[];
+  category?: string;
+}): string[] => {
+  const tagsSet = new Set<string>(prayer.tags || []);
+  const text = (prayer.title + ' ' + prayer.content + ' ' + (prayer.category || '')).toLowerCase();
+
+  if (prayer.timeOfDay === 'sang' || text.includes('buổi sáng') || text.includes('ban mai') || text.includes('bình minh')) tagsSet.add('Buổi Sáng');
+  if (prayer.timeOfDay === 'toi' || text.includes('buổi tối') || text.includes('ban đêm') || text.includes('trước khi ngủ')) tagsSet.add('Buổi Tối');
+  if (prayer.timeOfDay === 'trua' || text.includes('buổi trưa')) tagsSet.add('Buổi Trưa');
+  if (text.includes('gia đình') || text.includes('vợ chồng') || text.includes('con cái') || prayer.roles?.includes('family')) tagsSet.add('Gia Đình');
+  if (text.includes('bình an') || text.includes('an bình') || text.includes('yên hàn')) tagsSet.add('Bình An');
+  if (text.includes('tạ ơn') || text.includes('cảm tạ') || text.includes('tri ân')) tagsSet.add('Tạ Ơn');
+  if (text.includes('chữa lành') || text.includes('bệnh tật') || text.includes('đau yếu') || prayer.roles?.includes('sick')) tagsSet.add('Chữa Lành');
+  if (text.includes('tha thứ') || text.includes('sám hối') || text.includes('ăn năn') || text.includes('tội lỗi')) tagsSet.add('Sám Hối');
+  if (text.includes('đức mẹ') || text.includes('maria') || text.includes('mân côi')) tagsSet.add('Đức Mẹ');
+  if (text.includes('thánh giuse') || text.includes('giuse')) tagsSet.add('Thánh Giuse');
+  if (text.includes('công việc') || text.includes('làm ăn') || text.includes('nghề nghiệp') || prayer.roles?.includes('worker')) tagsSet.add('Công Việc');
+  if (text.includes('học tập') || text.includes('thi cử') || prayer.roles?.includes('student')) tagsSet.add('Học Tập');
+  if (text.includes('linh hồn') || text.includes('qua đời') || text.includes('luyện ngục') || text.includes('người đã khuất')) tagsSet.add('Cầu Cho Linh Hồn');
+
+  return Array.from(tagsSet);
 };
 
 // Main fetching function with robust fallback chain
@@ -132,7 +162,7 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
           });
         }
 
-        return {
+        const prayerObj: Prayer = {
           uid: doc.uid || doc.id,
           title: d.title || 'Lời cầu nguyện',
           category: categoryUids[0] || '',
@@ -140,11 +170,15 @@ export const fetchAllPrayers = async (): Promise<Prayer[]> => {
           content: richTextToHtml(d.content),
           timeOfDay: d.time_of_day || 'bat_ky',
           roles: rolesList.length > 0 ? rolesList : (d.roles || ['bat_ky']),
+          tags: Array.isArray(doc.tags) ? doc.tags : [],
           isUserSubmitted: Boolean(d.is_user_submitted),
           submittedByUser: d.submitted_by_user || '',
           isNovena,
           ...(isNovena && { novenaDays }),
         };
+
+        prayerObj.tags = extractTagsFromPrayer(prayerObj);
+        return prayerObj;
       });
 
       return prayers;

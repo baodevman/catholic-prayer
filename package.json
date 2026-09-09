@@ -12,12 +12,15 @@
     "prayers:crawl": "tsx scripts/crawl-prayers.ts",
     "cron:crawl-and-sync": "tsx scripts/cron-crawl-and-sync-prismic.ts",
     "sync:prismic": "tsx scripts/sync-prismic-data.ts",
+    "sync:tags": "tsx scripts/sync-tags-prismic.ts",
     "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@prismicio/client": "^7.21.8",
+    "firebase": "^12.18.0",
     "firebase-admin": "^13.0.0",
     "idb-keyval": "^6.2.6",
+    "nodemailer": "^10.0.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "vite-plugin-pwa": "^1.3.0"
@@ -26,6 +29,7 @@
     "@prismicio/migrate": "^0.0.2",
     "@slicemachine/adapter-next": "^0.3.96",
     "@types/node": "^24.13.2",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
