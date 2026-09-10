@@ -15,11 +15,11 @@ export default defineConfig({
         enabled: true,
         type: 'module'
       },
-      includeAssets: ['favicon.svg', 'icon.png', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: ['favicon.ico', 'favicon.svg', 'icon.png', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'Lời Cầu Nguyện Công Giáo',
         short_name: 'Lời Cầu Nguyện',
-        description: 'Ứng dụng Lời Cầu Nguyện & Tuần Cửu Nhật Công Giáo',
+        description: 'Ứng dụng Lời Cầu Nguyện Công Giáo',
         theme_color: '#FBF8EE',
         background_color: '#FBF8EE',
         display: 'standalone',

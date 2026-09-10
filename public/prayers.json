@@ -6,7 +6,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn vượt qua sự chia trí và lơ là",
@@ -16,7 +17,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh thánh hóa giờ làm việc cùng Chúa Giêsu",
@@ -25,7 +27,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu xin ơn khiêm nhường trong cuộc sống",
@@ -34,7 +37,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin ơn khiêm tốn trước mọi thành công",
@@ -44,7 +48,8 @@
     "roles": [
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh từ bỏ cái tôi ích kỷ để phục vụ tha nhân",
@@ -53,7 +58,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu xin ơn Khôn Ngoan của Chúa Thánh Thần",
@@ -62,7 +68,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin sự khôn ngoan phân định ý Chúa",
@@ -71,7 +78,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin sự sáng suốt trong học hành thi cử",
@@ -80,7 +88,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu xin ơn sống thánh thiện hằng ngày",
@@ -89,7 +98,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin ơn thánh hóa tâm hồn và thân xác",
@@ -98,7 +108,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời xin ơn kiên trì trên con đường nhân đức",
@@ -107,7 +118,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng ngày mới trước khi đi làm",
@@ -118,7 +130,8 @@
       "student",
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin bình an trước giờ làm việc",
@@ -127,7 +140,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời dâng hiến công sức lao động cho Chúa",
@@ -138,27 +152,30 @@
       "student",
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng ngày học mới của học sinh",
     "category": "loi-nguyen-cau-truoc-khi-di-hoc",
     "content": "<p>Lạy Chúa Giêsu yêu quý, con dâng ngày học hôm nay cho Chúa. Con cầu xin Chúa mở mang trí tuệ, ban cho con sự minh mẫn để tiếp thu bài giảng.</p><p>Xin ban cho con ơn biết kính trọng, vâng lời thầy cô giáo, yêu thương hòa thuận với bạn bè, tránh xa mọi thói xấu như gian lận trong thi cử hay bắt nạt bạn học. Con quyết tâm học chăm để dâng tặng cha mẹ món quà ý nghĩa nhất. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "sang",
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu trước khi vào lớp học",
     "category": "loi-nguyen-cau-truoc-khi-di-hoc",
     "content": "<p>Lạy Chúa Thánh Thần là Đấng giáo dục tối cao, xin đến ngự trị trong lớp học của con hôm nay. Xin soi sáng tâm trí con và ban ơn thông hiểu.</p><p>Giúp con biết lắng nghe bài giảng một cách chăm chú, biết tự giác suy nghĩ và tiếp nhận tri thức khoa học cũng như đạo lý làm người. Con xin dâng ngày học này để tôn vinh danh Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "sang",
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin Chúa đồng hành trên đường đi học",
@@ -167,7 +184,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện buổi sáng dành cho người lớn tuổi",
@@ -177,7 +195,8 @@
     "roles": [
       "student",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn tuổi già và cầu bình an",
@@ -190,7 +209,8 @@
       "family",
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện phó thác tuổi già cho Chúa",
@@ -200,7 +220,8 @@
     "roles": [
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng chuyến đi xa cầu bình an",
@@ -210,7 +231,8 @@
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện trước khi bước lên xe di chuyển",
@@ -219,7 +241,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời xin ơn bình an trên mọi nẻo đường di chuyển",
@@ -228,7 +251,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu tạ ơn cuối ngày làm việc",
@@ -239,7 +263,8 @@
       "student",
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng những mỏi mệt cuối ngày cho Chúa",
@@ -249,7 +274,8 @@
     "roles": [
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin bình an khi trở về nhà",
@@ -258,7 +284,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn cuối ngày học của học sinh",
@@ -267,7 +294,8 @@
     "timeOfDay": "toi",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời dâng nỗ lực học hành cuối ngày cho Chúa",
@@ -277,7 +305,8 @@
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện xin ơn sửa đổi sau ngày học tập",
@@ -286,7 +315,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời tạ ơn vì chuyến đi thượng lộ bình an trở về",
@@ -295,16 +325,18 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn Chúa đồng hành trên mọi nẻo đường",
     "category": "loi-nguyen-cuoi-ngay-sau-mot-chuyen-di",
     "content": "<p>Lạy Chúa Giêsu, Ngài đã cùng đồng hành với con trong suốt hành trình đi xa ngày hôm nay. Con xin tạ ơn Ngài đã luôn ở bên che chở con.</p><p>Cám ơn Ngài vì những cuộc gặp gỡ tốt đẹp, vì con đã hoàn thành công việc của chuyến đi một cách trọn vẹn. Con xin phó thác đêm nghỉ ngơi này trong sự giữ gìn của Ngài. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện tạ ơn Thiên Thần Hộ Thủ sau chuyến đi",
@@ -314,7 +346,8 @@
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện trong những ngày gian nan thử thách",
@@ -323,7 +356,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn cậy trông kiên nhẫn vượt qua nghịch cảnh",
@@ -334,7 +368,8 @@
       "student",
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện phó thác mọi lo âu phiền muộn cho Chúa",
@@ -343,17 +378,19 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tối gia đình xin sự hiệp nhất và yêu thương",
     "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
     "content": "<p>Lạy Chúa Giêsu, Chúa đã thánh hóa đời sống gia đình tại Nazareth. Giờ đây gia đình chúng con cùng quy tụ để dâng lời cầu nguyện.</p><p>Xin Chúa ngự trị trong ngôi nhà chúng con, ban ơn giúp chúng con luôn biết yêu thương, nhường nhịn và tha thứ cho nhau. Xin dập tắt mọi bất hòa, ghen ghét và ban cho chúng con lòng quảng đại để luôn thấu hiểu, chia sẻ khó nhọc cùng nhau dưới mái ấm gia đình. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "toi",
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu xin sự bình an và hòa thuận trong nhà",
@@ -363,7 +400,8 @@
     "roles": [
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu cho các thành viên biết tha thứ cho nhau",
@@ -372,7 +410,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu cho con cái biết kính trọng cha mẹ",
@@ -382,7 +421,8 @@
     "roles": [
       "family",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu cho lòng hiếu thảo của con cái trong gia đình",
@@ -392,7 +432,8 @@
     "roles": [
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn gìn giữ bổn phận hiếu nghĩa làm con",
@@ -403,7 +444,8 @@
       "student",
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu cho cha mẹ ông bà hồn an xác mạnh",
@@ -415,7 +457,8 @@
       "family",
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu cho đấng sinh thành được bình an hạnh phúc",
@@ -426,7 +469,8 @@
       "student",
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện dâng cha mẹ ông bà già yếu cho Chúa",
@@ -437,7 +481,8 @@
       "student",
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu của cha mẹ dâng con cái cho Chúa",
@@ -447,7 +492,8 @@
     "roles": [
       "family",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu cho con cái ngoan ngoãn và khôn lớn",
@@ -458,7 +504,8 @@
       "student",
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin Chúa gìn giữ tương lai con cháu",
@@ -470,7 +517,8 @@
       "worker",
       "family",
       "single"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Tuần Cửu Nhật Kính Đức Mẹ Hằng Cứu Giúp",
@@ -653,7 +701,8 @@
       "student",
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện ngày lễ Chúa Phục Sinh tạ ơn",
@@ -663,7 +712,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện ngày lễ Đức Mẹ Hồn Xác Về Trời",
@@ -672,27 +722,30 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu tạ ơn ngày cuối năm",
     "category": "loi-nguyen-cuoi-nam",
     "content": "<p>Lạy Thiên Chúa là Cha hằng hữu, thời gian một năm qua trôi nhanh như bóng câu qua cửa. Con xin dâng lời tạ ơn sâu sắc vì muôn vàn hồng ân Chúa ban.</p><p>Cám ơn Chúa vì những ngày nắng đẹp hạnh phúc, cả những ngày giông bão giúp con cậy trông vào Chúa hơn. Con xin sám hối vì những thiếu sót tội lỗi của con trong năm qua và xin đặt tương lai năm mới của con trong sự quan phòng của Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "student",
       "single"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng lời sám hối và tạ ơn đêm giao thừa",
     "category": "loi-nguyen-cuoi-nam",
     "content": "<p>Lạy Chúa Giêsu, trong những phút giây linh thiêng cuối cùng của năm cũ, gia đình chúng con cùng hiệp ý tạ ơn Ngài.</p><p>Xin tẩy sạch những lỗi lầm cũ trong lòng chúng con bằng Lòng Thương Xót bao la của Chúa. Xin ban ơn hiệp nhất và chữa lành cho mọi thành viên để chúng con sẵn sàng bước vào năm mới với tâm hồn thánh thiện, bình an và đầy lòng mến Chúa. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện nhìn lại một năm đã qua dâng hiến",
@@ -701,7 +754,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu bình an năm mới Tết Nguyên Đán",
@@ -711,7 +765,8 @@
     "roles": [
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện ngày mồng một Tết xin ơn thánh hóa thời gian",
@@ -721,7 +776,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện ngày đầu năm mới dương lịch dâng vạn sự",
@@ -731,7 +787,8 @@
     "roles": [
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu nhân ngày hiền mẫu Mother's Day",
@@ -741,7 +798,8 @@
     "roles": [
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu nhân ngày hiền phụ Father's Day",
@@ -751,7 +809,8 @@
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện tạ ơn đấng sinh thành trong ngày lễ cha mẹ",
@@ -762,16 +821,18 @@
       "worker",
       "family",
       "elderly"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu cho thiếu nhi dịp Tết Trung Thu",
     "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
     "content": "<p>Lạy Chúa Giêsu, nhân ngày Tết Trung Thu của trẻ thơ, chúng con dâng lên Chúa toàn thể các em thiếu nhi, thiếu niên trong giáo xứ và trên thế giới.</p><p>Xin ban cho các em một đêm trăng rằm ngập tràn tiếng cười và tình yêu thương. Xin gìn giữ tâm hồn các em luôn trong sáng, đơn sơ và ngày càng lớn khôn, khôn ngoan trước mặt Thiên Chúa và người đời. Amen.</p><p><i>Nguồn tham khảo: tgpsaigon.net</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện dâng tuổi thơ trong sáng cho Chúa Giêsu",
@@ -781,16 +842,18 @@
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện cho trẻ em nghèo khổ ngày rằm Trung Thu",
     "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
     "content": "<p>Lạy Chúa Giêsu Kitô nhân hậu, trong đêm trung thu vui tươi này, con nhớ đến những bạn nhỏ mồ côi, nghèo khổ hay đang phải nằm trên giường bệnh đau đớn.</p><p>Xin Chúa thương gửi những nhà hảo tâm đến giúp đỡ, mang bánh trung thu và tình yêu thương ấm áp đến cho các bạn. Xin xoa dịu những nỗi đau và mang niềm vui đến cho mọi trẻ em. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện tri ân thầy cô nhân ngày Nhà giáo Việt Nam 20/11",
@@ -800,7 +863,8 @@
     "roles": [
       "student",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin Chúa ban ơn khôn ngoan cho các nhà giáo",
@@ -810,7 +874,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện của người giáo viên Công giáo dâng sứ mạng",
@@ -820,7 +885,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin Chúa soi sáng tâm trí khi bị phân tâm",
@@ -829,7 +895,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng phút giây làm việc trong tinh thần tỉnh thức",
@@ -838,7 +905,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn bền chí và chuyên tâm làm việc",
@@ -848,7 +916,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh Cầu Sự Khiêm Nhường trong công việc",
@@ -857,7 +926,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin tha thứ thói kiêu ngạo và tự mãn",
@@ -866,7 +936,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện học theo gương nhẫn nại và hạ mình của Mẹ Maria",
@@ -875,7 +946,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh xin bảy ơn Đức Chúa Thánh Thần",
@@ -884,7 +956,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn phân định thiêng liêng trong thử thách",
@@ -893,7 +966,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh nguyện xin ơn trở nên muối và ánh sáng cho đời",
@@ -903,7 +977,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin giữ gìn lòng mến và ơn nghĩa Chúa",
@@ -912,7 +987,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu xin sự an toàn và hanh thông nơi công sở",
@@ -922,16 +998,18 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời dâng ngày làm việc cho Thánh Cả Giuse quan thầy",
     "category": "loi-nguyen-cau-truoc-khi-di-lam",
     "content": "<p>Lạy Thánh Cả Giuse, gương mẫu tuyệt vời của người lao động, Ngài đã nuôi sống Thánh Gia bằng mồ hôi và đôi tay lao động cần cù.</p><p>Con xin nhận Ngài làm quan thầy trong công việc hôm nay. Xin Ngài cầu bầu cùng Chúa ban cho con tinh thần trung thực, trách nhiệm và niềm vui trong từng công việc dù bé nhỏ nhất. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "sang",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng giờ học và xin ơn kiên nhẫn tích lũy tri thức",
@@ -940,7 +1018,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn bình tĩnh và tự tin trước kỳ thi",
@@ -950,7 +1029,8 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng tuổi già và xin ơn bình an tâm hồn",
@@ -961,7 +1041,8 @@
       "family",
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện xin sự ấm áp và quan tâm của con cháu",
@@ -971,7 +1052,8 @@
     "roles": [
       "family",
       "single"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh xin Thiên Thần Bản Mệnh gìn giữ trên đường",
@@ -980,7 +1062,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin sự bảo trợ của Đức Mẹ Đường Xa",
@@ -989,7 +1072,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn sau một ngày làm việc vất vả",
@@ -1000,17 +1084,19 @@
       "student",
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện buông bỏ áp lực công việc để nghỉ ngơi",
     "category": "loi-nguyen-cuoi-ngay-di-lam",
     "content": "<p>Lạy Chúa Giêsu, Ngài phán: 'Tất cả những ai vất vả mang gánh nặng nề, hãy đến cùng tôi, tôi sẽ cho nghỉ ngơi dưỡng sức'.</p><p>Giờ đây con xin trút bỏ mọi lo toan, áp lực và deadline công việc vào tay Chúa. Xin ban cho con một đêm ngủ yên giấc để phục hồi sức khỏe cho ngày mai. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "worker",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn Chúa vì một ngày học tập nhiều hoa trái",
@@ -1019,7 +1105,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn bình an trở về sau chuyến đi",
@@ -1028,7 +1115,8 @@
     "timeOfDay": "chieu",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện tìm lại sự tĩnh lặng sau dông bão cuộc đời",
@@ -1037,7 +1125,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh trông cậy vào tình yêu Chúa trong đêm tối thử thách",
@@ -1046,7 +1135,8 @@
     "timeOfDay": "sang",
     "roles": [
       "single"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh dâng mái ấm gia đình cho Trái Tim Cực Thánh Chúa Giêsu",
@@ -1056,7 +1146,8 @@
     "roles": [
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện xin ơn hiếu thảo của con cái đối với cha mẹ",
@@ -1065,7 +1156,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu cho cha mẹ ông bà được bách niên hảo hợp và an bình",
@@ -1077,7 +1169,8 @@
       "family",
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện của cha mẹ xin Chúa chúc lành cho con cái",
@@ -1086,7 +1179,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Tuần Cửu Nhật Kính Thánh Cả Giuse Quan Thầy Gia Đình",
@@ -1150,19 +1244,21 @@
     "title": "Lời nguyện dâng ngày Lễ Phục Sinh mừng Chúa Sống Lại",
     "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
     "content": "<p>Alleluia! Lạy Chúa Giêsu Phục Sinh, Ngài đã chiến thắng sự chết và tội lỗi để mở ra con đường sự sống vĩnh cửu.</p><p>Xin ban niềm vui Phục Sinh tràn ngập tâm hồn chúng con, giúp chúng con dẹp bỏ những con người cũ ích kỷ để sống một cuộc đời mới chan chứa hy vọng, bình an và tình yêu thương bác ái. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "sang",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện dâng ngày Lễ Chúa Thánh Thần Hiện Xuống",
     "category": "loi-nguyen-cho-cac-ngay-le-cong-giao",
     "content": "<p>Lạy Chúa Thánh Thần, xin ngự đến làm mới lại mặt đất và tâm hồn chúng con như ngày lễ Hiện Xuống năm xưa.</p><p>Xin ban ngọn lửa mến yêu để đốt cháy sự nguội lạnh, ban làn gió ơn sủng để thổi tan những sợ hãi và giúp chúng con hăng hái ra đi làm chứng cho Phúc Âm giữa đời. Amen.</p><p><i>Nguồn tham khảo: dongten.net/suy-tu/cau-nguyen</i></p>",
-    "timeOfDay": "bat_ky",
+    "timeOfDay": "sang",
     "roles": [
       "worker"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh cầu nguyện cho Thầy Cô nhân ngày Nhà Giáo Việt Nam 20/11",
@@ -1172,17 +1268,19 @@
     "roles": [
       "student",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời nguyện cầu cho Trẻ Em nhân dịp Tết Trung Thu",
     "category": "loi-nguyen-cho-tre-em-ngay-trung-thu",
     "content": "<p>Lạy Chúa Giêsu, Ngài rất yêu mến trẻ nhỏ và phán: 'Hãy để trẻ nhỏ đến cùng Ta'. Nhân đêm Rằm Trung Thu, chúng con xin dâng tất cả các em thiếu nhi cho Chúa.</p><p>Xin ban cho các em một đêm hội vầy vui tươi, được sống trong sự yêu thương chở che của gia đình và cộng đoàn, và ngày càng lớn lên trong sự khôn ngoan và ơn nghĩa Chúa. Amen.</p><p><i>Nguồn tham khảo: nhanguyennho.com</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Kinh tạ ơn Chúa ngày Cuối Năm (31/12)",
@@ -1191,7 +1289,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "student"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "title": "Lời cầu nguyện chúc lành cho Ngày Đầu Năm Mới (Mùng 1 Tết)",
@@ -1202,7 +1301,8 @@
       "family",
       "elderly",
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "uid": "loi-cau-nguyen-dang-ngay-moi-cho-duc-me-la-vang",
@@ -1213,18 +1313,20 @@
     "roles": [
       "worker",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "uid": "loi-nguyen-xin-su-hiep-nhat-va-yeu-thuong-trong-gia-dinh",
     "title": "Lời nguyện xin sự hiệp nhất và yêu thương trong gia đình",
     "category": "loi-nguyen-cho-su-hoa-thuan-yeu-thuong",
     "content": "<p>Lạy Thiên Chúa là Cha giàu lòng thương xót, Ngài liên kết chúng con trong một mái ấm gia đình.</p><p>Xin ban cho các thành viên biết lắng nghe, tha thứ những lỡ lầm của nhau và luôn cùng nhau đọc lời cầu nguyện mỗi đêm để tình yêu Chúa luôn bao phủ ngôi nhà chúng con. Amen.</p><p><i>Nguồn tham khảo: gxdmhcg.net</i></p>",
-    "timeOfDay": "toi",
+    "timeOfDay": "bat_ky",
     "roles": [
       "student",
       "family"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "uid": "loi-cau-nguyen-xin-su-an-binh-cho-tam-hon-khi-doi-mat-voi-om-dau",
@@ -1234,7 +1336,8 @@
     "timeOfDay": "bat_ky",
     "roles": [
       "sick"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "uid": "loi-nguyen-xin-on-phan-dinh-cho-nguoi-doc-than-truoc-nga-re-tuong-lai",
@@ -1245,7 +1348,8 @@
     "roles": [
       "student",
       "single"
-    ]
+    ],
+    "isNovena": false
   },
   {
     "uid": "loi-nguyen-ta-on-cuoi-ngay-dang-len-chua-giesu-thanh-the",
@@ -1256,6 +1360,7 @@
     "roles": [
       "student",
       "worker"
-    ]
+    ],
+    "isNovena": false
   }
 ]

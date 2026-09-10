@@ -33,16 +33,24 @@
   padding: 0;
 }
 
-body,
-button,
-input,
-select,
-textarea {
+body {
   margin: 0;
   background-color: var(--bg-parchment);
   color: var(--text-main);
   font-family: var(--font-serif);
   overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  background-color: transparent;
+  color: var(--text-main);
+  font-family: var(--font-serif);
   line-height: 1.6;
   font-size: 16px;
 }
@@ -1168,6 +1176,13 @@ textarea {
 }
 
 .tag-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: max-content;
+  white-space: nowrap;
+  overflow: visible;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 13px;
@@ -1176,7 +1191,6 @@ textarea {
   border: 1px solid var(--border-bible);
   color: var(--text-muted);
   cursor: pointer;
-  white-space: nowrap;
   transition: all 0.15s ease;
   user-select: none;
 }
@@ -1193,6 +1207,122 @@ textarea {
   border-color: var(--gold-primary);
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(140, 107, 45, 0.25);
+}
+
+/* Outer Font Size Controls Bar (Above Prayer Card) */
+.font-size-outer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.font-size-outer-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-weight: 500;
+}
+
+.font-size-btn-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(140, 107, 45, 0.08);
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid var(--border-bible);
+}
+
+.font-zoom-circle-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-bible);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  line-height: 1;
+}
+
+.font-zoom-circle-btn:hover:not(:disabled) {
+  background: var(--gold-primary);
+  color: #FFFFFF;
+  border-color: var(--gold-primary);
+}
+
+.font-zoom-circle-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.font-zoom-value-text {
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text-muted);
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* New Action Buttons Layout Below Prayer Content */
+.prayer-actions-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-bible);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prayer-actions-row-top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.prayer-actions-row-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-action-round {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-bible);
+  background: #FFFFFF;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-action-round:hover {
+  background: rgba(140, 107, 45, 0.08);
+  color: var(--text-main);
+  border-color: var(--gold-light);
+}
+
+.btn-action-round.fav-active {
+  color: #E11D48;
+  border-color: rgba(225, 29, 72, 0.3);
+  background: rgba(225, 29, 72, 0.06);
 }
 
 /* Prayer Tag Badge on cards */
@@ -1222,30 +1352,31 @@ textarea {
   color: #FFFFFF;
 }
 
-/* Favorites Shelf Component */
-.favorites-shelf {
-  background: #FFFFFF;
-  border: 1px solid var(--border-bible);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-subtle);
+/* Favorites Widget (reusing .widget-box styling) */
+.favorites-widget {
+  /* Inherits widget-box margin-top, border, shadow, padding */
 }
 
-.favorites-shelf-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.favorites-widget .widget-header {
   margin-bottom: 12px;
 }
 
-.favorites-shelf-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-main);
+.auth-sync-reminder {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(140, 107, 45, 0.06);
+  border-radius: 8px;
+  border-left: 3px solid var(--gold-light);
+  line-height: 1.5;
+}
+
+.auth-sync-status {
+  font-size: 12px;
+  color: #16a34a;
+  font-weight: 600;
 }
 
 .favorites-grid {

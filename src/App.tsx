@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppState, getTimeOfDayLabel, getCurrentTimeOfDayKey } from './hooks/useAppState';
+import { useAppState } from './hooks/useAppState';
 import type { Prayer } from './utils/prismic';
 import type { UserRole } from './utils/storage';
 import { CATHOLIC_SAINTS } from './utils/catholicSaints';
@@ -69,7 +69,7 @@ export default function App() {
   // Handle Share
   const handleShare = async (prayer: Prayer) => {
     const cleanText = prayer.content.replace(/<[^>]*>/g, '\n').replace(/\n\s*\n/g, '\n');
-    const shareText = `${prayer.title.toUpperCase()}\n\n${cleanText}\n\n— Trích từ Ứng dụng Lời Cầu Nguyện Công Giáo`;
+    const shareText = `${prayer.title.toUpperCase()}\n\n${cleanText}\n\n— Trích từ Ứng dụng Lời Cầu Nguyện Công Giáo loicaunguyen.com`;
 
     if (navigator.share) {
       try {
@@ -136,7 +136,7 @@ export default function App() {
     });
 
     if (!newPrayerIsPrivate) {
-      alert('Cảm ơn bạn! Lời cầu nguyện đóng góp của bạn đã được lưu và gửi tới Admin.');
+      alert('Cảm ơn bạn! Lời cầu nguyện đóng góp của bạn đã được lưu và gửi tới ban biên tập.');
     } else {
       alert('Đã lưu lời cầu nguyện cá nhân của bạn!');
     }
@@ -153,22 +153,18 @@ export default function App() {
   const todayDateStr = `${String(todayMonth).padStart(2, '0')}-${String(todayDay).padStart(2, '0')}`;
   const todaySaint = CATHOLIC_SAINTS.find(s => s.date === todayDateStr);
 
-  const timeKey = getCurrentTimeOfDayKey();
-  const timeLabel = getTimeOfDayLabel(timeKey);
-
-  // Available Novenas from dataset
+  // Available Novenas from dataset (strictly novenas only)
   const novenaPrayers = state.prayers.filter(p => p.isNovena || p.category === 'novena' || p.category === 'tuan-cuu-nhat');
 
   return (
     <div className="app-container">
-      {/* App Header (No Clock) */}
+      {/* App Header (Clean brand header without time badge) */}
       <header className="app-header">
         <div className="header-top">
           <div className="brand-box">
             <IconWheat size={22} color="var(--gold-primary)" />
             <h1 className="header-title">Lời Cầu Nguyện</h1>
           </div>
-          <span className="time-badge">{timeLabel}</span>
         </div>
       </header>
 
@@ -186,80 +182,36 @@ export default function App() {
               </div>
             ) : state.featuredPrayer ? (
               <div className="featured-card-wrapper">
-                <div className="card-badge-row">
-                  <span className="badge-time">{timeLabel}</span>
-                  {state.userRoles.map(r => (
-                    <span key={r} className="badge-role">
-                      {r === 'student' ? 'Học tập'
-                        : r === 'worker' ? 'Công việc'
-                          : r === 'family' ? 'Gia đình'
-                            : r === 'single' ? 'Độc thân'
-                              : r === 'elderly' ? 'Cao tuổi'
-                                : 'Sức khỏe'}
-                    </span>
-                  ))}
+                {/* Outer Font Size Controls Bar (Above Prayer Card) */}
+                <div className="font-size-outer-bar">
+                  <span className="font-size-outer-label">Tăng/giảm cỡ chữ:</span>
+                  <div className="font-size-btn-group">
+                    <button
+                      type="button"
+                      className="font-zoom-circle-btn"
+                      onClick={state.decreaseFontSize}
+                      disabled={state.fontSize <= 14}
+                      title="Giảm cỡ chữ (-)"
+                      aria-label="Giảm cỡ chữ"
+                    >
+                      -
+                    </button>
+                    <span className="font-zoom-value-text">{state.fontSize}px</span>
+                    <button
+                      type="button"
+                      className="font-zoom-circle-btn"
+                      onClick={state.increaseFontSize}
+                      disabled={state.fontSize >= 26}
+                      title="Tăng cỡ chữ (+)"
+                      aria-label="Tăng cỡ chữ"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
 
-                {/* Main Prayer Card showing 100% FULL Content */}
+                {/* Main Prayer Card showing 100% FULL Content (Clean, No Distracting Tags) */}
                 <div className="prayer-main-card">
-                  {/* Toolbar: Font Controls, Favorite, Edit */}
-                  <div className="prayer-card-toolbar">
-                    <div className="prayer-toolbar-left">
-                      {/* Font Size Zoom Pill */}
-                      <div className="font-size-control-group" title="Tăng giảm cỡ chữ đọc lời nguyện">
-                        <button
-                          type="button"
-                          className="font-zoom-btn"
-                          onClick={state.decreaseFontSize}
-                          disabled={state.fontSize <= 14}
-                          title="Giảm cỡ chữ (A-)"
-                          aria-label="Giảm cỡ chữ"
-                        >
-                          A-
-                        </button>
-                        <span className="font-zoom-indicator">{state.fontSize}px</span>
-                        <button
-                          type="button"
-                          className="font-zoom-btn"
-                          onClick={state.increaseFontSize}
-                          disabled={state.fontSize >= 26}
-                          title="Tăng cỡ chữ (A+)"
-                          aria-label="Tăng cỡ chữ"
-                        >
-                          A+
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="prayer-toolbar-right">
-                      {/* Favorite Button */}
-                      <button
-                        type="button"
-                        className={`btn-fav ${state.isFavorite(state.featuredPrayer.uid) ? 'active' : ''}`}
-                        onClick={() => state.toggleFavorite(state.featuredPrayer!.uid)}
-                        title={state.isFavorite(state.featuredPrayer.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
-                        aria-label="Yêu thích"
-                      >
-                        <IconHeart
-                          size={18}
-                          filled={state.isFavorite(state.featuredPrayer.uid)}
-                          color={state.isFavorite(state.featuredPrayer.uid) ? '#E11D48' : 'var(--text-muted)'}
-                        />
-                      </button>
-
-                      {/* Request Edit Button */}
-                      <button
-                        type="button"
-                        className="btn-edit-report"
-                        onClick={() => state.openEditModal(state.featuredPrayer!)}
-                        title="Báo sai sót hoặc yêu cầu chỉnh sửa lời nguyện"
-                      >
-                        <IconEdit size={14} />
-                        <span>Góp ý</span>
-                      </button>
-                    </div>
-                  </div>
-
                   <h2 className="prayer-card-title">{state.featuredPrayer.title}</h2>
                   <div className="prayer-divider">
                     <IconWheat size={18} color="var(--gold-light)" />
@@ -271,42 +223,55 @@ export default function App() {
                     dangerouslySetInnerHTML={{ __html: state.featuredPrayer.content }}
                   />
 
-                  {/* Inline Tags display if available */}
-                  {state.featuredPrayer.tags && state.featuredPrayer.tags.length > 0 && (
-                    <div className="prayer-tags-inline">
-                      {state.featuredPrayer.tags.map(t => (
-                        <span
-                          key={t}
-                          className="prayer-tag-badge"
-                          onClick={() => {
-                            state.filterByTag(t);
-                            state.setActiveTab('suggest');
-                          }}
-                          title={`Tìm các lời nguyện có thẻ "${t}"`}
-                        >
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {/* Actions Section: Row 1 (Right: Share, Favorite), Row 2 (Other prayer, Feedback) */}
+                  <div className="prayer-actions-section">
+                    <div className="prayer-actions-row-top">
+                      <button
+                        type="button"
+                        className="btn-action-round"
+                        onClick={() => handleShare(state.featuredPrayer!)}
+                        title="Chia sẻ lời cầu nguyện"
+                      >
+                        <IconShare size={16} />
+                        <span>Chia sẻ</span>
+                      </button>
 
-                  {/* Actions Bar (Share & Refresh/Shuffle only) */}
-                  <div className="prayer-card-actions">
-                    <button
-                      className="btn-action secondary"
-                      onClick={() => handleShare(state.featuredPrayer!)}
-                    >
-                      <IconShare size={18} />
-                      <span>Chia sẻ</span>
-                    </button>
-                    <button
-                      className="btn-action outline"
-                      onClick={state.shuffleFeaturedPrayer}
-                      title="Đổi lời cầu nguyện khác phù hợp buổi này"
-                    >
-                      <IconRefresh size={18} />
-                      <span>Đổi lời nguyện khác</span>
-                    </button>
+                      <button
+                        type="button"
+                        className={`btn-action-round ${state.isFavorite(state.featuredPrayer.uid) ? 'fav-active' : ''}`}
+                        onClick={() => state.toggleFavorite(state.featuredPrayer!.uid)}
+                        title={state.isFavorite(state.featuredPrayer.uid) ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'}
+                        aria-label="Yêu thích"
+                      >
+                        <IconHeart
+                          size={16}
+                          filled={state.isFavorite(state.featuredPrayer.uid)}
+                          color={state.isFavorite(state.featuredPrayer.uid) ? '#E11D48' : 'var(--text-muted)'}
+                        />
+                        <span>{state.isFavorite(state.featuredPrayer.uid) ? 'Đã thích' : 'Yêu thích'}</span>
+                      </button>
+                    </div>
+
+                    <div className="prayer-actions-row-bottom">
+                      <button
+                        type="button"
+                        className="btn-action outline"
+                        onClick={state.shuffleFeaturedPrayer}
+                        title="Đổi lời cầu nguyện khác phù hợp"
+                      >
+                        <IconRefresh size={16} />
+                        <span>Lời nguyện khác</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-action outline"
+                        onClick={() => state.openEditModal(state.featuredPrayer!)}
+                        title="Báo sai sót hoặc yêu cầu chỉnh sửa"
+                      >
+                        <IconEdit size={15} />
+                        <span>Góp ý</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -370,68 +335,66 @@ export default function App() {
               )}
             </div>
 
-            {/* FAVORITE PRAYERS SECTION (Synced to Firestore) */}
-            <div className="favorites-shelf">
-                <div className="favorites-shelf-header">
-                  <div className="favorites-shelf-title">
-                    <IconHeart size={18} filled={true} color="#E11D48" />
-                    <span>Lời Cầu Nguyện Yêu Thích ({state.favorites.length})</span>
-                  </div>
-                  {state.userProfile ? (
-                    <span style={{ fontSize: '12px', color: '#16a34a', fontWeight: 600 }}>
-                      ● Đã đồng bộ Firestore
-                    </span>
-                  ) : (
-                    <button
-                      className="btn-small-link"
-                      onClick={() => setShowAuthModal(true)}
-                      title="Đăng nhập để đồng bộ danh sách yêu thích lên Cloud Firestore"
-                    >
-                      Đăng nhập để sync
-                    </button>
-                  )}
+            {/* FAVORITE PRAYERS SECTION */}
+            <div className="widget-box favorites-widget">
+              <div className="widget-header">
+                <div className="widget-title-icon">
+                  <IconHeart size={18} filled={true} color="#E11D48" />
+                  <span>Lời Nguyện Yêu Thích ({state.favorites.length})</span>
                 </div>
-
-                {state.favorites.length > 0 ? (
-                  <div className="favorites-grid">
-                    {state.prayers
-                      .filter(p => state.favorites.includes(p.uid))
-                      .map(favPrayer => (
-                        <div
-                          key={favPrayer.uid}
-                          className="favorite-card-item"
-                          onClick={() => setSelectedPrayerModal(favPrayer)}
-                        >
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <h4 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 4px 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                              {favPrayer.title}
-                            </h4>
-                            <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                              {favPrayer.tags?.[0] ? `#${favPrayer.tags[0]}` : 'Lời cầu nguyện'}
-                            </span>
-                          </div>
-                          <button
-                            type="button"
-                            className="btn-fav active"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              state.toggleFavorite(favPrayer.uid);
-                            }}
-                            title="Bỏ khỏi yêu thích"
-                            style={{ width: '30px', height: '30px' }}
-                          >
-                            <IconHeart size={15} filled={true} color="#E11D48" />
-                          </button>
-                        </div>
-                      ))}
-                  </div>
-                ) : (
-                  <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
-                    Bạn chưa lưu lời cầu nguyện yêu thích nào. Hãy bấm biểu tượng ❤️ ở bất kỳ lời cầu nguyện nào để lưu vào đây.
-                  </p>
+                {state.userProfile && (
+                  <span className="auth-sync-status">
+                    ● Đã đồng bộ tài khoản
+                  </span>
                 )}
               </div>
+
+              {state.favorites.length > 0 ? (
+                <div className="favorites-grid">
+                  {state.prayers
+                    .filter(p => !p.isNovena && state.favorites.includes(p.uid))
+                    .map(favPrayer => (
+                      <div
+                        key={favPrayer.uid}
+                        className="favorite-card-item"
+                        onClick={() => setSelectedPrayerModal(favPrayer)}
+                      >
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <h4 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 4px 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {favPrayer.title}
+                          </h4>
+                          <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                            {favPrayer.tags?.[0] ? `#${favPrayer.tags[0]}` : 'Lời cầu nguyện'}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          className="btn-fav active"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            state.toggleFavorite(favPrayer.uid);
+                          }}
+                          title="Bỏ khỏi yêu thích"
+                          style={{ width: '30px', height: '30px' }}
+                        >
+                          <IconHeart size={15} filled={true} color="#E11D48" />
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>
+                  Bạn chưa lưu lời cầu nguyện yêu thích nào. Hãy bấm biểu tượng ❤️ ở bất kỳ lời cầu nguyện nào để lưu vào đây.
+                </p>
+              )}
+
+              {!state.userProfile && (
+                <p className="auth-sync-reminder">
+                  Ghi chú: Bạn chưa đăng nhập để đồng bộ yêu thích. Hãy đăng nhập tại mục Cài đặt để lưu trữ danh sách yêu thích khi đổi thiết bị.
+                </p>
+              )}
             </div>
+          </div>
         )}
 
         {/* ==================================================== */}
@@ -489,7 +452,7 @@ export default function App() {
                 </div>
                 <div className="results-list">
                   {state.prayers
-                    .filter(p => p.tags?.includes(state.selectedTag!))
+                    .filter(p => !p.isNovena && p.tags?.includes(state.selectedTag!))
                     .map((prayer) => (
                       <div key={prayer.uid} className="result-card">
                         <div className="result-card-header">
@@ -521,13 +484,6 @@ export default function App() {
                           dangerouslySetInnerHTML={{ __html: prayer.content }}
                         />
                         <div className="result-card-actions">
-                          <button
-                            className="btn-action primary small"
-                            onClick={() => setSelectedPrayerModal(prayer)}
-                          >
-                            <IconBookOpen size={15} />
-                            <span>Đọc trọn bài</span>
-                          </button>
                           <button
                             className="btn-action secondary small"
                             onClick={() => handleShare(prayer)}
@@ -688,7 +644,7 @@ export default function App() {
               ) : (
                 <div className="unauth-box">
                   <p className="group-desc" style={{ marginBottom: '10px' }}>
-                    Đăng nhập để đóng góp lời cầu nguyện cho cộng đồng và kết nối Bổn Mạng với thân nhân.
+                    Đăng nhập để đóng góp lời cầu nguyện cho cộng đồng và kết nối Bổn Mạng với Người Thân.
                   </p>
                   <button className="btn-action primary" onClick={() => setShowAuthModal(true)}>
                     <IconLogIn size={18} />
@@ -808,16 +764,16 @@ export default function App() {
 
             {/* 4. Relative Patron Saints & Connection Check */}
             <div className="settings-group">
-              <h3 className="group-title">Bổn Mạng Thân Nhân & Kết Nối</h3>
+              <h3 className="group-title">Bổn Mạng Người Thân & Kết Nối</h3>
               <p className="group-desc">
-                Nhập mã kết nối của thân nhân để kiểm tra 2 người dùng đã add nhau hay chưa và nhắc nhớ Lễ Bổn Mạng.
+                Nhập mã kết nối của Người Thân để kiểm tra 2 người dùng đã add nhau hay chưa và nhắc nhớ Lễ Bổn Mạng.
               </p>
 
               <div className="connection-input-box">
                 <input
                   type="text"
                   className="form-input"
-                  placeholder="Nhập mã kết nối của thân nhân (VD: CP-A1B2C3)"
+                  placeholder="Nhập mã kết nối của Người Thân (VD: CP-A1B2C3)"
                   value={connectCodeInput}
                   onChange={(e) => setConnectCodeInput(e.target.value)}
                 />
@@ -829,7 +785,7 @@ export default function App() {
 
               <button className="btn-action secondary" style={{ marginTop: '12px' }} onClick={() => setShowPatronModal(true)}>
                 <IconPlus size={18} />
-                <span>Thêm Thân Nhân Mới</span>
+                <span>Thêm Người Thân</span>
               </button>
 
               {state.relativePatrons.length > 0 && (
@@ -879,14 +835,14 @@ export default function App() {
               </p>
               <button className="btn-action secondary" onClick={state.openOnboardingModal}>
                 <IconBookOpen size={18} />
-                <span>Xem Giới Thiệu & Hướng Dẫn App</span>
+                <span>Xem Giới Thiệu & Hướng Dẫn</span>
               </button>
             </div>
 
             {/* App Info */}
             <div className="app-info-box">
-              <p>Ứng Dụng Lời Cầu Nguyện Công Giáo PWA</p>
-              <p className="sub">Phiên bản 2.2.0 — Thiết kế chuẩn phẳng tinh gọn</p>
+              <p>Ứng Dụng Lời Cầu Nguyện Công Giáo</p>
+              <p className="sub">Một sản phẩm của <strong>DEVMAN TECH SOLUTION</strong></p>
             </div>
           </div>
         )}
@@ -975,12 +931,12 @@ export default function App() {
         <div className="modal-backdrop" onClick={() => setShowPatronModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h3 className="modal-title">Thêm Bổn Mạng Thân Nhân</h3>
+              <h3 className="modal-title">Thêm Bổn Mạng Người Thân</h3>
               <button className="btn-close" onClick={() => setShowPatronModal(false)}>✕</button>
             </div>
             <div className="modal-body">
               <div className="form-field">
-                <label>Tên thân nhân (VD: Ba, Chị Mai, Chú Tuấn):</label>
+                <label>Tên Người Thân (VD: Ba, Chị Mai, Chú Tuấn):</label>
                 <input
                   type="text"
                   className="form-input"
@@ -990,7 +946,7 @@ export default function App() {
               </div>
 
               <div className="form-field">
-                <label>Mã kết nối của thân nhân (nếu có):</label>
+                <label>Mã kết nối của Người Thân (nếu có):</label>
                 <input
                   type="text"
                   className="form-input"
@@ -1033,7 +989,7 @@ export default function App() {
                   setShowPatronModal(false);
                 }}
               >
-                Lưu Thân Nhân
+                Lưu Người Thân
               </button>
             </div>
           </div>
